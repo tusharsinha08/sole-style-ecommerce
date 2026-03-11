@@ -47,7 +47,7 @@
     {
         "_id": 3,
         "name": "Men's Casual Hoodie",
-        "category": "men",
+        "category": "popular",
         "type": "hoodie",
         "brand": "StreetWear",
         "price": 42.99,
@@ -109,7 +109,7 @@
     {
         "_id": 6,
         "name": "Men's Polo Shirt",
-        "category": "men",
+        "category": "popular",
         "type": "polo",
         "brand": "SportFit",
         "price": 29.99,
@@ -220,7 +220,7 @@
     {
         "_id": 11,
         "name": "Women's Elegant Long Coat",
-        "category": "women",
+        "category": "popular",
         "type": "coat",
         "brand": "ElegantWear",
         "price": 89.99,
@@ -283,7 +283,7 @@
     {
         "_id": 14,
         "name": "Men's Graphic T-Shirt",
-        "category": "men",
+        "category": "popular",
         "type": "tshirt",
         "brand": "StreetWear",
         "price": 22.99,
@@ -326,7 +326,7 @@
     {
         "_id": 16,
         "name": "Women's Yoga Leggings",
-        "category": "women",
+        "category": "popular",
         "type": "leggings",
         "brand": "ActiveFit",
         "price": 29.99,

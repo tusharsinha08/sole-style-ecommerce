@@ -1,0 +1,430 @@
+[
+    {
+        "_id": 1,
+        "name": "Men's Basic Cotton T-Shirt",
+        "category": "men",
+        "type": "tshirt",
+        "brand": "UrbanStyle",
+        "price": 18.99,
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Black",
+            "White",
+            "Blue"
+        ],
+        "rating": 4.4,
+        "stock": 60,
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab",
+        "description": "Soft cotton t-shirt perfect for everyday casual wear."
+    },
+    {
+        "_id": 2,
+        "name": "Men's Slim Fit Denim Jeans",
+        "category": "men",
+        "type": "jeans",
+        "brand": "DenimPro",
+        "price": 49.99,
+        "sizes": [
+            "30",
+            "32",
+            "34",
+            "36"
+        ],
+        "colors": [
+            "Blue",
+            "Dark Blue"
+        ],
+        "rating": 4.5,
+        "stock": 40,
+        "image": "https://images.unsplash.com/photo-1542272604-787c3835535d",
+        "description": "Slim fit stretch denim jeans for modern style."
+    },
+    {
+        "_id": 3,
+        "name": "Men's Casual Hoodie",
+        "category": "men",
+        "type": "hoodie",
+        "brand": "StreetWear",
+        "price": 42.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Gray",
+            "Black"
+        ],
+        "rating": 4.6,
+        "stock": 35,
+        "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7",
+        "description": "Warm hoodie perfect for winter days."
+    },
+    {
+        "_id": 4,
+        "name": "Men's Formal White Shirt",
+        "category": "men",
+        "type": "shirt",
+        "brand": "ClassicWear",
+        "price": 36.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "White"
+        ],
+        "rating": 4.3,
+        "stock": 25,
+        "image": "https://images.unsplash.com/photo-1596755094514-f87e34085b2c",
+        "description": "Classic white shirt for office and formal meetings."
+    },
+    {
+        "_id": 5,
+        "name": "Men's Winter Jacket",
+        "category": "men",
+        "type": "jacket",
+        "brand": "NorthEdge",
+        "price": 79.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Black",
+            "Brown"
+        ],
+        "rating": 4.7,
+        "stock": 20,
+        "image": "https://images.unsplash.com/photo-1520975954732-35dd22c96f5d",
+        "description": "Trendy winter jacket with comfortable lining."
+    },
+    {
+        "_id": 6,
+        "name": "Men's Polo Shirt",
+        "category": "men",
+        "type": "polo",
+        "brand": "SportFit",
+        "price": 29.99,
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Red",
+            "Black",
+            "Navy"
+        ],
+        "rating": 4.4,
+        "stock": 50,
+        "image": "https://images.unsplash.com/photo-1581655353564-df123a1eb820",
+        "description": "Classic polo shirt for smart casual style."
+    },
+    {
+        "_id": 7,
+        "name": "Women's Floral Summer Dress",
+        "category": "women",
+        "type": "dress",
+        "brand": "BloomFashion",
+        "price": 39.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Red Floral",
+            "Yellow Floral"
+        ],
+        "rating": 4.8,
+        "stock": 30,
+        "image": "https://images.unsplash.com/photo-1496747611176-843222e1e57c",
+        "description": "Light floral dress ideal for summer outings."
+    },
+    {
+        "_id": 8,
+        "name": "Women's High Waist Jeans",
+        "category": "women",
+        "type": "jeans",
+        "brand": "DenimQueen",
+        "price": 52.99,
+        "sizes": [
+            "26",
+            "28",
+            "30",
+            "32"
+        ],
+        "colors": [
+            "Blue",
+            "Black"
+        ],
+        "rating": 4.6,
+        "stock": 35,
+        "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246",
+        "description": "Stylish high-waist jeans with stretch fabric."
+    },
+    {
+        "_id": 9,
+        "name": "Women's Casual Cotton T-Shirt",
+        "category": "women",
+        "type": "tshirt",
+        "brand": "UrbanChic",
+        "price": 21.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "White",
+            "Pink",
+            "Black"
+        ],
+        "rating": 4.5,
+        "stock": 45,
+        "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c",
+        "description": "Comfortable cotton t-shirt for daily wear."
+    },
+    {
+        "_id": 10,
+        "name": "Women's Oversized Hoodie",
+        "category": "women",
+        "type": "hoodie",
+        "brand": "CozyWear",
+        "price": 44.99,
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Beige",
+            "Pink",
+            "Gray"
+        ],
+        "rating": 4.7,
+        "stock": 28,
+        "image": "https://images.unsplash.com/photo-1520975916090-3105956dac38",
+        "description": "Soft oversized hoodie for relaxed comfort."
+    },
+    {
+        "_id": 11,
+        "name": "Women's Elegant Long Coat",
+        "category": "women",
+        "type": "coat",
+        "brand": "ElegantWear",
+        "price": 89.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Camel",
+            "Black"
+        ],
+        "rating": 4.8,
+        "stock": 15,
+        "image": "https://images.unsplash.com/photo-1483985988355-763728e1935b",
+        "description": "Elegant winter coat with premium fabric."
+    },
+    {
+        "_id": 12,
+        "name": "Women's Casual Skirt",
+        "category": "women",
+        "type": "skirt",
+        "brand": "StyleBloom",
+        "price": 27.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Black",
+            "Beige"
+        ],
+        "rating": 4.4,
+        "stock": 40,
+        "image": "https://images.unsplash.com/photo-1583496661160-fb5886a13d67",
+        "description": "Comfortable skirt suitable for casual wear."
+    },
+    {
+        "_id": 13,
+        "name": "Men's Casual Shorts",
+        "category": "men",
+        "type": "shorts",
+        "brand": "SportFit",
+        "price": 24.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Gray",
+            "Black"
+        ],
+        "rating": 4.3,
+        "stock": 55,
+        "image": "https://images.unsplash.com/photo-1506629905607-45c3c0c1c08c",
+        "description": "Lightweight shorts for summer comfort."
+    },
+    {
+        "_id": 14,
+        "name": "Men's Graphic T-Shirt",
+        "category": "men",
+        "type": "tshirt",
+        "brand": "StreetWear",
+        "price": 22.99,
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Black",
+            "White"
+        ],
+        "rating": 4.4,
+        "stock": 60,
+        "image": "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb",
+        "description": "Trendy graphic t-shirt with modern design."
+    },
+    {
+        "_id": 15,
+        "name": "Women's Party Dress",
+        "category": "women",
+        "type": "dress",
+        "brand": "GlowFashion",
+        "price": 59.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Red",
+            "Black"
+        ],
+        "rating": 4.7,
+        "stock": 20,
+        "image": "https://images.unsplash.com/photo-1520975661595-6453be3f7070",
+        "description": "Elegant dress suitable for parties and events."
+    },
+    {
+        "_id": 16,
+        "name": "Women's Yoga Leggings",
+        "category": "women",
+        "type": "leggings",
+        "brand": "ActiveFit",
+        "price": 29.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Black",
+            "Gray"
+        ],
+        "rating": 4.6,
+        "stock": 50,
+        "image": "https://images.unsplash.com/photo-1506629905607-45c3c0c1c08c",
+        "description": "Flexible leggings ideal for workouts and yoga."
+    },
+    {
+        "_id": 17,
+        "name": "Men's Casual Blazer",
+        "category": "men",
+        "type": "blazer",
+        "brand": "ClassicWear",
+        "price": 74.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Navy",
+            "Black"
+        ],
+        "rating": 4.5,
+        "stock": 18,
+        "image": "https://images.unsplash.com/photo-1593032465171-8b1cde9b4b52",
+        "description": "Smart casual blazer for formal occasions."
+    },
+    {
+        "_id": 18,
+        "name": "Women's Denim Jacket",
+        "category": "women",
+        "type": "jacket",
+        "brand": "DenimQueen",
+        "price": 64.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "Blue"
+        ],
+        "rating": 4.6,
+        "stock": 22,
+        "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
+        "description": "Classic denim jacket with timeless design."
+    },
+    {
+        "_id": 19,
+        "name": "Men's Sweatpants",
+        "category": "men",
+        "type": "pants",
+        "brand": "ActiveFit",
+        "price": 34.99,
+        "sizes": [
+            "M",
+            "L",
+            "XL"
+        ],
+        "colors": [
+            "Gray",
+            "Black"
+        ],
+        "rating": 4.4,
+        "stock": 35,
+        "image": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea",
+        "description": "Comfortable sweatpants for casual wear."
+    },
+    {
+        "_id": 20,
+        "name": "Women's Casual Blouse",
+        "category": "women",
+        "type": "blouse",
+        "brand": "ElegantWear",
+        "price": 31.99,
+        "sizes": [
+            "S",
+            "M",
+            "L"
+        ],
+        "colors": [
+            "White",
+            "Beige"
+        ],
+        "rating": 4.5,
+        "stock": 32,
+        "image": "https://images.unsplash.com/photo-1520975918318-8d63b1c8f0c4",
+        "description": "Elegant blouse perfect for office and casual style."
+    }
+]

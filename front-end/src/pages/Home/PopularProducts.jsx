@@ -9,7 +9,7 @@ const PopularProducts = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('products.json')
+        fetch('http://localhost:3000/products')
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
@@ -18,6 +18,10 @@ const PopularProducts = () => {
     }, []);
 
     const popular = products.filter(item => item.category === 'popular');
+
+    if (loading) {
+        return <div className='text-center'><span className="loading loading-dots loading-lg"></span></div>
+    }
 
     return (
         <section className='max-w-7xl mx-auto dark:bg-gray-800 py-12'>

@@ -1,4 +1,5 @@
 import React from 'react';
+import headerImage from '../../assets/images/shop_bg.jpg';
 
 const Hero = () => {
     return (
@@ -6,7 +7,7 @@ const Hero = () => {
             className="hero min-h-screen bg-fixed"
             style={{
                 backgroundImage:
-                    "url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)",
+                    `url(${headerImage})`,
             }}
         >
             <div className="hero-overlay"></div>

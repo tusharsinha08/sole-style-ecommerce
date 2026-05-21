@@ -18,7 +18,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
-    strict: true, 
+    strict: true,
     deprecationErrors: true,
   }
 });
@@ -33,9 +33,56 @@ async function run() {
 
     // products api
     app.get('/products', async (req, res) => {
-        const cursor = productsCollection.find();
-        const result = await cursor.toArray();
-        res.send(result);
+      // const cursor = productsCollection.find();
+      // const result = await cursor.toArray();
+      // res.send(result);
+      try {
+        const search = req.query.search;
+        const sort = req.query.sort;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        let query = {};
+        if (search) {
+          query.name = {
+            $regex: search,
+            $options: 'i'
+          }
+        }
+
+        let sortOption = {};
+        switch (sort) {
+          case 'popularity':
+            sortOption.popularity = -1;
+            break;
+          case 'latest':
+            sortOption.createdAt = -1;
+            break;
+          case 'lowToHigh':
+            sortOption.price = 1;
+            break;
+          case 'highToLow':
+            sortOption.price = -1;
+            break;
+          default:
+            break;
+        }
+
+        const cursor = productsCollection.find(query).sort(sortOption).skip(skip).limit(limit);
+        const products = await cursor.toArray();
+        const totalProducts = await productsCollection.countDocuments(query);
+
+        res.send({
+          totalProducts,
+          currentPage: page,
+          totalPages: Math.ceil(totalProducts / limit),
+          products
+        })
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        res.status(500).send('Internal Server Error');
+      }
     })
 
     // Send a ping to confirm a successful connection

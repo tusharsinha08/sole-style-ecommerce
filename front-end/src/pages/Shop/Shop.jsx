@@ -5,53 +5,29 @@ import ProductCard from '../../components/ProductCard';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
-    const [sortedProducts, setSortedProducts] = useState([]);
     const [sortType, setSortType] = useState("");
+    const [search, setSearch] = useState("");
+    const [page, setPage] = useState(1);
+    const [result, setResult] = useState({});
 
     useEffect(() => {
-        axios.get('http://localhost:3000/products')
+        axios.get('http://localhost:3000/products', {
+            params: {
+                search,
+                sort: sortType,
+                page,
+                limit: 10
+            }
+        })
             .then(response => {
                 console.log(response.data);
-                setProducts(response.data);
-                setSortedProducts(response.data);
+                setResult(response.data);
+                setProducts(response.data.products);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
-    }, []);
-
-    // Handle sorting
-    const handleSort = (e) => {
-        const value = e.target.value;
-        setSortType(value);
-
-        let sorted = [...products];
-
-        switch (value) {
-            case "popularity":
-                sorted.sort((a, b) => b.popularity - a.popularity);
-                break;
-
-            case "latest":
-                sorted.sort(
-                    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-                );
-                break;
-
-            case "lowToHigh":
-                sorted.sort((a, b) => a.price - b.price);
-                break;
-
-            case "highToLow":
-                sorted.sort((a, b) => b.price - a.price);
-                break;
-
-            default:
-                sorted = [...products];
-        }
-
-        setSortedProducts(sorted);
-    };
+    }, [search, sortType, page]);
 
     return (
         <section className='dark:bg-gray-800'>
@@ -75,10 +51,30 @@ const Shop = () => {
             </div>
 
             <div className='max-w-7xl mx-auto mt-12'>
-                <div className='md:flex md:justify-between my-6 p-6'>
-                    <p>Showing all {products.length} products</p>
+                <div className='md:flex md:justify-between my-6 p-6 dark:text-gray-300'>
+                    <p>Showing {products.length} products of {result.totalProducts}</p>
 
-                    <select value={sortType} onChange={handleSort}>
+                    <label className="input dark:bg-gray-700 dark:text-gray-300 w-full max-w-xs">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input
+                            type="search"
+                            placeholder="Search"
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    </label>
+
+                    <select value={sortType} onChange={(e) => setSortType(e.target.value)} className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
                         <option value="">Default sorting</option>
                         <option value="popularity">Sort by popularity</option>
                         <option value="latest">Sort by latest</option>
@@ -89,10 +85,22 @@ const Shop = () => {
 
                 <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-6'>
                     {
-                        sortedProducts.map((product) => (
+                        products.map((product) => (
                             <ProductCard key={product._id} product={product} />
                         ))
                     }
+                </div>
+
+                <div className="join join-vertical md:join-horizontal w-full flex justify-center my-6">
+                    <button className="join-item btn"
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                    >«</button>
+                    <button className="join-item btn">Page {page}</button>
+                    <button className="join-item btn"
+                        disabled={!(page === Math.ceil(products.length / 10))}
+                        onClick={() => setPage(page + 1)}
+                    >»</button>
                 </div>
             </div>
         </section>

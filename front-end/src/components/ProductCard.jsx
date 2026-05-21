@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
 
         <div className="text-center  w-full ">
             <figure className='h-80 w-full mb-2'>
-                <Link to={'/products'}>
+                <Link to={`/products/${product._id}`}>
                     <img
                         className='w-full h-full'
                         src={image}

@@ -1,5 +1,6 @@
 import React from 'react';
 import headerImage from '../../assets/images/shop_bg.jpg';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
     return (
@@ -20,7 +21,7 @@ const Hero = () => {
                     <p className="mb-3 text-sm">
                         Effortlessly blend comfort and style with our Casual & Everyday collection, featuring cozy sweaters, versatile denim, laid-back tees, and relaxed-fit joggers for your everyday adventures
                     </p>
-                    <button className="border py-2 px-6 bg-transparent text-white uppercase text-xs hover:bg-white hover:text-black cursor-pointer">View Collection</button>
+                    <button className="border py-2 px-6 bg-transparent text-white uppercase text-xs hover:bg-white hover:text-black cursor-pointer"><Link to="/products">View Collection</Link></button>
                 </div>
             </div>
         </div>

@@ -91,13 +91,13 @@ const Shop = () => {
                     }
                 </div>
 
-                <div className="join join-vertical md:join-horizontal w-full flex justify-center my-6">
-                    <button className="join-item btn"
+                <div className="join join-vertical md:join-horizontal w-full flex justify-center py-6">
+                    <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
                         disabled={page === 1}
                         onClick={() => setPage(page - 1)}
                     >«</button>
-                    <button className="join-item btn">Page {page}</button>
-                    <button className="join-item btn"
+                    <button className="join-item p-4 btn border-0 dark:text-gray-300 dark:bg-gray-800">Page {page}</button>
+                    <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
                         disabled={!(page === Math.ceil(products.length / 10))}
                         onClick={() => setPage(page + 1)}
                     >»</button>

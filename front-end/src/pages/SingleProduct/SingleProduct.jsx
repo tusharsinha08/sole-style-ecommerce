@@ -48,7 +48,7 @@ const SingleProduct = () => {
         );
     }
 
-    const { image, name, price, type, shortDescription, description, Category, rating, stock, sizes, colors, reviews, additionalInfo } = product;
+    const { image, name, price, type, shortDescription, description, Category, rating, stock, sizes, colors, reviews } = product;
 
     return (
 
@@ -272,16 +272,19 @@ const SingleProduct = () => {
                 >
                     Description
                 </button>
-                <button
-                    onClick={() => setActiveTab("additionalInfo")}
-                    className={`cursor-pointer p-2 border-t-4 font-semibold text-gray-700 dark:text-gray-300 border-t-[#3AA6B9] transition
+                {
+                    colors || sizes ? (
+                        <button
+                            onClick={() => setActiveTab("additionalInfo")}
+                            className={`cursor-pointer p-2 border-t-4 font-semibold text-gray-700 dark:text-gray-300 border-t-[#3AA6B9] transition
                     ${activeTab === "additionalInfo"
-                            ? "border-t-[#3AA6B9]"
-                            : "border-t-transparent "
-                        }`}
-                >
-                    Additional Info
-                </button>
+                                    ? "border-t-[#3AA6B9]"
+                                    : "border-t-transparent "
+                                }`}
+                        >
+                            Additional Info
+                        </button>) : null
+                }
                 <button
                     onClick={() => setActiveTab("Reviews")}
                     className={`cursor-pointer p-2 border-t-4 font-semibold text-gray-700 dark:text-gray-300 border-t-[#3AA6B9] transition
@@ -294,21 +297,57 @@ const SingleProduct = () => {
                 </button>
             </div>
 
-            {activeTab === "description" && (
-                <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {description}
+            <div className="mb-12">
+                {activeTab === "description" && (
+                    <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {description}
+                    </div>
+                )}
+                {activeTab === "additionalInfo" && (
+                    <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
+                        <table className="w-full border border-gray-300 dark:border-gray-700 border-collapse">
+                            <tbody>
+                                {colors && (
+                                    <tr className="border-b border-gray-300 dark:border-gray-700">
+                                        <td className="font-semibold w-1/6 pr-6 px-4 py-1 border border-gray-300 dark:border-gray-700">
+                                            Color:
+                                        </td>
+                                        <td className="px-4 py-1 border border-gray-300 dark:border-gray-700">
+                                            {colors.join(", ")}
+                                        </td>
+                                    </tr>
+                                )}
+
+                                {sizes && (
+                                    <tr className="border-b border-gray-300 dark:border-gray-700">
+                                        <td className="font-semibold w-1/6 pr-6 px-4 py-1 border border-gray-300 dark:border-gray-700">
+                                            Size:
+                                        </td>
+                                        <td className="px-4 py-1 border border-gray-300 dark:border-gray-700">
+                                            {sizes.join(", ")}
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+                {activeTab === "Reviews" && (
+                    <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {reviews}
+                    </div>
+                )}
+            </div>
+
+            <div>
+                <h3 className="text-4xl font-cormorant font-semibold dark:text-gray-300 mb-4">
+                    Related Products
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {/* Placeholder for related products */}
+                    
                 </div>
-            )}
-            {activeTab === "additionalInfo" && (
-                <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {additionalInfo}
-                </div>
-            )}
-            {activeTab === "Reviews" && (
-                <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                    {reviews}
-                </div>
-            )}
+            </div>
 
         </section>
     );

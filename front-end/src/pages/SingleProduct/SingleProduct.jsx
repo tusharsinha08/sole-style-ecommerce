@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import axios from "axios";
 import { FaStar, FaShoppingCart, FaHeart, FaSearchPlus } from "react-icons/fa";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import ProductCard from "../../components/ProductCard";
 
 const SingleProduct = () => {
+
+    const axios = useAxiosPublic();
 
     const { id } = useParams();
 
@@ -15,10 +18,10 @@ const SingleProduct = () => {
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState("description");
     const [showZoom, setShowZoom] = useState(false);
-
+    const [relatedProducts, setRelatedProducts] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3000/products/${id}`)
+        axios.get(`/products/${id}`)
             .then((res) => {
                 setProduct(res.data);
                 setLoading(false);
@@ -29,6 +32,25 @@ const SingleProduct = () => {
             });
 
     }, [id]);
+
+    useEffect(() => {
+        if (!product?.type) return;
+        const fetchRelatedProducts = async () => {
+            try {
+                setLoading(true);
+                const res = await axios.get(`/products?type=${product.type}`);
+                const products = res.data.products.filter(p => p._id !== product._id);
+                setRelatedProducts(products);
+            } catch (err) {
+                console.log(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRelatedProducts();
+    }, [product?.type]);
+
 
     if (loading) {
         return (
@@ -345,7 +367,14 @@ const SingleProduct = () => {
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* Placeholder for related products */}
-                    
+                    {!loading ?
+                        relatedProducts.slice(0, 4).map((relatedProduct) => (
+                            <ProductCard key={relatedProduct._id} product={relatedProduct} />
+                        )) : (
+                            <div className="col-span-full flex justify-center items-center">
+                                <span className="loading loading-spinner loading-lg"></span>
+                            </div>
+                        )}
                 </div>
             </div>
 

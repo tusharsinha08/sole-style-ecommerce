@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import headerImage from '../../assets/images/women_header.jpg';
-import axios from 'axios';
+// import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
+import useProduct from '../../hooks/useProduct';
 
 const Shop = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,28 +15,30 @@ const Shop = () => {
     const page = parseInt(searchParams.get("page")) || 1;
 
     // States
-    const [products, setProducts] = useState([]);
-    const [result, setResult] = useState({});
+    // const [products, setProducts] = useState([]);
+    // const [result, setResult] = useState({});
 
-    useEffect(() => {
-        axios.get('http://localhost:3000/products', {
-            params: {
-                type,
-                search,
-                sort: sortType,
-                page,
-                limit: 10,
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                setResult(response.data);
-                setProducts(response.data.products);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
-    }, [type, search, sortType, page]);
+    const [products, result, loading] = useProduct({ type, search, sortType, page });
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:3000/products', {
+    //         params: {
+    //             type,
+    //             search,
+    //             sort: sortType,
+    //             page,
+    //             limit: 10,
+    //         }
+    //     })
+    //         .then(response => {
+    //             console.log(response.data);
+    //             setResult(response.data);
+    //             setProducts(response.data.products);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching products:', error);
+    //         });
+    // }, [type, search, sortType, page]);
 
     // Update URL Params
     const updateParams = (key, value) => {
@@ -59,6 +62,14 @@ const Shop = () => {
         }
         setSearchParams(params);
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            </div>
+        );
+    }
 
     return (
         <section className='dark:bg-gray-800'>
@@ -123,7 +134,7 @@ const Shop = () => {
                     }
                 </div>
 
-                <div className="join join-vertical md:join-horizontal w-full flex justify-center py-6">
+                <div className="join join-horizontal w-full flex justify-center py-6">
                     <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
                         disabled={page === 1}
                         onClick={() => updateParams("page", page - 1)}

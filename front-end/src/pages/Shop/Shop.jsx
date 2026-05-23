@@ -10,6 +10,7 @@ const Shop = () => {
 
     // URL Params
     const type = searchParams.get("type") || "";
+    const category = searchParams.get("category") || "";
     const sortType = searchParams.get("sort") || "";
     const search = searchParams.get("search") || "";
     const page = parseInt(searchParams.get("page")) || 1;
@@ -18,8 +19,8 @@ const Shop = () => {
     // const [products, setProducts] = useState([]);
     // const [result, setResult] = useState({});
 
-    const [products, result, loading] = useProduct({ type, search, sortType, page });
-
+    const [products, result, loading] = useProduct({ type, category, search, sortType, page });
+    console.log(products, result, loading);
     // useEffect(() => {
     //     axios.get('http://localhost:3000/products', {
     //         params: {
@@ -52,6 +53,7 @@ const Shop = () => {
 
         if (key === "search") {
             params.delete("type");
+            params.delete("category");
             params.delete("sort");
             params.set("page", 1);
         }

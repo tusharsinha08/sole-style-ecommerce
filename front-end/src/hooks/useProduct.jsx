@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import useAxiosPublic from './useAxiosPublic';
 
 
-const useProduct = ({ type, search, sortType, page }) => {
+const useProduct = ({ type, category, search, sortType, page }) => {
     const axios = useAxiosPublic();
 
     const [products, setProducts] = useState([]);
@@ -14,6 +14,7 @@ const useProduct = ({ type, search, sortType, page }) => {
         axios.get('/products', {
             params: {
                 type,
+                category,
                 search,
                 sort: sortType,
                 page,
@@ -30,7 +31,7 @@ const useProduct = ({ type, search, sortType, page }) => {
                 console.error('Error fetching products:', error);
                 setLoading(false);
             });
-    }, [type, search, sortType, page]);
+    }, [type, category, search, sortType, page]);
 
     
     return [ products, result, loading];

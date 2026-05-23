@@ -11,7 +11,7 @@ app.use(cors())
 app.use(express.json())
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.n7fvplr.mongodb.net/?appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -40,6 +40,7 @@ async function run() {
         const search = req.query.search;
         const sort = req.query.sort;
         const type = req.query.type;
+        const category = req.query.category;
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
@@ -54,6 +55,10 @@ async function run() {
 
         if (type) {
           query.type = type;
+        }
+
+        if (category) {
+          query.category = category;
         }
 
         let sortOption = {};
@@ -92,9 +97,9 @@ async function run() {
 
     app.get('/products/:id', async (req, res) => {
       const id = req.params.id;
-      const numericId = parseInt(id);
-      // const query = { _id: new ObjectId(id)}
-      const query = { _id: numericId }
+      // const numericId = parseInt(id);
+      const query = { _id: new ObjectId(id) }
+      // const query = { _id: numericId }
 
       const result = await productsCollection.findOne(query);
       res.send(result);

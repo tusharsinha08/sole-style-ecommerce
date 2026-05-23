@@ -19,11 +19,13 @@ const SingleProduct = () => {
     const [activeTab, setActiveTab] = useState("description");
     const [showZoom, setShowZoom] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
+    const [activeImage, setActiveImage] = useState("");
 
     useEffect(() => {
         axios.get(`/products/${id}`)
             .then((res) => {
                 setProduct(res.data);
+                setActiveImage(res.data.images[0]);
                 setLoading(false);
             })
             .catch((err) => {
@@ -32,6 +34,7 @@ const SingleProduct = () => {
             });
 
     }, [id]);
+    console.log(product);
 
     useEffect(() => {
         if (!product?.type) return;
@@ -70,31 +73,52 @@ const SingleProduct = () => {
         );
     }
 
-    const { image, name, price, type, shortDescription, description, Category, rating, stock, sizes, colors, reviews } = product;
+    const { images, name, price, shortDescription, description, category, rating, stock, sizes, colors, reviews } = product;
 
     return (
 
         <section className="max-w-7xl mx-auto px-4 py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10  mb-12">
                 {/* Product Image */}
-                <div className="relative bg-gray-100 dark:bg-gray-900 overflow-hidden group">
+                <div>
+                    <div className="relative w-full h-[400px] md:h-[500px] bg-gray-100 dark:bg-gray-900 overflow-hidden group">
 
                     {/* Zoom Button */}
                     <button
                         onClick={() => setShowZoom(true)}
-                        className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md cursor-pointer opacity-0 group-hover:opacity-100 transition"
+                        className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
                     >
                         <FaSearchPlus className="text-gray-700 dark:text-gray-300" />
                     </button>
 
-                    {/* Product Image */}
+                    {/* Main Image */}
                     <img
-                        src={image}
+                        src={activeImage}
                         alt={name}
-                        className="w-full h:[600px] md:h-[700px] object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="w-full h-[400px] md:h-[500px] object-cover object-center transition-transform duration-300 group-hover:scale-105"
                     />
+                </div>
+
+                {/* THUMBNAILS */}
+                <div className="flex gap-3 mt-4 overflow">
+
+                    {images.map((img, index) => (
+                        <img
+                            key={index}
+                            src={img}
+                            alt={name}
+                            onClick={() => setActiveImage(img)}
+                            className={`w-20 h-20 object-cover cursor-pointer border-2 rounded-md transition
+                            ${activeImage === img
+                                    ? "border-black dark:border-white scale-105"
+                                    : "border-gray-300 dark:border-gray-600 opacity-70 hover:opacity-100"
+                                }`}
+                        />
+                    ))}
 
                 </div>
+                </div>
+
 
                 {
                     showZoom && (
@@ -111,9 +135,9 @@ const SingleProduct = () => {
 
                             {/* Full Size Image */}
                             <img
-                                src={image}
+                                src={activeImage}
                                 alt={name}
-                                className="max-w-full max-h-full object-contain rounded-lg"
+                                className="max-w-[90%] max-h-[90%] object-contain"
                             />
 
                         </div>
@@ -123,10 +147,10 @@ const SingleProduct = () => {
                 {/* Product Info */}
                 <div className="space-y-2">
                     <p className="text-gray-500 dark:text-gray-400">
-                        <Link to="/">Home</Link> / <Link to={`/products?type=${type}`}>{type}</Link> / {name}
+                        <Link to="/">Home</Link> / <Link to={`/products?category=${category}`}>{category}</Link> / {name}
                     </p>
                     <p className="uppercase my-6 font-semibold tracking-widest text-sm text-[#2997AA]">
-                        <Link to={`/products?type=${type}`}>{type}</Link>
+                        <Link to={`/products?category=${category}`}>{category}</Link>
                     </p>
                     <h1 className="text-2xl font-cormorant dark:text-gray-300">
                         {name}
@@ -251,7 +275,7 @@ const SingleProduct = () => {
                             <span className="font-semibold">
                                 Category:
                             </span>{" "}
-                            {type}
+                            <Link to={`/products?category=${category}`}>{category}</Link>
                         </p>
                         <p className="dark:text-gray-300">
                             <span className="font-semibold">
@@ -315,7 +339,7 @@ const SingleProduct = () => {
                             : "border-t-transparent "
                         }`}
                 >
-                    Reviews ({reviews})
+                    Reviews ({reviews.length})
                 </button>
             </div>
 
@@ -356,7 +380,13 @@ const SingleProduct = () => {
                 )}
                 {activeTab === "Reviews" && (
                     <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {reviews}
+                        {product.reviews.map((review, index) => (
+                            <div key={index} className="border p-2 mb-2">
+                                <p><strong>User:</strong> {review.user}</p>
+                                <p><strong>Comment:</strong> {review.comment}</p>
+                                <p><strong>Rating:</strong> {review.rating}</p>
+                            </div>
+                        ))}
                     </div>
                 )}
             </div>

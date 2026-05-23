@@ -2,21 +2,29 @@ import React, { useEffect, useState } from 'react';
 import headerImage from '../../assets/images/women_header.jpg';
 import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
+import { useSearchParams } from 'react-router-dom';
 
 const Shop = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    // URL Params
+    const type = searchParams.get("type") || "";
+    const sortType = searchParams.get("sort") || "";
+    const search = searchParams.get("search") || "";
+    const page = parseInt(searchParams.get("page")) || 1;
+
+    // States
     const [products, setProducts] = useState([]);
-    const [sortType, setSortType] = useState("");
-    const [search, setSearch] = useState("");
-    const [page, setPage] = useState(1);
     const [result, setResult] = useState({});
 
     useEffect(() => {
         axios.get('http://localhost:3000/products', {
             params: {
+                type,
                 search,
                 sort: sortType,
                 page,
-                limit: 10
+                limit: 10,
             }
         })
             .then(response => {
@@ -27,7 +35,30 @@ const Shop = () => {
             .catch(error => {
                 console.error('Error fetching products:', error);
             });
-    }, [search, sortType, page]);
+    }, [type, search, sortType, page]);
+
+    // Update URL Params
+    const updateParams = (key, value) => {
+        const params = new URLSearchParams(searchParams);
+
+        if (value) {
+            params.set(key, value);
+        } else {
+            params.delete(key);
+        }
+
+        if (key === "search") {
+            params.delete("type");
+            params.delete("sort");
+            params.set("page", 1);
+        }
+
+        // reset page when filtering
+        if (key !== "page") {
+            params.set("page", 1);
+        }
+        setSearchParams(params);
+    };
 
     return (
         <section className='dark:bg-gray-800'>
@@ -70,11 +101,12 @@ const Shop = () => {
                         <input
                             type="search"
                             placeholder="Search"
-                            onChange={(e) => setSearch(e.target.value)}
+                            value={search}
+                            onChange={(e) => updateParams("search", e.target.value)}
                         />
                     </label>
 
-                    <select value={sortType} onChange={(e) => setSortType(e.target.value)} className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
+                    <select value={sortType} onChange={(e) => updateParams("sort", e.target.value)} className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
                         <option value="">Default sorting</option>
                         <option value="popularity">Sort by popularity</option>
                         <option value="latest">Sort by latest</option>
@@ -94,12 +126,14 @@ const Shop = () => {
                 <div className="join join-vertical md:join-horizontal w-full flex justify-center py-6">
                     <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
                         disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
+                        onClick={() => updateParams("page", page - 1)}
                     >«</button>
+
                     <button className="join-item p-4 btn border-0 dark:text-gray-300 dark:bg-gray-800">Page {page}</button>
+
                     <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
-                        disabled={!(page === Math.ceil(products.length / 10))}
-                        onClick={() => setPage(page + 1)}
+                        disabled={(page === result.totalPages)}
+                        onClick={() => updateParams("page", page + 1)}
                     >»</button>
                 </div>
             </div>

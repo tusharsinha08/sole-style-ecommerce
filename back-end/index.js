@@ -39,6 +39,7 @@ async function run() {
       try {
         const search = req.query.search;
         const sort = req.query.sort;
+        const type = req.query.type;
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 10;
         const skip = (page - 1) * limit;
@@ -49,6 +50,10 @@ async function run() {
             $regex: search,
             $options: 'i'
           }
+        }
+
+        if (type) {
+          query.type = type;
         }
 
         let sortOption = {};
@@ -85,7 +90,7 @@ async function run() {
       }
     })
 
-    app.get('/products/:id', async (req, res) => { 
+    app.get('/products/:id', async (req, res) => {
       const id = req.params.id;
       const numericId = parseInt(id);
       // const query = { _id: new ObjectId(id)}

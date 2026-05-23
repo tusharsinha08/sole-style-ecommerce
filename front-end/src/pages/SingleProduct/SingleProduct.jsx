@@ -3,6 +3,8 @@ import { Link, useParams } from "react-router";
 import { FaStar, FaShoppingCart, FaHeart, FaSearchPlus } from "react-icons/fa";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/ProductCard";
+import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
+
 
 const SingleProduct = () => {
 
@@ -83,66 +85,97 @@ const SingleProduct = () => {
                 <div>
                     <div className="relative w-full h-[400px] md:h-[500px] bg-gray-100 dark:bg-gray-900 overflow-hidden group">
 
-                    {/* Zoom Button */}
-                    <button
-                        onClick={() => setShowZoom(true)}
-                        className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
-                    >
-                        <FaSearchPlus className="text-gray-700 dark:text-gray-300" />
-                    </button>
+                        {/* Zoom Button */}
+                        <button
+                            onClick={() => setShowZoom(true)}
+                            className="absolute top-3 right-3 z-10 bg-white dark:bg-gray-800 p-2 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
+                        >
+                            <FaSearchPlus className="text-gray-700 dark:text-gray-300" />
+                        </button>
 
-                    {/* Main Image */}
-                    <img
-                        src={activeImage}
-                        alt={name}
-                        className="w-full h-[400px] md:h-[500px] object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                    />
-                </div>
-
-                {/* THUMBNAILS */}
-                <div className="flex gap-3 mt-4 overflow">
-
-                    {images.map((img, index) => (
+                        {/* Main Image */}
                         <img
-                            key={index}
-                            src={img}
+                            src={activeImage}
                             alt={name}
-                            onClick={() => setActiveImage(img)}
-                            className={`w-20 h-20 object-cover cursor-pointer border-2 rounded-md transition
-                            ${activeImage === img
-                                    ? "border-black dark:border-white scale-105"
-                                    : "border-gray-300 dark:border-gray-600 opacity-70 hover:opacity-100"
-                                }`}
+                            className="w-full h-[400px] md:h-[500px] object-cover object-center transition-transform duration-300 group-hover:scale-105"
                         />
-                    ))}
+                    </div>
 
-                </div>
-                </div>
+                    {/* THUMBNAILS */}
+                    <div className="flex gap-3 mt-4 overflow">
 
-
-                {
-                    showZoom && (
-                        <div
-                            onClick={() => setShowZoom(false)}
-                            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                            {/* Close Button */}
-                            <button
-                                onClick={() => setShowZoom(false)}
-                                className="absolute top-5 right-5 text-white text-3xl cursor-pointer"
-                            >
-                                ✕
-                            </button>
-
-                            {/* Full Size Image */}
+                        {images.map((img, index) => (
                             <img
-                                src={activeImage}
+                                key={index}
+                                src={img}
                                 alt={name}
-                                className="max-w-[90%] max-h-[90%] object-contain"
+                                onClick={() => setActiveImage(img)}
+                                className={`w-20 h-20 object-cover cursor-pointer border-2 rounded-md transition
+                            ${activeImage === img
+                                        ? "border-black dark:border-white scale-105"
+                                        : "border-gray-300 dark:border-gray-600 opacity-70 hover:opacity-100"
+                                    }`}
                             />
+                        ))}
 
-                        </div>
-                    )
-                }
+                    </div>
+                </div>
+
+
+                {showZoom && (
+                    <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+
+                        {/* Close Button */}
+                        <button
+                            onClick={() => setShowZoom(false)}
+                            className="absolute top-5 right-5 text-white text-3xl cursor-pointer"
+                        >
+                            ✕
+                        </button>
+
+                        {/* Get current index safely */}
+                        {(() => {
+                            const currentIndex = images.findIndex(img => img === activeImage);
+
+                            const prevImage = images[currentIndex - 1];
+                            const nextImage = images[currentIndex + 1];
+
+                            return (
+                                <div className="flex items-center gap-6">
+
+                                    {/* Prev Button */}
+                                    <button
+                                        disabled={currentIndex === 0}
+                                        onClick={() => prevImage && setActiveImage(prevImage)}
+                                        className={`text-white text-4xl cursor-pointer ${currentIndex === 0 ? "opacity-30 cursor-not-allowed" : ""
+                                            }`}
+                                    >
+                                        <MdOutlineArrowBackIos />
+                                    </button>
+
+                                    {/* Image */}
+                                    <img
+                                        src={activeImage}
+                                        alt={name}
+                                        className="max-w-[90vw] max-h-[85vh] object-contain rounded-md"
+                                    />
+
+                                    {/* Next Button */}
+                                    <button
+                                        disabled={currentIndex === images.length - 1}
+                                        onClick={() => nextImage && setActiveImage(nextImage)}
+                                        className={`text-white text-4xl cursor-pointer ${currentIndex === images.length - 1 ? "opacity-30 cursor-not-allowed" : ""
+                                            }`}
+                                    >
+                                        <MdOutlineArrowForwardIos />
+                                    </button>
+
+                                </div>
+                            );
+                        })()}
+
+                    </div>
+                )}
 
                 {/* Product Info */}
                 <div className="space-y-2">

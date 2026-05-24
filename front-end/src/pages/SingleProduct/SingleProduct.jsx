@@ -59,13 +59,30 @@ const SingleProduct = () => {
         fetchRelatedProducts();
     }, [product?.type]);
 
-    const handleAddToCart = () => {
+    const handleAddToCart = (product) => {
         if (!selectedSize || !selectedColor) {
             alert("Please select size and color");
             return;
         }
-        setCartData({ productId: product._id, image: activeImage, name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price  });
+        setCartData({ productId: product._id, image: product.images[0], name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price });
         setIsCartOpen(true);
+
+        const cartItem = {
+            productId: product._id,
+            name: product.name,
+            image: product.images[0],
+            size: selectedSize,
+            color: selectedColor,
+            quantity: quantity,
+            price: product.price
+        };
+        
+        setCartData(cartItem);
+        setIsCartOpen(true);
+
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        existingCart.push(cartItem);
+        localStorage.setItem("cart", JSON.stringify(existingCart));
     };
 
 
@@ -307,7 +324,7 @@ const SingleProduct = () => {
                             </div>
                         </div>
                         <button
-                            onClick={() => handleAddToCart()}
+                            onClick={() => handleAddToCart(product)}
                             className="btn rounded-none text-[#3AA6B9] py-4 shadow-none bg-transparent border-[#3AA6B9] hover:bg-[#3AA6B9] hover:text-white">
                             <FaShoppingCart /> Add To Cart
                         </button>

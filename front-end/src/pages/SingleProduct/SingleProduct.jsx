@@ -4,6 +4,7 @@ import { FaStar, FaShoppingCart, FaHeart, FaSearchPlus } from "react-icons/fa";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/ProductCard";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
+import AddToCart from "../../components/AddToCart";
 
 
 const SingleProduct = () => {
@@ -22,6 +23,8 @@ const SingleProduct = () => {
     const [showZoom, setShowZoom] = useState(false);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [activeImage, setActiveImage] = useState("");
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartData, setCartData] = useState({});
 
     useEffect(() => {
         axios.get(`/products/${id}`)
@@ -55,6 +58,15 @@ const SingleProduct = () => {
 
         fetchRelatedProducts();
     }, [product?.type]);
+
+    const handleAddToCart = () => {
+        if (!selectedSize || !selectedColor) {
+            alert("Please select size and color");
+            return;
+        }
+        setCartData({ productId: product._id, image: activeImage, name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price  });
+        setIsCartOpen(true);
+    };
 
 
     if (loading) {
@@ -294,7 +306,9 @@ const SingleProduct = () => {
                                 +
                             </div>
                         </div>
-                        <button className="btn rounded-none text-[#3AA6B9] py-4 shadow-none bg-transparent border-[#3AA6B9] hover:bg-[#3AA6B9] hover:text-white">
+                        <button
+                            onClick={() => handleAddToCart()}
+                            className="btn rounded-none text-[#3AA6B9] py-4 shadow-none bg-transparent border-[#3AA6B9] hover:bg-[#3AA6B9] hover:text-white">
                             <FaShoppingCart /> Add To Cart
                         </button>
                     </div>
@@ -441,6 +455,11 @@ const SingleProduct = () => {
                 </div>
             </div>
 
+            <AddToCart
+                isOpen={isCartOpen}
+                setIsOpen={setIsCartOpen}
+                data={cartData}
+            />
         </section>
     );
 };

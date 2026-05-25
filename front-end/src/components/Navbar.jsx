@@ -1,6 +1,7 @@
 import React from 'react';
 import ToggleDarkMode from './ToggleDarkMode';
 import { Link } from 'react-router-dom';
+import { FaRegCircleUser } from "react-icons/fa6";
 
 const Navbar = () => {
     const navOptions = <>
@@ -21,7 +22,7 @@ const Navbar = () => {
                         <ul
                             tabIndex="-1"
                             className="menu menu-sm dropdown-content bg-white/10 backdrop-blur-sm  rounded-box z-1 mt-3 w-52 p-2 shadow">
-                                {navOptions}
+                            {navOptions}
                         </ul>
                     </div>
                     <a className="btn btn-ghost text-xl">Sole Style</a>
@@ -33,6 +34,11 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <ToggleDarkMode></ToggleDarkMode>
+                    <button className='mx-4'>
+                        <Link to={'/my-account'}>
+                            <FaRegCircleUser className='text-gray-100 dark:text-gray-800' size={24}></FaRegCircleUser>
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div>

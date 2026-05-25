@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
 import SingleProduct from "../pages/SingleProduct/SingleProduct";
+import UserAccount from "../pages/UserAccount/UserAccount";
 
 
 export const router = createBrowserRouter([{
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([{
         {
             path: '/',
             element: <Home></Home>
+        },
+        {
+            path: '/my-account',
+            element: <UserAccount></UserAccount>
         },
         {
             path: '/products',

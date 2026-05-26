@@ -3,9 +3,9 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
 import SingleProduct from "../pages/SingleProduct/SingleProduct";
-import UserAccount from "../pages/UserAccount/UserAccount";
 import Register from "../pages/LoginAndRegister/Register";
 import Login from "../pages/LoginAndRegister/Login";
+import UserHome from "../pages/UserAccount/UserHome";
 
 
 export const router = createBrowserRouter([{
@@ -26,7 +26,7 @@ export const router = createBrowserRouter([{
         },
         {
             path: '/my-account',
-            element: <UserAccount></UserAccount>
+            element: <UserHome></UserHome>
         },
         {
             path: '/products',

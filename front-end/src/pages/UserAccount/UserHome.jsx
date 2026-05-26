@@ -3,7 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const UserAccount = () => {
+const UserHome = () => {
     const { user, signOutUser } = useAuth();
     // console.log(auth);
     console.log("user: ", user)
@@ -28,7 +28,7 @@ const UserAccount = () => {
 
     return (
         <div className='mx-auto py-20 items-center max-w-7xl '>
-            <h3>wellcome back </h3>
+            <h3>wellcome back {user.displayName}</h3>
             <Link to={'/login'} >login</Link>
             <button className='btn'
                 onClick={handleSignOut}
@@ -37,4 +37,4 @@ const UserAccount = () => {
     );
 };
 
-export default UserAccount;
+export default UserHome;

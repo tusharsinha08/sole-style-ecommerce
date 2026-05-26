@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 
 const Register = () => {
     const { createUser, updateUserProfile } = useAuth();
     const axios = useAxiosPublic();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -17,29 +21,39 @@ const Register = () => {
 
         try {
             await createUser(email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
+                .then(result => {
+                    const user = result.user;
+                    console.log(user);
 
-                updateUserProfile(name)
-                .then(() => {
-                    const userInfo = {
-                        name: name,
-                        email: email
-                    }
+                    updateUserProfile(name)
+                        .then(() => {
+                            const userInfo = {
+                                name: name,
+                                email: email
+                            }
 
-                    axios.post('/users', userInfo)
-                    .then(res => {
-                        console.log(res.data);
-                    })
+                            axios.post('/users', userInfo)
+                                .then(res => {
+                                    console.log(res.data);
+                                    if (res.data.insertedId) {
+                                        reset();
+                                        navigate('/')
+                                        Swal.fire({
+                                            toast: true,
+                                            position: "top-end",
+                                            icon: "success",
+                                            title: "Account created successful",
+                                            showConfirmButton: false,
+                                            timer: 1500,
+                                            customClass: {
+                                                popup: 'w-56 p-2 text-sm'
+                                            }
+                                        });
+                                    }
+                                })
+                        })
+                        .catch(error => console.log(error));
                 })
-                .catch(error => console.log(error));
-
-            })
-            .catch(error =>  console.log(error))
-
-
-            reset();
         }
         catch (error) {
             console.log(error.message);
@@ -47,11 +61,11 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-10">
+        <div className="min-h-screen flex items-center justify-center px-4 pt-10">
             <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-8 md:p-10">
 
                 {/* Heading */}
-                <div className="mb-10">
+                <div className="mb-6">
                     <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
                         Register
                     </h1>
@@ -122,6 +136,12 @@ const Register = () => {
                         Register
                     </button>
                 </form>
+                <p className="mt-6 text-center text-gray-500 dark:text-gray-400">
+                    Already have an account?{" "}
+                    <Link to={'/login'} className="text-black dark:text-white font-bold hover:underline">
+                        Login
+                    </Link>
+                </p>
             </div>
         </div>
 

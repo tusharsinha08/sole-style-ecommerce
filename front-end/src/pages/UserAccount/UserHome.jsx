@@ -28,7 +28,7 @@ const UserHome = () => {
 
     return (
         <div className='mx-auto py-20 items-center max-w-7xl '>
-            <h3>wellcome back {user.displayName}</h3>
+            <h3>wellcome back {user?.displayName}</h3>
             <Link to={'/login'} >login</Link>
             <button className='btn'
                 onClick={handleSignOut}

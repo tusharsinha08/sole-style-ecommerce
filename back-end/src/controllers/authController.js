@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const {
     createUser,
-    updateUserName,
+    updateUserDetails,
     fetchUsersByEmail,
     fetchAllUsers,
 } = require("../services/authService")
@@ -55,9 +55,9 @@ const getUser = async (req, res) => {
 // UPDATE USER NAME
 const updateUser = async (req, res) => {
     try {
-        const { email, name } = req.body;
+        const { email, name, role } = req.body;
 
-        const result = await updateUserName(email, name);
+        const result = await updateUserDetails(email, name, role);
 
         res.send(result);
     } catch (error) {

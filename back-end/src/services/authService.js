@@ -21,12 +21,17 @@ const fetchUsersByEmail = async (email) => {
     return await usersCollection.findOne({ email })
 }
 
-const updateUserName = async (email, name) => {
+const updateUserDetails = async (email, name, role) => {
     const usersCollection = getUsersCollection()
 
-    const result = await usersCollection.updateOnw(
+    const result = await usersCollection.updateOne(
         { email },
-        { $set: { name } }
+        {
+            $set: {
+                name,
+                role
+            }
+        }
     )
 
     return result
@@ -36,5 +41,5 @@ module.exports = {
     fetchAllUsers,
     createUser,
     fetchUsersByEmail,
-    updateUserName
+    updateUserDetails
 }

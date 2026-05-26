@@ -18,6 +18,7 @@ const Register = () => {
 
     const handleRegister = async (data) => {
         const { name, email, password } = data;
+        const role = 'customer';
 
         try {
             await createUser(email, password)
@@ -29,7 +30,8 @@ const Register = () => {
                         .then(() => {
                             const userInfo = {
                                 name: name,
-                                email: email
+                                email: email,
+                                role: role
                             }
 
                             axios.post('/users', userInfo)

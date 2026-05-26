@@ -1,9 +1,9 @@
 
 const { getUsersCollection } = require('../config/db')
 
-const getAllUsers = async () => {
+const fetchAllUsers = async () => {
     const usersCollection = getUsersCollection();
-    
+
     const result = await usersCollection.find({}).toArray();
     return result;
 };
@@ -15,7 +15,7 @@ const createUser = async (userInfo) => {
     return result;
 }
 
-const getUsersByEmail = async (email) => {
+const fetchUsersByEmail = async (email) => {
     const usersCollection = getUsersCollection()
 
     return await usersCollection.findOne({ email })
@@ -33,8 +33,8 @@ const updateUserName = async (email, name) => {
 }
 
 module.exports = {
-    getAllUsers,
+    fetchAllUsers,
     createUser,
-    getUsersByEmail,
+    fetchUsersByEmail,
     updateUserName
 }

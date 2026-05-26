@@ -1,15 +1,17 @@
-const { 
-    createUser, 
-    getUsersByEmail, 
-    updateUserName, 
-    getAllUsers 
-} = require("../services/usersService")
+const jwt = require("jsonwebtoken");
+const {
+    createUser,
+    updateUserName,
+    fetchUsersByEmail,
+    fetchAllUsers,
+} = require("../services/authService")
+
 
 const addUser = async (req, res) => {
     try {
         const user = req.body
 
-        const existingUser = await getUsersByEmail(user.email);
+        const existingUser = await fetchUsersByEmail(user.email);
         if (existingUser) {
             return res.send({ message: "User already exists" });
         }
@@ -23,9 +25,9 @@ const addUser = async (req, res) => {
     }
 };
 
-const getUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
     try {
-        const users = await getAllUsers();
+        const users = await fetchAllUsers();
 
         res.send(users);
     } catch (error) {
@@ -38,7 +40,7 @@ const getUser = async (req, res) => {
     try {
         const email = req.params.email;
 
-        const user = await getUsersByEmail(email);
+        const user = await fetchUsersByEmail(email);
 
         if (!user) {
             return res.status(404).send({ message: "User not found" });
@@ -68,5 +70,5 @@ module.exports = {
     addUser,
     getUser,
     updateUser,
-    getUsers
+    getAllUsers
 };

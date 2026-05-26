@@ -1,0 +1,72 @@
+const { 
+    createUser, 
+    getUsersByEmail, 
+    updateUserName, 
+    getAllUsers 
+} = require("../services/usersService")
+
+const addUser = async (req, res) => {
+    try {
+        const user = req.body
+
+        const existingUser = await getUsersByEmail(user.email);
+        if (existingUser) {
+            return res.send({ message: "User already exists" });
+        }
+
+        const result = await createUser(user);
+
+        res.send(result);
+    } catch (error) {
+        console.error(error)
+        res.send(error)
+    }
+};
+
+const getUsers = async (req, res) => {
+    try {
+        const users = await getAllUsers();
+
+        res.send(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "Server Error" });
+    }
+};
+
+const getUser = async (req, res) => {
+    try {
+        const email = req.params.email;
+
+        const user = await getUsersByEmail(email);
+
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        res.send(user);
+    } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+    }
+};
+
+// UPDATE USER NAME
+const updateUser = async (req, res) => {
+    try {
+        const { email, name } = req.body;
+
+        const result = await updateUserName(email, name);
+
+        res.send(result);
+    } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+    }
+};
+
+
+module.exports = {
+    addUser,
+    getUser,
+    updateUser,
+    getUsers
+};

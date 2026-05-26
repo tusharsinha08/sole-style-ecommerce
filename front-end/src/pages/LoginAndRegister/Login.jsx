@@ -1,9 +1,15 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const { signInUser } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    console.log("location:", location);
+    
 
     const {
         register,
@@ -15,9 +21,25 @@ const Login = () => {
         const { email, password } = data;
 
         try {
-            const result = await signInUser(email, password);
-
-            console.log(result.user);
+            await signInUser(email, password)
+                .then(result => {
+                    const user = result.user;
+                    console.log(user);
+                    
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title:  `Welcome ${user.displayName}`,
+                        showConfirmButton: false,
+                        timer: 1500,
+                        customClass: {
+                            popup: 'w-56 p-2 text-sm'
+                        }
+                    });
+                    
+                    navigate('/');
+                })
 
             reset();
         }

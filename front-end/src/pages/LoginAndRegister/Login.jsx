@@ -7,8 +7,7 @@ const Login = () => {
     const { signInUser } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-
-    console.log("location:", location);
+    const from = location.state?.from?.pathname || '/';
     
 
     const {
@@ -38,7 +37,7 @@ const Login = () => {
                         }
                     });
                     
-                    navigate('/');
+                    navigate(from, { replace: true })
                 })
 
             reset();

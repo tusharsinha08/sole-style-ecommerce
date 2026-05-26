@@ -6,6 +6,7 @@ import SingleProduct from "../pages/SingleProduct/SingleProduct";
 import Register from "../pages/LoginAndRegister/Register";
 import Login from "../pages/LoginAndRegister/Login";
 import UserHome from "../pages/UserAccount/UserHome";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router = createBrowserRouter([{
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([{
         },
         {
             path: '/my-account',
-            element: <UserHome></UserHome>
+            element: <PrivateRoute><UserHome></UserHome> </PrivateRoute>
         },
         {
             path: '/products',

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 
 
@@ -9,6 +9,9 @@ const Register = () => {
     const { createUser, updateUserProfile } = useAuth();
     const axios = useAxiosPublic();
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
 
     const {
         register,
@@ -39,7 +42,7 @@ const Register = () => {
                                     console.log(res.data);
                                     if (res.data.insertedId) {
                                         reset();
-                                        navigate('/')
+                                        navigate(from, { replace: true })
                                         Swal.fire({
                                             toast: true,
                                             position: "top-end",

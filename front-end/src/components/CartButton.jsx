@@ -1,8 +1,10 @@
 import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../hooks/useCart";
 
 const CartButton = ({ setIsOpen }) => {
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    // const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const { carts } = useCart();
 
     return (
         <button
@@ -17,7 +19,7 @@ const CartButton = ({ setIsOpen }) => {
                 <span
                     className="absolute bottom-5 right-5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
                 >
-                    {cart.length}
+                    {carts.length}
                 </span>
 
             </div>

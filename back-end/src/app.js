@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 
 const productsRoutes = require('./routes/productsRoutes');
 const authRoutes = require("./routes/authRoutes");
+const cartsRoutes = require('./routes/cartsRoutes')
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.post('/jwt', (req, res) => {
 app.use('/products', productsRoutes);
 
 app.use("/users", authRoutes);
+
+app.use('/carts', cartsRoutes)
 
 
 app.get('/', (req, res) => {

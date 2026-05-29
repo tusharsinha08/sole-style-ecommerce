@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import useAuth from './useAuth';
+import useAxiosSecure from './useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 
-export const useCart = () => {
-    const [cartItems, setCartItems] = useState(() => {
-        try {
-            return JSON.parse(localStorage.getItem("cart")) || [];
-        } catch {
-            return [];
+const useCart = () => {
+    const { user } = useAuth()
+
+    const axiosSecure = useAxiosSecure();
+    const { refetch, data: carts = [], isPending: isLoading } = useQuery({
+        queryKey: ['cart', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/carts?email=${user?.email}`)
+            
+            return res.data
         }
-    });
+    })
 
-    useEffect(() => {
-        localStorage.setItem("cart", JSON.stringify(cartItems));
-    }, [cartItems]);
-
-    return { cartItems, setCartItems };
+    return {carts, refetch, isLoading};
 };
+
+export default useCart;

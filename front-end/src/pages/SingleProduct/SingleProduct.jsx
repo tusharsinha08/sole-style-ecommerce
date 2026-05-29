@@ -5,11 +5,16 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import ProductCard from "../../components/ProductCard";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 import AddToCart from "../../components/AddToCart";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useCart from "../../hooks/useCart";
 
 
 const SingleProduct = () => {
 
     const axios = useAxiosPublic();
+    const axiosSecure = useAxiosSecure()
 
     const { id } = useParams();
 
@@ -24,7 +29,8 @@ const SingleProduct = () => {
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [activeImage, setActiveImage] = useState("");
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const [cartData, setCartData] = useState({});
+    const { user } = useAuth();
+    const { refetch } = useCart();
 
     useEffect(() => {
         axios.get(`/products/${id}`)
@@ -59,29 +65,66 @@ const SingleProduct = () => {
         fetchRelatedProducts();
     }, [product?.type]);
 
-    const handleAddToCart = (product) => {
+    // const cart = localStorage.getItem('cart')
+    // console.log("cart lS", cart);
+
+
+    const handleAddToCart = (cart) => {
         if (!selectedSize || !selectedColor) {
             alert("Please select size and color");
             return;
         }
-        setCartData({ productId: product._id, image: product.images[0], name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price });
+        // setCartData({ productId: product._id, image: product.images[0], name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price });
         setIsCartOpen(true);
 
         const cartItem = {
-            productId: product._id,
-            name: product.name,
-            image: product.images[0],
+            productId: cart._id,
+            name: cart.name,
+            image: cart.images[0],
             size: selectedSize,
             color: selectedColor,
             quantity: quantity,
-            price: product.price
+            price: cart.price,
+            totalPrice: cart.price * quantity
         };
-        
-        setCartData(cartItem);
-        setIsCartOpen(true);
 
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         existingCart.push(cartItem);
+
+        if (user && user.email) {
+            const updatedCartItem = {
+                ...cartItem,
+                email: user?.email || null
+            };
+            axiosSecure.post('/carts', updatedCartItem)
+                .then(res => {
+                    if (res.data.insertedId) {
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: `${cart.name} is added to cart.`,
+                            showConfirmButton: false,
+                            timer: 500,
+                            customClass: {
+                                popup: 'w-56 p-2 text-sm'
+                            }
+                        });
+                        localStorage.removeItem('cart');
+                        refetch()
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding to cart:', error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Failed to add item to cart!"
+                    });
+                });
+        }
+
+        setIsCartOpen(true);
         localStorage.setItem("cart", JSON.stringify(existingCart));
     };
 
@@ -475,7 +518,6 @@ const SingleProduct = () => {
             <AddToCart
                 isOpen={isCartOpen}
                 setIsOpen={setIsCartOpen}
-                data={cartData}
             />
         </section>
     );

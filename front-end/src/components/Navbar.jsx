@@ -2,7 +2,7 @@ import React from 'react';
 import ToggleDarkMode from './ToggleDarkMode';
 import { Link } from 'react-router-dom';
 import { FaRegCircleUser } from "react-icons/fa6";
-
+ 
 const Navbar = () => {
     const navOptions = <>
         <li><Link to={'/'}>Home</Link></li>

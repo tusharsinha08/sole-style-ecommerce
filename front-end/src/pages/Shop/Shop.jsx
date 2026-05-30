@@ -4,6 +4,7 @@ import headerImage from '../../assets/images/women_header.jpg';
 import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
+import useScrollToTop from '../../hooks/useScrollToTop';
 
 const Shop = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,6 +15,7 @@ const Shop = () => {
     const sortType = searchParams.get("sort") || "";
     const search = searchParams.get("search") || "";
     const page = parseInt(searchParams.get("page")) || 1;
+    const scrollToTop = useScrollToTop();
 
     // States
     // const [products, setProducts] = useState([]);
@@ -131,7 +133,9 @@ const Shop = () => {
                 <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-6'>
                     {
                         products.map((product) => (
-                            <ProductCard key={product._id} product={product} />
+                            <div key={product._id} onClick={scrollToTop}>
+                                <ProductCard product={product} />
+                            </div>
                         ))
                     }
                 </div>

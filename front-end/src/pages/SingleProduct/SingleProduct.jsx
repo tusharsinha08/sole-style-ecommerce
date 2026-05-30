@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 
 const SingleProduct = () => {
@@ -31,6 +32,7 @@ const SingleProduct = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user } = useAuth();
     const { refetch } = useCart();
+    const scrollToTop = useScrollToTop();
 
     useEffect(() => {
         axios.get(`/products/${id}`)
@@ -65,10 +67,6 @@ const SingleProduct = () => {
         fetchRelatedProducts();
     }, [product?.type]);
 
-    // const cart = localStorage.getItem('cart')
-    // console.log("cart lS", cart);
-
-
     const handleAddToCart = (cart) => {
         if (!selectedSize || !selectedColor) {
             // alert("Please select size and color");
@@ -96,11 +94,6 @@ const SingleProduct = () => {
             price: cart.price,
             totalPrice: cart.price * quantity
         };
-        
-        // const existingCart = JSON.parse(localStorage.getItem("carts")) || [];
-        // // localStorage.setItem("carts", JSON.stringify(cartItem))
-        // existingCart.push(cartItem);
-        // console.log("lkajdfkjas", existingCart);
         
         
         if (user && user.email) {
@@ -525,7 +518,9 @@ const SingleProduct = () => {
                     {/* Placeholder for related products */}
                     {!loading ?
                         relatedProducts.slice(0, 4).map((relatedProduct) => (
-                            <ProductCard key={relatedProduct._id} product={relatedProduct} />
+                            <div key={relatedProduct._id} onClick={scrollToTop}>
+                                <ProductCard product={relatedProduct} />
+                            </div>
                         )) : (
                             <div className="col-span-full flex justify-center items-center">
                                 <span className="loading loading-spinner loading-lg"></span>

@@ -1,7 +1,7 @@
-const { addCartsDetails, getCartsByEmail, deleteCartById, updateCartByAction } = require("../services/cartsService");
+const { addCartDetails, getCartsByEmail, deleteCartById, updateCartByAction  } = require("../services/cartsService");
 
 
-const addCarts = async (req, res) => {
+const addCart = async (req, res) => {
     const cartItem = req.body;
 
     try {
@@ -11,7 +11,7 @@ const addCarts = async (req, res) => {
             });
         }
 
-        const result = await addCartsDetails(cartItem)
+        const result = await addCartDetails(cartItem)
 
         res.send(result)
     } catch (error) {
@@ -48,7 +48,7 @@ const deleteCart = async (req, res) => {
 
 
 module.exports = {
-    addCarts,
+    addCart,
     getCarts,
     deleteCart,
     updateCart

@@ -1,10 +1,10 @@
 const express = require('express');
-const { addCarts, getCarts, deleteCart, updateCart } = require('../controllers/cartsController');
+const { addCart, getCarts, deleteCart, updateCart } = require('../controllers/cartsController');
 
 
 const router = express.Router();
 
-router.post('/', addCarts);
+router.post('/', addCart);
 
 router.get('/', getCarts)
 

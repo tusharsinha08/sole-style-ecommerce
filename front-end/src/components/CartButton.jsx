@@ -1,10 +1,12 @@
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../hooks/useCart";
+import useAuth from "../hooks/useAuth";
 
 const CartButton = ({ setIsOpen }) => {
 
-    // const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
     const { carts } = useCart();
+    const { user } = useAuth();
 
     return (
         <button
@@ -19,11 +21,12 @@ const CartButton = ({ setIsOpen }) => {
                 <span
                     className="absolute bottom-5 right-5 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
                 >
-                    {carts.length}
+                    {user ?
+
+                        carts.length : guestCart.length 
+                    }
                 </span>
-
             </div>
-
         </button>
     );
 };

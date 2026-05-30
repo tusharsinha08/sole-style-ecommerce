@@ -1,13 +1,40 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 import useCart from "../hooks/useCart";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const AddToCart = ({ isOpen, setIsOpen }) => {
     const { carts, refetch, isLoading } = useCart();
     const axiosSecure = useAxiosSecure();
+    const { user } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation()
+    const [guestCarts, setGuestCarts] = useState(() => {
+        // Initialize state from localStorage immediately
+        const storedCarts = JSON.parse(localStorage.getItem('carts')) || [];
+        return storedCarts;
+    });
+
+    // Only load from localStorage when isOpen changes (for real-time updates)
+    useEffect(() => {
+        if (isOpen) {
+            const storedCarts = JSON.parse(localStorage.getItem('carts')) || [];
+            setGuestCarts(storedCarts);
+        }
+    }, [isOpen]);
+
+
+    useEffect(() => {
+        if (!user) {
+            localStorage.setItem('carts', JSON.stringify(guestCarts));
+        }
+        console.log(guestCarts);
+    }, [guestCarts, user]);
+
 
     // Increase quantity with optimistic update
     const handleIncrease = async (id) => {
@@ -72,6 +99,30 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
             }
         }).then(async (result) => {
             if (result.isConfirmed) {
+                if (!user) {
+                    // const storedCart = JSON.parse(localStorage.getItem("carts")) || [];
+
+                    const updatedCart = guestCarts.filter((_, i) => i !== id);
+
+                    console.log("before:", guestCarts);
+                    console.log("after:", updatedCart);
+
+                    localStorage.setItem('carts', JSON.stringify(updatedCart));
+                    setGuestCarts(updatedCart);
+
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        text: "Item has been removed from cart.",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000,
+                        customClass: {
+                            popup: 'w-56 p-1 text-sm'
+                        }
+                    });
+                    return;
+                }
                 try {
                     const response = await axiosSecure.delete(`/carts/${id}`);
                     if (response.data.deletedCount > 0) {
@@ -102,18 +153,52 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
 
     // Calculate subtotal and total quantity
     const subtotal = useMemo(() => {
-        return carts.reduce(
+        if (user) {
+            return carts.reduce(
+                (total, item) => total + item.price * item.quantity,
+                0
+            );
+        }
+        return guestCarts.reduce(
             (total, item) => total + item.price * item.quantity,
             0
         );
-    }, [carts]);
+    }, [carts, guestCarts, user]);
 
     const totalQuantity = useMemo(() => {
-        return carts.reduce(
+        if (user) {
+            return carts.reduce(
+                (total, item) => total + item.quantity,
+                0
+            );
+        }
+        return guestCarts.reduce(
             (total, item) => total + item.quantity,
             0
         );
-    }, [carts]);
+    }, [carts, guestCarts, user]);
+
+    const handleCheckOut = () => {
+        if(user) {
+            //do something---------
+
+        } else {
+            Swal.fire({
+                title: "You are not logged in",
+                text: "Please login to add to the cart",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Login!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login', { state: { from: location } })
+                }
+            });
+
+        }
+    }
 
     return (
         <div>
@@ -153,77 +238,135 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
                         <div className="h-full flex items-center justify-center text-gray-500">
                             Loading...
                         </div>
-                    ) : carts.length === 0 ? (
-                        <div className="h-full flex items-center justify-center text-gray-500">
-                            Your cart is empty
-                        </div>
-                    ) : (
-                        carts.map((item) => (
-                            <div
-                                key={`${item._id}-${item.size}-${item.color}`}
-                                className="border border-gray-200 dark:border-gray-700 rounded-xl p-3"
-                            >
-                                <div className="flex gap-4">
-                                    {/* Image */}
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="w-24 h-24 object-cover rounded-lg"
-                                    />
+                    ) : !user ? (
+                        guestCarts.length === 0 ? (
+                            <div className="h-full flex items-center justify-center text-gray-500">
+                                Your cart is empty
+                            </div>
+                        ) :
+                            guestCarts.map((item, index) => (
+                                <div
+                                    key={`${item._id}-${item.size}-${item.color}`}
+                                    className="border border-gray-200 dark:border-gray-700 rounded-xl p-3"
+                                >
+                                    <div className="flex gap-4">
+                                        {/* Image */}
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-24 h-24 object-cover rounded-lg"
+                                        />
 
-                                    {/* Content */}
-                                    <div className="flex-1">
-                                        <div className="flex justify-between">
-                                            <div>
-                                                <h3 className="font-semibold text-gray-800 dark:text-gray-200">
-                                                    {item.name}
-                                                </h3>
-                                                <p className="text-sm text-gray-600 dark:text-gray-400">
-                                                    <b>Size:</b> {item.size} <b>Color:</b> {item.color}
-                                                </p>
-                                            </div>
-
-                                            <button
-                                                onClick={() => handleRemove(item._id)}
-                                                className="text-red-500 hover:text-red-700 disabled:opacity-50"
-                                            >
-                                                <MdDeleteForever className="text-2xl" />
-                                            </button>
-                                        </div>
-
-                                        {/* Bottom */}
-                                        <div className="flex items-center justify-between mt-3">
-                                            {/* Quantity */}
-                                            <div className="flex items-center">
-                                                <button
-                                                    onClick={() => handleDecrease(item._id)}
-                                                    className="w-8 border dark:border-gray-600 dark:text-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                                                >
-                                                    -
-                                                </button>
-
-                                                <div className="w-10 text-center border-y dark:border-gray-600 dark:text-gray-300">
-                                                        {item.quantity}
+                                        {/* Content */}
+                                        <div className="flex-1">
+                                            <div className="flex justify-between">
+                                                <div>
+                                                    <h3 className="font-semibold text-gray-800 dark:text-gray-200">
+                                                        {item.name}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                        <b>Size:</b> {item.size} <b>Color:</b> {item.color}
+                                                    </p>
                                                 </div>
 
                                                 <button
-                                                    onClick={() => handleIncrease(item._id)}
-                                                    className="w-8 border dark:border-gray-600 dark:text-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    onClick={() => handleRemove(index)}
+                                                    className="text-red-500 hover:text-red-700 disabled:opacity-50"
                                                 >
-                                                    +
+                                                    <MdDeleteForever className="text-2xl" />
                                                 </button>
                                             </div>
 
-                                            {/* Price */}
-                                            <p className="font-bold text-lg text-gray-800 dark:text-gray-200">
-                                                ৳ {item.price * item.quantity}
-                                            </p>
+                                            {/* Bottom */}
+                                            <div className="flex items-center justify-between mt-3">
+                                                {/* Quantity */}
+
+                                                <p className=" text-center dark:border-gray-600 dark:text-gray-300">
+                                                    <span className="font-semibold">Items: </span>{item.quantity}
+                                                </p>
+
+                                                {/* Price */}
+                                                <p className="font-bold text-lg text-gray-800 dark:text-gray-200">
+                                                    ৳ {item.price * item.quantity}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            ))
+                    ) :
+
+                        carts.length === 0 ? (
+                            <div className="h-full flex items-center justify-center text-gray-500">
+                                Your cart is empty
                             </div>
-                        ))
-                    )}
+                        ) : (
+                            carts.map((item) => (
+                                <div
+                                    key={`${item._id}-${item.size}-${item.color}`}
+                                    className="border border-gray-200 dark:border-gray-700 rounded-xl p-3"
+                                >
+                                    <div className="flex gap-4">
+                                        {/* Image */}
+                                        <img
+                                            src={item.image}
+                                            alt={item.name}
+                                            className="w-24 h-24 object-cover rounded-lg"
+                                        />
+
+                                        {/* Content */}
+                                        <div className="flex-1">
+                                            <div className="flex justify-between">
+                                                <div>
+                                                    <h3 className="font-semibold text-gray-800 dark:text-gray-200">
+                                                        {item.name}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                        <b>Size:</b> {item.size} <b>Color:</b> {item.color}
+                                                    </p>
+                                                </div>
+
+                                                <button
+                                                    onClick={() => handleRemove(item._id)}
+                                                    className="text-red-500 hover:text-red-700 disabled:opacity-50"
+                                                >
+                                                    <MdDeleteForever className="text-2xl" />
+                                                </button>
+                                            </div>
+
+                                            {/* Bottom */}
+                                            <div className="flex items-center justify-between mt-3">
+                                                {/* Quantity */}
+                                                <div className="flex items-center">
+                                                    <button
+                                                        onClick={() => handleDecrease(item._id)}
+                                                        className="w-8 border dark:border-gray-600 dark:text-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        -
+                                                    </button>
+
+                                                    <div className="w-10 text-center border-y dark:border-gray-600 dark:text-gray-300">
+                                                        {item.quantity}
+                                                    </div>
+
+                                                    <button
+                                                        onClick={() => handleIncrease(item._id)}
+                                                        className="w-8 border dark:border-gray-600 dark:text-gray-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+
+                                                {/* Price */}
+                                                <p className="font-bold text-lg text-gray-800 dark:text-gray-200">
+                                                    ৳ {item.price * item.quantity}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        )}
                 </div>
 
                 {/* Footer */}
@@ -245,8 +388,9 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
                     </div>
 
                     <button
-                        className="w-full py-3 bg-black text-white rounded-lg hover:opacity-90 transition disabled:opacity-50"
-                        disabled={carts.length === 0 || isLoading}
+                        onClick={handleCheckOut}
+                        className="w-full py-3 bg-black text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                        disabled={(carts.length === 0 && guestCarts.length === 0) || isLoading}
                     >
                         Checkout
                     </button>

@@ -71,12 +71,21 @@ const SingleProduct = () => {
 
     const handleAddToCart = (cart) => {
         if (!selectedSize || !selectedColor) {
-            alert("Please select size and color");
+            // alert("Please select size and color");
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "warning",
+                text: 'Please select size and color',
+                showConfirmButton: false,
+                timer: 1500,
+                customClass: {
+                    popup: 'w-56 p-2 text-sm'
+                }
+            });
             return;
         }
-        // setCartData({ productId: product._id, image: product.images[0], name: product.name, size: selectedSize, color: selectedColor, quantity: quantity, price: product.price });
-        setIsCartOpen(true);
-
+        
         const cartItem = {
             productId: cart._id,
             name: cart.name,
@@ -87,10 +96,13 @@ const SingleProduct = () => {
             price: cart.price,
             totalPrice: cart.price * quantity
         };
-
-        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-        existingCart.push(cartItem);
-
+        
+        // const existingCart = JSON.parse(localStorage.getItem("carts")) || [];
+        // // localStorage.setItem("carts", JSON.stringify(cartItem))
+        // existingCart.push(cartItem);
+        // console.log("lkajdfkjas", existingCart);
+        
+        
         if (user && user.email) {
             const updatedCartItem = {
                 ...cartItem,
@@ -110,7 +122,7 @@ const SingleProduct = () => {
                                 popup: 'w-56 p-2 text-sm'
                             }
                         });
-                        localStorage.removeItem('cart');
+                        localStorage.removeItem('carts');
                         refetch()
                     }
                 })
@@ -124,11 +136,18 @@ const SingleProduct = () => {
                 });
         }
 
+        const existingCart = JSON.parse(localStorage.getItem("carts")) || [];
+        existingCart.push(cartItem);
+        localStorage.setItem("carts", JSON.stringify(existingCart));
+
+        // localStorage.setItem("carts", JSON.stringify(existingCart));
+        console.log(' line 141', existingCart);
+        
         setIsCartOpen(true);
-        localStorage.setItem("cart", JSON.stringify(existingCart));
+        // setIsCartOpen(true);
     };
 
-
+    
     if (loading) {
         return (
             <div className="min-h-screen flex justify-center items-center">

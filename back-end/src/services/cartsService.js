@@ -1,7 +1,7 @@
 const { ObjectId } = require("mongodb")
 const { getCartsCollection } = require("../config/db")
 
-const addCartsDetails = async (cartItem) => {
+const addCartDetails = async (cartItem) => {
     const cartsCollection = getCartsCollection()
 
     const result = await cartsCollection.insertOne(cartItem)
@@ -68,7 +68,7 @@ const deleteCartById = async (id) => {
 }
 
 module.exports = {
-    addCartsDetails,
+    addCartDetails,
     getCartsByEmail,
     deleteCartById,
     updateCartByAction

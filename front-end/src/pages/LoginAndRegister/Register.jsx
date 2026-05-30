@@ -3,15 +3,19 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 
 const Register = () => {
     const { createUser, updateUserProfile } = useAuth();
     const axios = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
-
+    const { refetch } = useCart();
+    const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
 
     const {
         register,
@@ -28,6 +32,7 @@ const Register = () => {
                 .then(result => {
                     const user = result.user;
                     console.log(user);
+
 
                     updateUserProfile(name)
                         .then(() => {
@@ -56,6 +61,32 @@ const Register = () => {
                                         });
                                     }
                                 })
+
+                            guestCart.forEach(cart => {
+                                const updatedCartItem = {
+                                    ...cart,
+                                    email: email
+                                }
+                                axiosSecure.post('/carts', updatedCartItem)
+                                    .then(res => {
+                                        if (res.data.insertedId) {
+                                            Swal.fire({
+                                                toast: true,
+                                                position: "top-end",
+                                                icon: "success",
+                                                title: `${cart.name} is added to cart.`,
+                                                showConfirmButton: false,
+                                                timer: 500,
+                                                customClass: {
+                                                    popup: 'w-56 p-2 text-sm'
+                                                }
+                                            });
+                                            refetch()
+                                        }
+                                    })
+                            });
+
+                            navigate(from, { replace: true })
                         })
                         .catch(error => console.log(error));
                 })

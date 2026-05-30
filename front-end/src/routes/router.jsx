@@ -5,37 +5,50 @@ import Shop from "../pages/Shop/Shop";
 import SingleProduct from "../pages/SingleProduct/SingleProduct";
 import Register from "../pages/LoginAndRegister/Register";
 import Login from "../pages/LoginAndRegister/Login";
-import UserHome from "../pages/UserAccount/UserHome";
 import PrivateRoute from "./PrivateRoute";
 
+import CustomerDashboardLayout from "../layouts/CustomerDashboardLayout";
+import Dashboard from "../pages/UserAccount/Dashboard";
 
-export const router = createBrowserRouter([{
-    path: '/',
-    element: <MainLayout></MainLayout>,
-    children: [
-        {
-            path: '/',
-            element: <Home></Home>
-        },
-        {
-            path: '/login',
-            element: <Login></Login>
-        },
-        {
-            path: '/register',
-            element: <Register></Register>
-        },
-        {
-            path: '/my-account',
-            element: <PrivateRoute><UserHome></UserHome> </PrivateRoute>
-        },
-        {
-            path: '/products',
-            element: <Shop></Shop>
-        },
-        {
-            path: '/products/:id',
-            element: <SingleProduct></SingleProduct>
-        }
-    ]
-}])
+
+export const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <MainLayout></MainLayout>,
+        children: [
+            {
+                path: '/',
+                element: <Home></Home>
+            },
+            {
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/register',
+                element: <Register></Register>
+            },
+            {
+                path: '/products',
+                element: <Shop></Shop>
+            },
+            {
+                path: '/products/:id',
+                element: <SingleProduct></SingleProduct>
+            },
+        ]
+    },
+
+    {
+        path: '/my-account',
+        element: <PrivateRoute><CustomerDashboardLayout></CustomerDashboardLayout> </PrivateRoute>,
+        children: [
+            {
+                path: 'dashboard',
+                element: <Dashboard></Dashboard>
+            }
+
+        ]
+    },
+    
+])

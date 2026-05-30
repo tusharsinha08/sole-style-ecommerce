@@ -13,7 +13,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar px-32 bg-gray-600/50 backdrop-blur-sm backdrop-saturate-50 shadow fixed z-50 text-white mx-auto left-0 right-0">
+            <div className="navbar lg:px-10 bg-gray-600/50 backdrop-blur-sm backdrop-saturate-50 shadow fixed z-50 text-white mx-auto left-0 right-0">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

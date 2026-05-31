@@ -33,56 +33,56 @@ const CustomersSidebar = () => {
             {/* Menu */}
             <ul className="flex-1 p-4 space-y-2">
                 <li>
-                    <NavLink to="dashboard" className={navClass}>
+                    <NavLink to={"dashboard"} className={navClass}>
                         <FaHome />
                         Dashboard
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/my-account/cart" className={navClass}>
+                    <NavLink to="cart" className={navClass}>
                         <FaShoppingCart />
                         My Cart
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/orders" className={navClass}>
+                    <NavLink to="orders" className={navClass}>
                         <FaBoxOpen />
                         My Orders
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/payment-history" className={navClass}>
+                    <NavLink to="payment-history" className={navClass}>
                         <FaCreditCard />
                         Payment History
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/wishlist" className={navClass}>
+                    <NavLink to="wishlist" className={navClass}>
                         <FaHeart />
                         Wishlist
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/profile" className={navClass}>
+                    <NavLink to="profile" className={navClass}>
                         <FaUser />
                         My Profile
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/notifications" className={navClass}>
+                    <NavLink to="notifications" className={navClass}>
                         <FaBell />
                         Notifications
                     </NavLink>
                 </li>
 
                 <li>
-                    <NavLink to="/dashboard/reviews" className={navClass}>
+                    <NavLink to="reviews" className={navClass}>
                         <FaStar />
                         Reviews
                     </NavLink>

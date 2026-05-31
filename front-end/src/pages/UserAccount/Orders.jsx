@@ -30,9 +30,9 @@ const Orders = () => {
                         <thead>
                             <tr className='dark:text-gray-400'>
                                 <th>Order Title</th>
-                                <th>Total Products</th>
+                                <th>Products</th>
+                                <th>Price</th>
                                 <th>Payment</th>
-                                <th>Payment Status</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -61,7 +61,7 @@ const Orders = () => {
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div>
-                                                    <div className="font-bold">{order.paymentMethod}</div>
+                                                    <div className="font-bold">৳ {order.totalPrice}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -69,6 +69,7 @@ const Orders = () => {
                                             <div className="flex items-center gap-3">
                                                 <div>
                                                     <div className="font-bold">{order.paymentStatus}</div>
+                                                    <div className="text-xs">{order.paymentMethod}</div>
                                                 </div>
                                             </div>
                                         </td>

@@ -175,7 +175,7 @@ const MyCart = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            {item.price * item.quantity}
+                                            <p className='font-bold'>৳ {item.price * item.quantity}</p>
                                         </td>
                                         <td>
                                             <div className='flex gap-2 justify-center'>

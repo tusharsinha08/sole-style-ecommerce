@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import CustomerDashboardLayout from "../layouts/CustomerDashboardLayout";
 import Dashboard from "../pages/UserAccount/Dashboard";
+import Checkout from "../pages/CheckOut/Checkout";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +38,11 @@ export const router = createBrowserRouter([
                 element: <SingleProduct></SingleProduct>
             },
             {
+                path:'check-out',
+                element: <Checkout></Checkout>
+            },
+
+            {
                 path: '/my-account',
                 element: <PrivateRoute><CustomerDashboardLayout></CustomerDashboardLayout> </PrivateRoute>,
                 children: [
@@ -44,7 +50,6 @@ export const router = createBrowserRouter([
                         path: 'dashboard',
                         element: <Dashboard></Dashboard>
                     }
-
                 ]
             },
         ]

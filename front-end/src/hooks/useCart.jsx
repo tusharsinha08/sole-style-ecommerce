@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import useAuth from './useAuth';
 import useAxiosSecure from './useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +16,16 @@ const useCart = () => {
         }
     })
 
-    return {carts, refetch, isLoading};
+    const subtotal = useMemo(() => {
+            if (user) {
+                return carts.reduce(
+                    (total, item) => total + item.price * item.quantity,
+                    0
+                );
+            }
+        }, [carts, user]);
+
+    return {carts, refetch, isLoading, subtotal};
 };
 
 export default useCart;

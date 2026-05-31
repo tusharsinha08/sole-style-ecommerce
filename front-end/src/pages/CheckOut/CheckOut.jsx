@@ -1,0 +1,300 @@
+import React from "react";
+import { useForm } from "react-hook-form";
+import useCart from "../../hooks/useCart";
+import useAuth from "../../hooks/useAuth";
+import { useState } from "react";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+
+
+const Checkout = () => {
+    const { subtotal } = useCart();
+    const { user } = useAuth();
+    const [shippingFee, setShippingFee] = useState(0)
+    const axiosSecure = useAxiosSecure();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            email: user?.email,
+            // later from DB
+            address: user?.address || "",
+            city: user?.city || "",
+            district: user?.district || "",
+            postalCode: user?.postalCode || "",
+        }
+    });
+
+
+    const onSubmit = async (data) => {
+        console.log(data);
+
+        const { name, email, phone, address, city, district, postalCode, paymentMethod } = data
+
+        if (paymentMethod === 'bKash') {
+            // setShippingCost(120)
+        } else if (paymentMethod === 'Card') {
+            // 
+        } else {
+            //
+        }
+
+        // Send order data to backend
+        // axiosSecure.post("/orders", data)
+    };
+
+    return (
+        <div className="max-w-7xl mx-auto px-4 pt-20 pb-12 text-gray-700
+    dark:text-gray-300">
+            <h1 className="text-3xl font-bold mb-8">
+                Checkout
+            </h1>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Form Section */}
+                <div className="md:col-span-2 dark:bg-gray-800 p-6 rounded-xl shadow">
+                    <h2 className="text-xl font-semibold mb-6">
+                        Billing Information
+                    </h2>
+
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="space-y-5"
+                    >
+                        {/* Name */}
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Your Name"
+                                defaultValue={user?.displayName}
+                                {...register("name", {
+                                    required:
+                                        "Name is required",
+                                })}
+                                className="w-full border rounded-lg px-4 py-3"
+                            />
+                            {errors.name && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.name.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                            <input
+                                type="email"
+                                readOnly
+                                placeholder="Email Address"
+                                defaultValue={user?.email}
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value:
+                                            /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                        message:
+                                            "Enter a valid email",
+                                    },
+                                })}
+                                className="w-full bg-gray-300 dark:bg-gray-600 border rounded-lg px-4 py-3"
+                            />
+
+                            {errors.email && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.email.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Phone */}
+                        <div>
+                            <input
+                                type="tel"
+                                placeholder="Phone Number"
+                                defaultValue={user?.phone}
+                                {...register("phone", {
+                                    required:
+                                        "Phone number is required",
+                                    minLength: {
+                                        value: 11,
+                                        message:
+                                            "Minimum 11 digits required",
+                                    },
+                                })}
+                                className="w-full border rounded-lg px-4 py-3"
+                            />
+
+                            {errors.phone && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.phone.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Address */}
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Street Address"
+                                {...register("address", {
+                                    required:
+                                        "Address is required",
+                                })}
+                                className="w-full border rounded-lg px-4 py-3"
+                            />
+
+                            {errors.address && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.address.message}
+                                </p>
+                            )}
+                        </div>
+
+                        {/* Location */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="City"
+                                    {...register("city", {
+                                        required:
+                                            "City is required",
+                                    })}
+                                    className="w-full border rounded-lg px-4 py-3"
+                                />
+
+                                {errors.city && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.city.message}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="District"
+                                    {...register("district", {
+                                        required:
+                                            "District is required",
+                                    })}
+                                    className="w-full border rounded-lg px-4 py-3"
+                                />
+
+                                {errors.district && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.district.message}
+                                    </p>
+                                )}
+                            </div>
+
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Postal Code"
+                                    {...register("postalCode", {
+                                        required:
+                                            "Postal code is required",
+                                    })}
+                                    className="w-full border rounded-lg px-4 py-3"
+                                />
+
+                                {errors.postalCode && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.postalCode.message}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Payment Method */}
+                        <div>
+                            <h3 className="font-semibold mb-3">
+                                Payment Method
+                            </h3>
+
+                            <div className="space-y-3">
+                                <label className="flex items-center gap-3 border p-3 rounded-lg">
+                                    <input
+                                        onClick={() => setShippingFee(120)}
+                                        type="radio"
+                                        value="COD"
+                                        {...register("paymentMethod", {
+                                            required:
+                                                "Select a payment method",
+                                        })}
+                                    />
+                                    Cash on Delivery
+                                </label>
+
+                                <label className="flex items-center gap-3 border p-3 rounded-lg">
+                                    <input
+                                        onClick={() => setShippingFee(0)}
+                                        type="radio"
+                                        value="bKash"
+                                        {...register("paymentMethod")}
+                                    />
+                                    bKash
+                                </label>
+
+                                <label className="flex items-center gap-3 border p-3 rounded-lg">
+                                    <input
+                                        onClick={() => setShippingFee(0)}
+                                        type="radio"
+                                        value="Card"
+                                        {...register("paymentMethod")}
+                                    />
+                                    Credit / Debit Card
+                                </label>
+                            </div>
+
+                            {errors.paymentMethod && (
+                                <p className="text-red-500 text-sm mt-2">
+                                    {errors.paymentMethod.message}
+                                </p>
+                            )}
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800"
+                        >
+                            Place Order
+                        </button>
+                    </form>
+                </div>
+
+                {/* Order Summary */}
+                <div className=" p-6 rounded-xl shadow h-fit dark:bg-gray-800">
+                    <h2 className="text-xl font-semibold mb-6 ">
+                        Order Summary
+                    </h2>
+
+                    <div className="space-y-4">
+                        <div className="flex justify-between">
+                            <span>Subtotal</span>
+                            <span>৳ {subtotal}</span>
+                        </div>
+
+                        <div className="flex justify-between">
+                            <span>Shipping</span>
+                            {shippingFee ?
+                                <span>৳ {shippingFee}</span>
+                                : <span>Free</span>
+                            }
+                        </div>
+
+                        <div className="flex justify-between font-bold text-lg">
+                            <span>Total</span>
+                            <span>৳ {subtotal + shippingFee}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Checkout;

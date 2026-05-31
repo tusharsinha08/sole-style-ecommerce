@@ -16,6 +16,7 @@
     "dotenv": "^17.4.2",
     "firebase": "^12.13.0",
     "react": "^19.2.0",
+    "react-bkash": "^3.0.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.76.1",
     "react-icons": "^5.6.0",

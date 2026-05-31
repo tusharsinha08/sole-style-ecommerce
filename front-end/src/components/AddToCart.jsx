@@ -181,7 +181,8 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
     const handleCheckOut = () => {
         if(user) {
             //do something---------
-
+            navigate('/check-out');
+            setIsOpen(false)
         } else {
             Swal.fire({
                 title: "You are not logged in",

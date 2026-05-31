@@ -1,6 +1,7 @@
 import React from 'react';
 import useOrder from '../../hooks/useOrder';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 const Orders = () => {
     const { orders, refetch } = useOrder();
@@ -9,13 +10,41 @@ const Orders = () => {
 
     const handleCancelOrder = async (id) => {
         console.log('order Id:', id);
-        await axiosSecure.patch(`/orders/${id}`, { action: 'cancel'})
-        .then(res => {
-            if(res.data.modifiedCount) {
-                refetch()
-            }
-        })
+        await axiosSecure.patch(`/orders/${id}`, { action: 'cancel' })
+            .then(res => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "Want to remove the cart",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes",
+                    customClass: {
+                        popup: 'w-56 p-2 text-sm',
+                    }.then(async (result) => {
+                        if (result.isConfirmed) {
+                            if (res.data.modifiedCount) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    text: "Your order is cancelled",
+                                    icon: "success",
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    customClass: {
+                                        popup: 'w-56 p-1 text-sm'
+                                    }
+                                });
+                                refetch()
+                            }
+                        }
+                    })
+
+                })
+            })
     }
+
 
 
     return (
@@ -87,7 +116,7 @@ const Orders = () => {
                                                         disabled={(order.paymentStatus && order.orderStatus) !== 'pending'}
                                                         onClick={() => handleCancelOrder(order._id)}
                                                         className={`font-bold cursor-pointer disabled:${order.paymentStatus !== 'pending'} disabled:cursor-not-allowed text-red-500`}>
-                                                            cancel
+                                                        cancel
                                                     </button>
                                                 </div>
                                             </div>

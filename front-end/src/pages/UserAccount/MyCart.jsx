@@ -3,12 +3,11 @@ import useCart from '../../hooks/useCart';
 import { MdDeleteForever } from 'react-icons/md';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const MyCart = () => {
     const { carts, refetch, subtotal, isLoading } = useCart();
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate()
     console.log(carts);
 
     // Increase quantity with optimistic update

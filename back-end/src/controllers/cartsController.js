@@ -1,4 +1,4 @@
-const { addCartDetails, getCartsByEmail, deleteCartById, updateCartByAction  } = require("../services/cartsService");
+const { addCartDetails, getCartsByEmail, deleteCartById, updateCartByAction, deleteManyCartsById } = require("../services/cartsService");
 
 
 const addCart = async (req, res) => {
@@ -46,10 +46,19 @@ const deleteCart = async (req, res) => {
     res.send(result)
 }
 
+const deleteCarts = async (req, res) => {
+    const cartIds = req.body
+
+    const result = await deleteManyCartsById(cartIds)
+
+    res.send(result)
+}
+
 
 module.exports = {
     addCart,
     getCarts,
     deleteCart,
-    updateCart
+    updateCart,
+    deleteCarts
 }

@@ -32,14 +32,14 @@ const updateCartByAction = async (id, action) => {
     let updateOperation
     if (action === 'increment') {
         updateOperation = {
-            $inc: { 
+            $inc: {
                 quantity: 1,
                 totalPrice: price
             }
         }
-    } else if (action === 'decrement'){
+    } else if (action === 'decrement') {
         updateOperation = {
-            $inc: { 
+            $inc: {
                 quantity: -1,
                 totalPrice: -price
             }
@@ -48,7 +48,7 @@ const updateCartByAction = async (id, action) => {
         return res.status(400).send({ error: 'Invalid action' })
     }
 
-    
+
     const result = await cartsCollection.updateOne(filter, updateOperation)
 
     if (result.modifiedCount > 0) {
@@ -67,9 +67,24 @@ const deleteCartById = async (id) => {
     return result
 }
 
+const deleteManyCartsById = async (cartIds) => {
+    const cartsCollection = getCartsCollection();
+
+
+
+    const query = {
+        _id: {
+            $in: cartIds.map(id => new ObjectId(id))
+        }
+    };
+
+    return await cartsCollection.deleteMany(query);
+};
+
 module.exports = {
     addCartDetails,
     getCartsByEmail,
     deleteCartById,
-    updateCartByAction
+    updateCartByAction,
+    deleteManyCartsById
 }

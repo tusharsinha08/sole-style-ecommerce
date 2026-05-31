@@ -15,6 +15,7 @@ const client = new MongoClient(uri, {
 let productsCollection;
 let usersCollection;
 let cartsCollection;
+let ordersCollection;
 
 async function connectDB() {
     try {
@@ -25,6 +26,7 @@ async function connectDB() {
         productsCollection = database.collection('products');
         usersCollection = database.collection('users');
         cartsCollection = database.collection('carts');
+        ordersCollection = database.collection('orders');
 
         await usersCollection.createIndex({ email: 1 }, { unique: true });
 
@@ -40,5 +42,6 @@ module.exports = {
     connectDB,
     getProductsCollection: () => productsCollection,
     getUsersCollection: () => usersCollection,
-    getCartsCollection: () => cartsCollection
+    getCartsCollection: () => cartsCollection,
+    getOrdersCollection: () => ordersCollection
 };

@@ -4,18 +4,28 @@ import useCart from "../../hooks/useCart";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import useScrollToTop from "../../hooks/useScrollToTop";
 
 
 const Checkout = () => {
-    const { subtotal } = useCart();
+    const { carts, subtotal, refetch } = useCart();
     const { user } = useAuth();
     const [shippingFee, setShippingFee] = useState(0)
     const axiosSecure = useAxiosSecure();
+    const [paymentStatus, setPaymentStatus] = useState('pending');
+    const [transactionId, setTransactionId] = useState('');
+    console.log("carts:", carts);
+    const navigate = useNavigate()
+    const scrollToTop = useScrollToTop()
+
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset
     } = useForm({
         defaultValues: {
             email: user?.email,
@@ -27,18 +37,68 @@ const Checkout = () => {
         }
     });
 
+    const handleCashOnDelivery = (orderItem) => {
+        axiosSecure.post('/orders', orderItem)
+            .then(res => {
+                if (res.data.insertedId) {
+                    console.log(res.data);
+                    
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: "Your order is placed successfully",
+                        showConfirmButton: false,
+                        timer: 500,
+                        customClass: {
+                            popup: 'w-56 p-2 text-sm'
+                        }
+                    });
+
+                    const cartIds = carts.map(item => item._id)
+                    console.log({data:{cartIds}});
+                    
+                    axiosSecure.delete('/carts/delete-many',  {data: cartIds})
+                    .then(res => console.log(res.data)
+                    )
+                    reset()
+                    refetch()
+                    scrollToTop()
+                    navigate('/my-account/orders')
+                }
+            })
+    }
+
 
     const onSubmit = async (data) => {
         console.log(data);
 
         const { name, email, phone, address, city, district, postalCode, paymentMethod } = data
+        const orderItem = {
+            customer_ame: name,
+            email: email,
+            phone: phone,
+            address: address,
+            city: city,
+            district: district,
+            postalCode: postalCode,
+            paymentMethod: paymentMethod,
+            cartIds: carts.map(item => item._id),
+            productIds: carts.map(item => item.productId),
+            totalPrice: subtotal + shippingFee,
+            paymentStatus: paymentStatus,
+            transactionId: transactionId,
+            orderStatus: 'pending',
+            orderTime: new Date()
+        }
+
 
         if (paymentMethod === 'bKash') {
             // setShippingCost(120)
         } else if (paymentMethod === 'Card') {
             // 
         } else {
-            //
+            handleCashOnDelivery(orderItem)
         }
 
         // Send order data to backend

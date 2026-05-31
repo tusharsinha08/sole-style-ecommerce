@@ -11,6 +11,7 @@ import CustomerDashboardLayout from "../layouts/CustomerDashboardLayout";
 import Dashboard from "../pages/UserAccount/Dashboard";
 import Checkout from "../pages/CheckOut/Checkout";
 import Orders from "../pages/UserAccount/Orders";
+import MyCart from "../pages/UserAccount/MyCart";
 
 
 export const router = createBrowserRouter([
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'dashboard',
                         element: <Dashboard></Dashboard>
+                    },
+                    {
+                        path: 'carts',
+                        element: <MyCart></MyCart>
                     },
                     {
                         path: 'orders',

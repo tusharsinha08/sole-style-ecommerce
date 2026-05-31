@@ -40,7 +40,7 @@ const CustomersSidebar = () => {
                 </li>
 
                 <li>
-                    <NavLink to="cart" className={navClass}>
+                    <NavLink to="carts" className={navClass}>
                         <FaShoppingCart />
                         My Cart
                     </NavLink>

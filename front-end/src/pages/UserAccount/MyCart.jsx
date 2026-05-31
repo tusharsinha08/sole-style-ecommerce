@@ -196,18 +196,21 @@ const MyCart = () => {
                     </table>
 
                 </div>
-                <div className='flex justify-end items-center gap-4'>
-                    <p className="flex justify-end gap-4 font-bold text-gray-600 dark:text-gray-400">
-                        <span>Subtotal:</span>
-                        <span className="text-gray-800 dark:text-gray-200">৳ {subtotal}</span>
-                    </p>
-                    <button
-                        className="flex justify-end w-fit px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
-                        disabled={carts.length === 0 || isLoading}
-                    >
-                        <Link to={'/check-out'}>Checkout</Link>
-                    </button>
-                </div>
+                {carts.length &&
+                    <div className='flex justify-end items-center gap-4'>
+                        <p className="flex justify-end gap-4 font-bold text-gray-600 dark:text-gray-400">
+                            <span>Subtotal:</span>
+                            <span className="text-gray-800 dark:text-gray-200">৳ {subtotal}</span>
+                        </p>
+                        <button
+                            className="flex justify-end w-fit px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+                            disabled={carts.length === 0 || isLoading}
+                        >
+                            <Link to={'/check-out'}>Checkout</Link>
+                        </button>
+                    </div>
+                }
+
             </div>
         </div>
     );

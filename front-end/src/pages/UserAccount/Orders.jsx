@@ -9,41 +9,42 @@ const Orders = () => {
     const axiosSecure = useAxiosSecure()
 
     const handleCancelOrder = async (id) => {
-        console.log('order Id:', id);
-        await axiosSecure.patch(`/orders/${id}`, { action: 'cancel' })
-            .then(res => {
-                Swal.fire({
-                    title: "Are you sure?",
-                    text: "Want to remove the cart",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes",
-                    customClass: {
-                        popup: 'w-56 p-2 text-sm',
-                    }.then(async (result) => {
-                        if (result.isConfirmed) {
-                            if (res.data.modifiedCount) {
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    text: "Your order is cancelled",
-                                    icon: "success",
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    customClass: {
-                                        popup: 'w-56 p-1 text-sm'
-                                    }
-                                });
-                                refetch()
-                            }
-                        }
-                    })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Want to cancel this order?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await axiosSecure.patch(`/orders/${id}`, {
+                        action: 'cancel'
+                    });
 
-                })
-            })
-    }
+                    if (response.data.modifiedCount > 0) {
+                        await refetch();
+
+                        Swal.fire({
+                            toast: true,
+                            position: "top-end",
+                            icon: "success",
+                            title: "Order cancelled successfully",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
+                } catch (error) {
+                    console.error(error);
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "Failed to cancel order",
+                    });
+                }
+            }
+        });
+    };
 
 
 

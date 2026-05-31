@@ -18,10 +18,10 @@ import useAuth from "../hooks/useAuth";
 const CustomersSidebar = () => {
     const {signOutUser} = useAuth();
     const navClass = ({ isActive }) =>
-        `flex items-center gap-3 px-4 py-3 rounded-lg transition-all
+        `flex items-center gap-3 px-4 py-3 rounded-sm transition-all
     ${isActive
-            ? "bg-primary text-primary-content"
-            : "hover:bg-base-300"
+            ? "bg-black text-primary-content"
+            : "hover:bg-gray-300 dark:hover:bg-gray-700"
         }`;
     
     const handleSignOut = () => {
@@ -29,7 +29,7 @@ const CustomersSidebar = () => {
     }
 
     return (
-        <div className="flex flex-col text-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800">
+        <div className="flex flex-col text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-300">
             {/* Menu */}
             <ul className="flex-1 p-4 space-y-2">
                 <li>

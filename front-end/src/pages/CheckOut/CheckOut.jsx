@@ -75,7 +75,7 @@ const Checkout = () => {
 
         const { name, email, phone, address, city, district, postalCode, paymentMethod } = data
         const orderItem = {
-            customer_ame: name,
+            customer_name: name,
             email: email,
             phone: phone,
             address: address,
@@ -319,7 +319,7 @@ const Checkout = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800"
+                            className="w-full bg-gray-900 text-white py-3 cursor-pointer rounded-lg hover:text-gray-300"
                         >
                             Place Order
                         </button>

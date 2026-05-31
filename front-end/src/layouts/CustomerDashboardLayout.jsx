@@ -28,7 +28,7 @@ const CustomerDashboardLayout = () => {
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 
-                    <aside className="w-72">
+                    <aside className="w-64">
                         {/* Sidebar Content */}
                         <CustomersSidebar></CustomersSidebar>
                     </aside>

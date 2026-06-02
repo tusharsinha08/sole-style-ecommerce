@@ -8,14 +8,15 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
 
-const StripePayment = ({ totalAmount, orderData, onSuccess }) => {
+const StripePayment = ({ totalAmount, onSuccess }) => {
 
     const stripe = useStripe();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
-    const [error, setError] = useState('')
     const { user } = useAuth();
+    const [cardComplete, setCardComplete] = useState(false);
 
+    const [processing, setProcessing] = useState(true);
     const [clientSecret, setClientSecret] = useState("");
 
     useEffect(() => {
@@ -24,13 +25,12 @@ const StripePayment = ({ totalAmount, orderData, onSuccess }) => {
                 amount: totalAmount
             })
                 .then(res => {
-                    console.log(res.data.clientSecret);
-
                     setClientSecret(res.data.clientSecret);
+                    setProcessing(false);
                 });
         }
 
-    }, []);
+    }, [totalAmount]);
 
     const handlePayment = async () => {
 
@@ -38,18 +38,14 @@ const StripePayment = ({ totalAmount, orderData, onSuccess }) => {
 
         const card = elements.getElement(CardElement);
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: "card",
             card
         });
 
         if (error) {
-            setError(error.message);
             return;
-        } else {
-            setError('')
         }
-        console.log(orderData);
 
 
         const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
@@ -63,7 +59,6 @@ const StripePayment = ({ totalAmount, orderData, onSuccess }) => {
         });
 
         if (confirmError) {
-            setError(confirmError.message)
             console.log("Stripe Error:", confirmError);
             return;
 
@@ -79,14 +74,19 @@ const StripePayment = ({ totalAmount, orderData, onSuccess }) => {
 
     return (
         <div>
-            <CardElement />
+            <CardElement
+                onChange={(event) => {
+                    setCardComplete(event.complete);
+                }}
+            />
 
             <button
+                disabled={!cardComplete || !stripe || !clientSecret}
                 type="button"
                 onClick={handlePayment}
-                className="btn btn-primary mt-4"
+                className="btn bg-gray-900 text-gray-300 py-2 px-4 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
             >
-                Pay ৳ {totalAmount}
+               {processing ? "Processing..." : `Pay ৳ ${totalAmount}`}
             </button>
         </div>
     );

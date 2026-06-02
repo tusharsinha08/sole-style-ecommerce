@@ -409,13 +409,19 @@ const Checkout = () => {
                         {
 
                             showCardForm && (
-                                <Elements stripe={stripePromise}>
-                                    <StripePayment
-                                        totalAmount={subtotal + shippingFee}
-                                        orderData={pendingOrder}
-                                        onSuccess={handleStripeSuccess}
-                                    />
-                                </Elements>
+
+                                <div>
+                                    {/* divider */}
+                                    <hr className="my-4 text-gray-300 dark:text-gray-700" />
+                                    
+                                    <h4 className="text-lg font-semibold mb-4">Enter your card details</h4>
+                                    <Elements stripe={stripePromise}>
+                                        <StripePayment
+                                            totalAmount={subtotal + shippingFee}
+                                            onSuccess={handleStripeSuccess}
+                                        />
+                                    </Elements>
+                                </div>
                             )
                         }
                     </div>

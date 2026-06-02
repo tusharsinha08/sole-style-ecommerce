@@ -9,7 +9,7 @@ const addPaymentStripe = async (req, res) => {
 
 const addPayment = async (req, res) => {
     const payment = req.body
-    console.log(payment);
+    const result = await addPaymentToMongodb(payment)
 
     res.send(result)
 }

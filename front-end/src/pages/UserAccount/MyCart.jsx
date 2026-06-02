@@ -113,6 +113,7 @@ const MyCart = () => {
                         {/* head */}
                         <thead>
                             <tr className='dark:text-gray-400'>
+                                <th></th>
                                 <th>Product</th>
                                 <th>Details</th>
                                 <th>Quantity</th>
@@ -122,10 +123,11 @@ const MyCart = () => {
                         </thead>
 
                         {
-                            carts.map((item) => (
+                            carts.map((item, index) => (
                                 <tbody key={item._id} className='text-gray-400 dark:text-gray-500'>
                                     {/* row 1 */}
                                     <tr>
+                                        <td>{index + 1}</td>
                                         <td>
                                             <div className="flex items-center gap-3 w-48">
                                                 <img

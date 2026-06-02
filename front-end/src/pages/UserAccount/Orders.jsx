@@ -59,6 +59,7 @@ const Orders = () => {
                         {/* head */}
                         <thead>
                             <tr className='dark:text-gray-400'>
+                                <th></th>
                                 <th>Order Title</th>
                                 <th>Products</th>
                                 <th>Price</th>
@@ -69,10 +70,10 @@ const Orders = () => {
                         </thead>
 
                         {
-                            orders.map((order) => (
+                            orders.map((order, index) => (
                                 <tbody key={order._id} className='text-gray-400 dark:text-gray-500'>
-                                    {/* row 1 */}
                                     <tr>
+                                        <td>{index + 1}</td>
                                         <td>
                                             <div className="flex items-center gap-3 w-48">
                                                 <div>
@@ -100,6 +101,7 @@ const Orders = () => {
                                                 <div>
                                                     <div className="font-bold">{order.paymentStatus}</div>
                                                     <div className="text-xs">{order.paymentMethod}</div>
+                                                    <div className="text-xs">{order.transactionId}</div>
                                                 </div>
                                             </div>
                                         </td>

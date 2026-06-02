@@ -8,7 +8,6 @@ import {
     updateProfile
 } from "firebase/auth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const auth = getAuth(app)

@@ -39,7 +39,10 @@ const Register = () => {
                             const userInfo = {
                                 name: name,
                                 email: email,
-                                role: role
+                                role: role,
+                                address: "",
+                                photo: "",
+                                createdAt: new Date()
                             }
 
                             axios.post('/users', userInfo)

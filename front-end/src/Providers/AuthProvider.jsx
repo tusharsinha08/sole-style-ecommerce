@@ -1,13 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase";
-import { 
-    createUserWithEmailAndPassword, 
-    getAuth, onAuthStateChanged, 
-    signInWithEmailAndPassword, 
-    signOut, 
-    updateProfile 
+import {
+    createUserWithEmailAndPassword,
+    getAuth, onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+    updateProfile
 } from "firebase/auth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const auth = getAuth(app)
@@ -18,6 +19,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const axios = useAxiosPublic();
+    const [dbUser, setDbUser] = useState(null);
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -49,24 +51,36 @@ const AuthProvider = ({ children }) => {
                     email: currentUser?.email
                 }
                 axios.post('/jwt', userInfo)
-                .then(res => {
-                    if (res.data.token) {
-                        localStorage.setItem('access-token', res.data.token)
-                    }
-                    setLoading(false)
-                })
+                    .then(async (res) => {
+                        if (res.data.token) {
+                            localStorage.setItem('access-token', res.data.token)
+                        }
+
+                        // fetch mongodb user
+                        const userRes = await axios.get(
+                            `/users/${currentUser.email}`
+                        );
+
+                        setDbUser(userRes.data);
+                        setLoading(false)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        setLoading(false);
+                    });
             }
             else {
                 localStorage.removeItem('access-token')
                 setLoading(false)
             }
         })
-        
+
         return () => unsubscribe();
     }, [])
 
     const authInfo = {
         user,
+        dbUser,
         loading,
         createUser,
         signInUser,

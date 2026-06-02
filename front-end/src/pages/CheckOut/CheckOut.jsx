@@ -7,6 +7,13 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useScrollToTop from "../../hooks/useScrollToTop";
+import StripePayment from "../../components/StripePayment";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+    import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+);
 
 
 const Checkout = () => {
@@ -14,11 +21,10 @@ const Checkout = () => {
     const { user } = useAuth();
     const [shippingFee, setShippingFee] = useState(0)
     const axiosSecure = useAxiosSecure();
-    const [paymentStatus, setPaymentStatus] = useState('pending');
-    const [transactionId, setTransactionId] = useState('');
-    console.log("carts:", carts);
+    const [showCardForm, setShowCardForm] = useState(false);
     const navigate = useNavigate()
     const scrollToTop = useScrollToTop()
+    const [pendingOrder, setPendingOrder] = useState(null);
 
 
     const {
@@ -42,7 +48,7 @@ const Checkout = () => {
             .then(res => {
                 if (res.data.insertedId) {
                     console.log(res.data);
-                    
+
                     Swal.fire({
                         toast: true,
                         position: "top-end",
@@ -56,11 +62,11 @@ const Checkout = () => {
                     });
 
                     const cartIds = carts.map(item => item._id)
-                    console.log({data:{cartIds}});
-                    
-                    axiosSecure.delete('/carts/delete-many',  {data: cartIds})
-                    .then(res => console.log(res.data)
-                    )
+                    console.log({ data: { cartIds } });
+
+                    axiosSecure.delete('/carts/delete-many', { data: cartIds })
+                        .then(res => console.log(res.data)
+                        )
                     reset()
                     refetch()
                     scrollToTop()
@@ -68,6 +74,48 @@ const Checkout = () => {
                 }
             })
     }
+
+    const handleStripeSuccess = async (transactionId) => {
+
+        const payment = {
+            email: user?.email,
+            amount: subtotal + shippingFee,
+            transactionId: transactionId,
+            status: "paid",
+            date: new Date()
+        };
+
+        const orderItem = {
+            ...pendingOrder,
+            paymentStatus: 'paid',
+            transactionId: transactionId,
+            orderStatus: 'pending',
+            orderTime: new Date()
+        }
+
+        const cartIds = carts.map(item => item._id)
+
+        const res = await axiosSecure.post("/payments", payment);
+
+        if (res.data.insertedId) {
+            await axiosSecure.post('/orders', orderItem)
+            await axiosSecure.delete("/carts/delete-many", { data: cartIds });
+
+            refetch();
+
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                showConfirmButton: false,
+                text: "Payment Successful",
+                timer: 1500
+            });
+
+            navigate("/my-account/orders");
+        }
+    }
+
 
 
     const onSubmit = async (data) => {
@@ -86,17 +134,18 @@ const Checkout = () => {
             cartIds: carts.map(item => item._id),
             productIds: carts.map(item => item.productId),
             totalPrice: subtotal + shippingFee,
-            paymentStatus: paymentStatus,
-            transactionId: transactionId,
+            paymentStatus: 'pending',
             orderStatus: 'pending',
             orderTime: new Date()
         }
+        console.log(" order item", orderItem);
 
 
         if (paymentMethod === 'bKash') {
             // setShippingCost(120)
         } else if (paymentMethod === 'Card') {
-            // 
+            setShowCardForm(true);
+            setPendingOrder(orderItem)
         } else {
             handleCashOnDelivery(orderItem)
         }
@@ -106,13 +155,12 @@ const Checkout = () => {
     };
 
     return (
-        <div className="max-w-7xl mx-auto px-4 pt-20 pb-12 text-gray-700
-    dark:text-gray-300">
+        <div className="max-w-7xl mx-auto px-4 pt-20 pb-12 text-gray-700 dark:text-gray-300">
             <h1 className="text-3xl font-bold mb-8">
                 Checkout
             </h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                 {/* Form Section */}
                 <div className="md:col-span-2 dark:bg-gray-800 p-6 rounded-xl shadow">
                     <h2 className="text-xl font-semibold mb-6">
@@ -278,33 +326,41 @@ const Checkout = () => {
                             <div className="space-y-3">
                                 <label className="flex items-center gap-3 border p-3 rounded-lg">
                                     <input
-                                        onClick={() => setShippingFee(120)}
                                         type="radio"
                                         value="COD"
                                         {...register("paymentMethod", {
                                             required:
                                                 "Select a payment method",
                                         })}
+                                        onClick={() => {
+                                            setShippingFee(120);
+                                            setShowCardForm(false);
+                                        }}
                                     />
                                     Cash on Delivery
                                 </label>
 
                                 <label className="flex items-center gap-3 border p-3 rounded-lg">
                                     <input
-                                        onClick={() => setShippingFee(0)}
                                         type="radio"
                                         value="bKash"
                                         {...register("paymentMethod")}
+                                        onClick={() => {
+                                            setShippingFee(0);
+                                            setShowCardForm(false);
+                                        }}
                                     />
                                     bKash
                                 </label>
 
                                 <label className="flex items-center gap-3 border p-3 rounded-lg">
                                     <input
-                                        onClick={() => setShippingFee(0)}
                                         type="radio"
                                         value="Card"
                                         {...register("paymentMethod")}
+                                        onClick={() => {
+                                            setShippingFee(0);
+                                        }}
                                     />
                                     Credit / Debit Card
                                 </label>
@@ -327,7 +383,7 @@ const Checkout = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className=" p-6 rounded-xl shadow h-fit dark:bg-gray-800">
+                <div className="md:col-span-2 p-6 rounded-xl shadow h-fit dark:bg-gray-800">
                     <h2 className="text-xl font-semibold mb-6 ">
                         Order Summary
                     </h2>
@@ -350,6 +406,18 @@ const Checkout = () => {
                             <span>Total</span>
                             <span>৳ {subtotal + shippingFee}</span>
                         </div>
+                        {
+
+                            showCardForm && (
+                                <Elements stripe={stripePromise}>
+                                    <StripePayment
+                                        totalAmount={subtotal + shippingFee}
+                                        orderData={pendingOrder}
+                                        onSuccess={handleStripeSuccess}
+                                    />
+                                </Elements>
+                            )
+                        }
                     </div>
                 </div>
             </div>

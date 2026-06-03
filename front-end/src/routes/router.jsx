@@ -14,6 +14,7 @@ import Orders from "../pages/UserAccount/Orders";
 import MyCart from "../pages/UserAccount/MyCart";
 import MyProfile from "../pages/UserAccount/MyProfile";
 import Notification from "../pages/UserAccount/Notification";
+import About from "../pages/About/About";
 
 
 export const router = createBrowserRouter([
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
             {
                 path:'check-out',
                 element: <Checkout></Checkout>
+            },
+            {
+                path: '/about',
+                element: <About></About>
             },
 
             {

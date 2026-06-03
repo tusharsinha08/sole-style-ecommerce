@@ -21,7 +21,7 @@ const Shop = () => {
     // const [products, setProducts] = useState([]);
     // const [result, setResult] = useState({});
 
-    const [products, result, loading] = useProduct({ type, category, search, sortType, page });
+    const { products, result, loading } = useProduct({ type, category, search, sortType, page });
     console.log(products, result, loading);
     // useEffect(() => {
     //     axios.get('http://localhost:3000/products', {

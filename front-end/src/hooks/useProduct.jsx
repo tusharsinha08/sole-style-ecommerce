@@ -34,7 +34,7 @@ const useProduct = ({ type, category, search, sortType, page }) => {
     }, [type, category, search, sortType, page]);
 
     
-    return [ products, result, loading];
+    return { products, result, loading };
 };
 
 export default useProduct;

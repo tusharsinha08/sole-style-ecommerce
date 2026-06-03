@@ -18,7 +18,6 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const axios = useAxiosPublic();
-    const [dbUser, setDbUser] = useState(null);
 
     const createUser = (email, password) => {
         setLoading(true);
@@ -55,12 +54,6 @@ const AuthProvider = ({ children }) => {
                             localStorage.setItem('access-token', res.data.token)
                         }
 
-                        // fetch mongodb user
-                        const userRes = await axios.get(
-                            `/users/${currentUser.email}`
-                        );
-
-                        setDbUser(userRes.data);
                         setLoading(false)
                     })
                     .catch(err => {
@@ -77,9 +70,10 @@ const AuthProvider = ({ children }) => {
         return () => unsubscribe();
     }, [])
 
+    
+
     const authInfo = {
         user,
-        dbUser,
         loading,
         createUser,
         signInUser,

@@ -1,11 +1,12 @@
 import React from 'react';
 import ToggleDarkMode from './ToggleDarkMode';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaRegCircleUser } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
 
 const Navbar = () => {
-    const { signOutUser } = useAuth();
+    const { signOutUser, user, dbUser } = useAuth();
+    const navigate = useNavigate();
     const navOptions = <>
         <li><Link to={'/'}>Home</Link></li>
         <li><Link to={'/products'}>Shop</Link></li>
@@ -14,12 +15,13 @@ const Navbar = () => {
     </>
 
     const handleLogout = async () => {
-    try {
-        await signOutUser(); // your auth logout function
-    } catch (error) {
-        console.error(error);
-    }
-};
+        navigate('/login');
+        try {
+            await signOutUser(); // your auth logout function
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <div>
@@ -46,10 +48,18 @@ const Navbar = () => {
                     <ToggleDarkMode></ToggleDarkMode>
                     <div className="dropdown dropdown-end">
                         <div tabIndex={0} role="button">
-                            <FaRegCircleUser
-                                className="text-gray-900 dark:text-gray-300 cursor-pointer"
-                                size={24}
-                            />
+                            {dbUser?.image ? (
+                                <img
+                                    src={dbUser?.image}
+                                    alt="User"
+                                    className="w-10 h-10 rounded-full"
+                                />
+                            ) : (
+                                <FaRegCircleUser
+                                    className="text-gray-900 dark:text-gray-300 cursor-pointer"
+                                    size={24}
+                                />
+                            )}
                         </div>
 
                         <ul
@@ -79,7 +89,7 @@ const Navbar = () => {
                                     onClick={handleLogout}
                                     className="text-red-500"
                                 >
-                                    Logout
+                                    {user ? "Logout" : "Login"}
                                 </button>
                             </li>
                         </ul>

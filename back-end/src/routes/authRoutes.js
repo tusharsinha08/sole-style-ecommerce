@@ -17,4 +17,6 @@ router.get("/:email", getUser);
 
 router.put("/", updateUser);
 
+router.patch('/', updateUser);
+
 module.exports = router;

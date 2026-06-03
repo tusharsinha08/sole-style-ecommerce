@@ -1,29 +1,27 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const MyProfile = () => {
-    const { user, dbUser } = useAuth();
-    console.log('user: ', user, '\ndbUser: ', dbUser);
-
-
+    const { user, dbUser, refetch } = useAuth();
+    const axiosSecure = useAxiosSecure();
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors },
     } = useForm();
 
-    const [preview, setPreview] = useState("");
+    const [preview, setPreview] = useState(dbUser?.image || '');
 
     useEffect(() => {
-        if (user) {
-            setValue("name", dbUser?.name || user.displayName || "");
-            setValue("email", user.email || "");
-            setPreview(dbUser?.photo || null);
+        if (dbUser) {
+            setPreview(dbUser?.image || "");
         }
-    }, [user, dbUser, setValue]);
-
+    }, [dbUser]);
+    
     const handleImageChange = (e) => {
         const file = e.target.files[0];
 
@@ -43,11 +41,6 @@ const MyProfile = () => {
             const img = new Image();
 
             img.onload = () => {
-                if (img.width > 400 || img.height > 400) {
-                    reject("Image dimensions must be less than or equal to 400x400 pixels");
-                    return;
-                }
-
                 resolve(true);
             };
 
@@ -60,20 +53,71 @@ const MyProfile = () => {
     };
 
     const onSubmit = async (data) => {
-        console.log("Profile Data:", data);
+        try {
+            console.log('onsubmit data', data);
 
-        // Upload image logic here
-        // Update profile logic here
+            let imageUrl = dbUser?.image || "";
 
-        // Example:
-        // const image = data.photo[0];
-        // upload image -> get image URL
-        // save profile data to database
+            // Check if new image selected
+            if (data.photo?.length > 0) {
+                const imageFile = data.photo[0];
+
+                // Validate image
+                await validateImage(imageFile);
+
+                // Upload to ImageBB
+                const formData = new FormData();
+                formData.append("image", imageFile);
+
+                const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_KEY}`;
+
+                const imageRes = await axios.post(imageUploadUrl, formData, {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                }
+                );
+                console.log('imga response: ', imageRes);
+
+                imageUrl = imageRes.data.data.display_url;
+            }
+
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                address: data.address,
+                image: imageUrl,
+                updatedAt: new Date(),
+            };
+
+            const res = await axiosSecure.patch("/users", userInfo);
+            console.log(res.data);
+
+
+            if (res.data) {
+                Swal.fire({
+                    icon: "success",
+                    text: "Your profile is updated",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                refetch();
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text:
+                    typeof error === "string"
+                        ? error
+                        : error.message,
+            });
+        }
     };
 
     return (
         <div className="max-w-3xl mx-auto p-6">
-            <div className="bg-white rounded-xl shadow-md p-8">
+            <div className="bg-white rounded-xl shadow-md p-8 dark:bg-gray-800 dark:text-gray-500">
                 <h2 className="text-3xl font-bold text-center mb-8">
                     My Profile
                 </h2>
@@ -84,7 +128,7 @@ const MyProfile = () => {
                 >
                     {/* Profile Image */}
                     <div className="flex flex-col items-center gap-4">
-                        <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-gray-200">
+                        <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-400">
                             <img
                                 src={
                                     preview ||
@@ -100,7 +144,7 @@ const MyProfile = () => {
                             accept="image/*"
                             {...register("photo")}
                             onChange={handleImageChange}
-                            className="file-input file-input-bordered w-full max-w-xs"
+                            className="file-input file-input-bordered file-input-neutral dark:file-input dark:bg-gray-600 w-full max-w-xs"
                         />
                     </div>
 
@@ -111,6 +155,7 @@ const MyProfile = () => {
                         </label>
                         <input
                             type="text"
+                            defaultValue={dbUser?.name || user?.displayName || ""}
                             {...register("name", {
                                 required: "Name is required",
                             })}
@@ -133,9 +178,10 @@ const MyProfile = () => {
 
                         <input
                             type="email"
+                            defaultValue={dbUser?.email || user?.email}
                             readOnly
                             {...register("email")}
-                            className="w-full border rounded-lg px-4 py-3 bg-gray-100 cursor-not-allowed"
+                            className="w-full border rounded-lg px-4 py-3 bg-gray-100 cursor-not-allowed dark:bg-gray-700"
                         />
                     </div>
 
@@ -147,6 +193,7 @@ const MyProfile = () => {
 
                         <textarea
                             rows="4"
+                            defaultValue={dbUser?.address || ""}
                             {...register("address")}
                             className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-800"
                             placeholder="Enter your address"
@@ -156,7 +203,7 @@ const MyProfile = () => {
                     {/* Save Button */}
                     <button
                         type="submit"
-                        className="w-full bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+                        className="w-full cursor-pointer bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition"
                     >
                         Save Profile
                     </button>

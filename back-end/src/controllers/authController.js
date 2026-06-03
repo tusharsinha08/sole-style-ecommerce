@@ -55,9 +55,8 @@ const getUser = async (req, res) => {
 // UPDATE USER NAME
 const updateUser = async (req, res) => {
     try {
-        const { email, name, role } = req.body;
-
-        const result = await updateUserDetails(email, name, role);
+        const user = req.body;
+        const result = await updateUserDetails(user);
 
         res.send(result);
     } catch (error) {

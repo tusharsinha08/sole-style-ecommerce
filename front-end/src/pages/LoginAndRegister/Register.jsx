@@ -41,7 +41,7 @@ const Register = () => {
                                 email: email,
                                 role: role,
                                 address: "",
-                                photo: "",
+                                image: "",
                                 createdAt: new Date()
                             }
 
@@ -84,6 +84,8 @@ const Register = () => {
                                                     popup: 'w-56 p-2 text-sm'
                                                 }
                                             });
+
+                                            localStorage.removeItem('carts');
                                             refetch()
                                         }
                                     })

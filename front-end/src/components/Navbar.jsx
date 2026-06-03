@@ -82,6 +82,10 @@ const Navbar = () => {
                                 <Link to="my-account/profile">My Profile</Link>
                             </li>
 
+                            <li>
+                                <Link to="my-account/notifications">Notifications</Link>
+                            </li>
+
                             <div className="divider my-1"></div>
 
                             <li>

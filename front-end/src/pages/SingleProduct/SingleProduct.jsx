@@ -9,7 +9,6 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
-import useScrollToTop from "../../hooks/useScrollToTop";
 
 
 const SingleProduct = () => {
@@ -32,7 +31,6 @@ const SingleProduct = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user } = useAuth();
     const { refetch } = useCart();
-    const scrollToTop = useScrollToTop();
 
     useEffect(() => {
         axios.get(`/products/${id}`)
@@ -83,7 +81,7 @@ const SingleProduct = () => {
             });
             return;
         }
-        
+
         const cartItem = {
             productId: cart._id,
             name: cart.name,
@@ -94,8 +92,8 @@ const SingleProduct = () => {
             price: cart.price,
             totalPrice: cart.price * quantity
         };
-        
-        
+
+
         if (user && user.email) {
             const updatedCartItem = {
                 ...cartItem,
@@ -135,12 +133,12 @@ const SingleProduct = () => {
 
         // localStorage.setItem("carts", JSON.stringify(existingCart));
         console.log(' line 141', existingCart);
-        
+
         setIsCartOpen(true);
         // setIsCartOpen(true);
     };
 
-    
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -207,7 +205,10 @@ const SingleProduct = () => {
 
 
                 {showZoom && (
-                    <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+                    <div
+                        className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+                        onClick={() => setShowZoom(false)}   // 👈 click outside closes
+                    >
 
                         {/* Close Button */}
                         <button
@@ -217,7 +218,6 @@ const SingleProduct = () => {
                             ✕
                         </button>
 
-                        {/* Get current index safely */}
                         {(() => {
                             const currentIndex = images.findIndex(img => img === activeImage);
 
@@ -225,7 +225,11 @@ const SingleProduct = () => {
                             const nextImage = images[currentIndex + 1];
 
                             return (
-                                <div className="flex items-center gap-6">
+                                // 👇 STOP click from bubbling to background
+                                <div
+                                    className="flex items-center gap-6"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
 
                                     {/* Prev Button */}
                                     <button
@@ -248,7 +252,9 @@ const SingleProduct = () => {
                                     <button
                                         disabled={currentIndex === images.length - 1}
                                         onClick={() => nextImage && setActiveImage(nextImage)}
-                                        className={`text-white text-4xl cursor-pointer ${currentIndex === images.length - 1 ? "opacity-30 cursor-not-allowed" : ""
+                                        className={`text-white text-4xl cursor-pointer ${currentIndex === images.length - 1
+                                            ? "opacity-30 cursor-not-allowed"
+                                            : ""
                                             }`}
                                     >
                                         <MdOutlineArrowForwardIos />
@@ -518,7 +524,7 @@ const SingleProduct = () => {
                     {/* Placeholder for related products */}
                     {!loading ?
                         relatedProducts.slice(0, 4).map((relatedProduct) => (
-                            <div key={relatedProduct._id} onClick={scrollToTop}>
+                            <div key={relatedProduct._id}>
                                 <ProductCard product={relatedProduct} />
                             </div>
                         )) : (

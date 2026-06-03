@@ -17,31 +17,8 @@ const Shop = () => {
     const page = parseInt(searchParams.get("page")) || 1;
     const scrollToTop = useScrollToTop();
 
-    // States
-    // const [products, setProducts] = useState([]);
-    // const [result, setResult] = useState({});
-
     const { products, result, loading } = useProduct({ type, category, search, sortType, page });
     console.log(products, result, loading);
-    // useEffect(() => {
-    //     axios.get('http://localhost:3000/products', {
-    //         params: {
-    //             type,
-    //             search,
-    //             sort: sortType,
-    //             page,
-    //             limit: 10,
-    //         }
-    //     })
-    //         .then(response => {
-    //             console.log(response.data);
-    //             setResult(response.data);
-    //             setProducts(response.data.products);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching products:', error);
-    //         });
-    // }, [type, search, sortType, page]);
 
     // Update URL Params
     const updateParams = (key, value) => {
@@ -76,7 +53,7 @@ const Shop = () => {
     }
 
     return (
-        <section className='dark:bg-gray-800'>
+        <section className='dark:bg-gray-800 text-gray-900 dark:text-gray-400'>
 
             <div
                 className="hero  bg-fixed min-h-[70vh]"
@@ -97,8 +74,37 @@ const Shop = () => {
             </div>
 
             <div className='max-w-7xl mx-auto mt-12'>
-                <div className='md:flex md:justify-between my-6 p-6 dark:text-gray-300'>
-                    <p className='text-sm'>Showing {products.length} products of {result.totalProducts}</p>
+                <div className='md:grid hidden md:grid-cols-4 gap-4 mx-4 my-12 items-center dark:text-gray-300 text-sm'>
+                    <select
+                        value={sortType}
+                        onChange={(e) => updateParams("sort", e.target.value)}
+                        className="select select-bordered dark:bg-gray-700 dark:text-gray-300">
+                        <option value="">Default sorting</option>
+                        <option value="popularity">Sort by popularity</option>
+                        <option value="latest">Sort by latest</option>
+                        <option value="lowToHigh">Sort by price: low to high</option>
+                        <option value="highToLow">Sort by price: high to low</option>
+                    </select>
+
+                    <select
+                        value={type}
+                        onChange={(e) => updateParams("type", e.target.value)}
+                        className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
+                        <option value="">Default type</option>
+                        <option value="Formal">Formal</option>
+                        <option value="Night Dress">Night Dress</option>
+                        <option value="Casual">Casual</option>
+                    </select>
+
+                    <select
+                        value={category}
+                        onChange={(e) => updateParams("category", e.target.value)}
+                        className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
+                        <option value="">Default Category</option>
+                        <option value="Formal">Formal</option>
+                        <option value="Night Dress">Night Dress</option>
+                        <option value="Casual">Casual</option>
+                    </select>
 
                     <label className="input dark:bg-gray-700 dark:text-gray-300 w-full max-w-xs">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -121,15 +127,143 @@ const Shop = () => {
                         />
                     </label>
 
-                    <select value={sortType} onChange={(e) => updateParams("sort", e.target.value)} className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
-                        <option value="">Default sorting</option>
-                        <option value="popularity">Sort by popularity</option>
-                        <option value="latest">Sort by latest</option>
-                        <option value="lowToHigh">Sort by price: low to high</option>
-                        <option value="highToLow">Sort by price: high to low</option>
-                    </select>
+                    <div className='md:col-start-4 text-right'>
+                        <p className='text-sm'>Showing {products.length} products of {result.totalProducts}</p>
+                    </div>
                 </div>
 
+                {/* Mobile Search + Filter */}
+                <div className="lg:hidden flex gap-3 mx-4 my-6">
+                    <label className="input flex-1 dark:bg-gray-700 dark:text-gray-300">
+                        <svg
+                            className="h-[1em] opacity-50"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+
+                        <input
+                            type="search"
+                            placeholder="Search products..."
+                            value={search}
+                            onChange={(e) => updateParams("search", e.target.value)}
+                        />
+                    </label>
+
+                    <button
+                        className="btn btn-outline"
+                        onClick={() => document.getElementById("filter_modal").showModal()}
+                    >
+                        Filters
+                    </button>
+                </div>
+
+
+                <dialog id="filter_modal" className="modal">
+                    <div className="modal-box dark:bg-gray-800 dark:text-gray-300">
+
+                        <h3 className="font-bold text-lg mb-5">
+                            Filter Products
+                        </h3>
+
+                        {/* Sort */}
+                        <div className="mb-4">
+                            <label className="label">
+                                <span className="label-text dark:text-gray-300">
+                                    Sort By
+                                </span>
+                            </label>
+
+                            <select
+                                value={sortType}
+                                onChange={(e) => updateParams("sort", e.target.value)}
+                                className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
+                            >
+                                <option value="">Default sorting</option>
+                                <option value="popularity">Sort by popularity</option>
+                                <option value="latest">Sort by latest</option>
+                                <option value="lowToHigh">Price: low to high</option>
+                                <option value="highToLow">Price: high to low</option>
+                            </select>
+                        </div>
+
+                        {/* Type */}
+                        <div className="mb-4">
+                            <label className="label">
+                                <span className="label-text dark:text-gray-300">
+                                    Product Type
+                                </span>
+                            </label>
+
+                            <select
+                                value={type}
+                                onChange={(e) => updateParams("type", e.target.value)}
+                                className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
+                            >
+                                <option value="">All Types</option>
+                                <option value="Formal">Formal</option>
+                                <option value="Night Dress">Night Dress</option>
+                                <option value="Casual">Casual</option>
+                            </select>
+                        </div>
+
+                        {/* Category */}
+                        <div className="mb-4">
+                            <label className="label">
+                                <span className="label-text dark:text-gray-300">
+                                    Category
+                                </span>
+                            </label>
+
+                            <select
+                                value={category}
+                                onChange={(e) => updateParams("category", e.target.value)}
+                                className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
+                            >
+                                <option value="">All Categories</option>
+                                <option value="Formal">Formal</option>
+                                <option value="Night Dress">Night Dress</option>
+                                <option value="Casual">Casual</option>
+                            </select>
+                        </div>
+
+                        <div className="flex justify-between mt-6">
+                            <button
+                                className="btn btn-outline"
+                                onClick={() => {
+                                    updateParams("sort", "");
+                                    updateParams("type", "");
+                                    updateParams("category", "");
+                                }}
+                            >
+                                Clear Filters
+                            </button>
+
+                            <form method="dialog">
+                                <button className="btn btn-neutral">
+                                    Apply
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <form method="dialog" className="modal-backdrop">
+                        <button>close</button>
+                    </form>
+                </dialog>
+
+
+                {/* products mapping ------------------------------------- */}
                 <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-6'>
                     {
                         products.map((product) => (
@@ -146,7 +280,7 @@ const Shop = () => {
                         onClick={() => updateParams("page", page - 1)}
                     >«</button>
 
-                    <button className="join-item p-4 btn border-0 dark:text-gray-300 dark:bg-gray-800">Page {page}</button>
+                    <button className="join-item px-4 border-y-1 border-gray-500 dark:text-gray-300 dark:bg-gray-800">Page {page}</button>
 
                     <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
                         disabled={(page === result.totalPages)}

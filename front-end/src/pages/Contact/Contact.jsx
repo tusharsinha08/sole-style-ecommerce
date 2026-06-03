@@ -3,6 +3,7 @@ import contactBanner from "../../assets/images/shop_bg.jpg";
 import { useForm } from "react-hook-form";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Contact = () => {
     const {
@@ -11,19 +12,28 @@ const Contact = () => {
         reset,
         formState: { errors, isSubmitting }
     } = useForm();
+    const axiosSecure = useAxiosSecure()
 
     const onSubmit = async (data) => {
-        console.log(data);
+        try {
+            const res = await axiosSecure.post("/contacts", data);
 
-        Swal.fire({
-            icon: "success",
-            title: "Message Sent!",
-            text: "We will get back to you soon.",
-            timer: 2000,
-            showConfirmButton: false,
-        });
+            if (res.data.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Message Sent",
+                    text: "We'll get back to you shortly.",
+                });
 
-        reset();
+                reset();
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Failed",
+                text: "Something went wrong",
+            });
+        }
     };
 
     return (
@@ -158,7 +168,7 @@ const Contact = () => {
                                     <div>
                                         <label className="label">
                                             <span className="label-text dark:text-gray-300">
-                                                Email Address
+                                               Your Email Address
                                             </span>
                                         </label>
 

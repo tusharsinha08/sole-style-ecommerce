@@ -1,6 +1,6 @@
+require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const productsRoutes = require('./routes/productsRoutes');
@@ -9,6 +9,7 @@ const cartsRoutes = require('./routes/cartsRoutes')
 const ordersRoutes = require('./routes/ordersRoutes')
 const paymentRoutes = require('./routes/paymentRoutes');
 const notificationsRoutes = require('./routes/notificationsRoutes');
+const contactsRoutes = require("./routes/contactsRoutes");
 
 const app = express();
 
@@ -32,6 +33,8 @@ app.use('/orders', ordersRoutes)
 app.use("/payments", paymentRoutes);
 
 app.use("/notifications", notificationsRoutes);
+
+app.use('/contacts', contactsRoutes)
 
 
 app.get('/', (req, res) => {

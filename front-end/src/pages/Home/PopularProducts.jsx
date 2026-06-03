@@ -20,7 +20,11 @@ const PopularProducts = () => {
     const popular = products.filter(item => item.category === 'popular');
 
     if (loading) {
-        return <div className='text-center'><span className="loading loading-dots loading-lg"></span></div>
+        return <>
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
+            </div>
+        </>
     }
 
     return (

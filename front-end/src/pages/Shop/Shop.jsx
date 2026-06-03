@@ -69,8 +69,8 @@ const Shop = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
             </div>
         );
     }
@@ -98,7 +98,7 @@ const Shop = () => {
 
             <div className='max-w-7xl mx-auto mt-12'>
                 <div className='md:flex md:justify-between my-6 p-6 dark:text-gray-300'>
-                    <p>Showing {products.length} products of {result.totalProducts}</p>
+                    <p className='text-sm'>Showing {products.length} products of {result.totalProducts}</p>
 
                     <label className="input dark:bg-gray-700 dark:text-gray-300 w-full max-w-xs">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

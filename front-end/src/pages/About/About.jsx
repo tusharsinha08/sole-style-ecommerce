@@ -23,7 +23,7 @@ const About = () => {
             .then(response => {
                 setUser(response.data);
                 console.log(user);
-                
+
             })
             .catch(error => {
                 console.error('Error fetching user:', error);
@@ -32,8 +32,6 @@ const About = () => {
 
     return (
         <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-
-            {/* Hero Section */}
             <div
                 className="hero bg-fixed min-h-[70vh]"
                 style={{

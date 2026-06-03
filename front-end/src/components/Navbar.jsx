@@ -52,7 +52,7 @@ const Navbar = () => {
                                 <img
                                     src={dbUser?.image}
                                     alt="User"
-                                    className="w-10 h-10 rounded-full"
+                                    className="w-10 h-10 rounded-full cursor-pointer"
                                 />
                             ) : (
                                 <FaRegCircleUser

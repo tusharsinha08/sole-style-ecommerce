@@ -17,6 +17,8 @@ let usersCollection;
 let cartsCollection;
 let ordersCollection;
 let paymentsCollection;
+let notificationsCollection;
+
 
 async function connectDB() {
     try {
@@ -29,6 +31,7 @@ async function connectDB() {
         cartsCollection = database.collection('carts');
         ordersCollection = database.collection('orders');
         paymentsCollection = database.collection('payments')
+        notificationsCollection = database.collection("notifications");
 
         await usersCollection.createIndex({ email: 1 }, { unique: true });
 
@@ -46,5 +49,6 @@ module.exports = {
     getUsersCollection: () => usersCollection,
     getCartsCollection: () => cartsCollection,
     getOrdersCollection: () => ordersCollection,
-    getPaymentsCollection: () => paymentsCollection
+    getPaymentsCollection: () => paymentsCollection,
+    getNotificationsCollection: () => notificationsCollection
 };

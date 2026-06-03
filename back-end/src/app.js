@@ -8,6 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const cartsRoutes = require('./routes/cartsRoutes')
 const ordersRoutes = require('./routes/ordersRoutes')
 const paymentRoutes = require('./routes/paymentRoutes');
+const notificationsRoutes = require('./routes/notificationsRoutes');
 
 const app = express();
 
@@ -29,6 +30,8 @@ app.use('/carts', cartsRoutes)
 app.use('/orders', ordersRoutes)
 
 app.use("/payments", paymentRoutes);
+
+app.use("/notifications", notificationsRoutes);
 
 
 app.get('/', (req, res) => {

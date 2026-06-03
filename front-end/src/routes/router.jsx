@@ -13,6 +13,7 @@ import Checkout from "../pages/CheckOut/Checkout";
 import Orders from "../pages/UserAccount/Orders";
 import MyCart from "../pages/UserAccount/MyCart";
 import MyProfile from "../pages/UserAccount/MyProfile";
+import Notification from "../pages/UserAccount/Notification";
 
 
 export const router = createBrowserRouter([
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'profile',
                         element: <MyProfile></MyProfile>
+                    },
+                    {
+                        path: 'notifications',
+                        element: <Notification></Notification>
                     }
                 ]
             },

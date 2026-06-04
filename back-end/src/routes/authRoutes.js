@@ -5,18 +5,20 @@ const {
     getUser,  
     getAllUsers
 } = require('../controllers/authController');
+const { verifyToken } = require('../middlewares/verifyToken');
+const { verifyAdmin } = require('../middlewares/verifyAdmin');
 
 const router = express.Router();
 
 
-router.get('/', getAllUsers)
+router.get('/', verifyToken, getAllUsers)
 
-router.post('/', addUser)
+router.post('/', verifyToken, verifyAdmin, addUser)
 
-router.get("/:email", getUser);
+router.get("/:email", verifyToken, getUser);
 
-router.put("/", updateUser);
+router.put("/", verifyToken, updateUser);
 
-router.patch('/', updateUser);
+router.patch('/', verifyToken, updateUser);
 
 module.exports = router;

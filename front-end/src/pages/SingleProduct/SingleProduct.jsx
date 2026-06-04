@@ -157,7 +157,7 @@ const SingleProduct = () => {
         );
     }
 
-    const { images, name, price, shortDescription, description, category, rating, stock, sizes, colors, reviews } = product;
+    const { images, name, price, shortDescription, description, categories, rating, stock, sizes, colors, reviews } = product;
 
     return (
 
@@ -270,10 +270,10 @@ const SingleProduct = () => {
                 {/* Product Info */}
                 <div className="space-y-2">
                     <p className="text-gray-500 dark:text-gray-400">
-                        <Link to="/">Home</Link> / <Link to={`/products?category=${category}`}>{category}</Link> / {name}
+                        <Link to="/">Home</Link> / <Link to={`/products?category=${categories[0]}`}>{categories[0]}</Link> / {name}
                     </p>
                     <p className="uppercase my-6 font-semibold tracking-widest text-sm text-[#2997AA]">
-                        <Link to={`/products?category=${category}`}>{category}</Link>
+                        <Link to={`/products?category=${categories[0]}`}>{categories[0]}</Link>
                     </p>
                     <h1 className="text-2xl font-cormorant dark:text-gray-300">
                         {name}
@@ -396,12 +396,18 @@ const SingleProduct = () => {
 
                     {/* Extra Info */}
                     <div className="flex gap-6">
-                        <p className="dark:text-gray-300">
+                        <div className="dark:text-gray-300">
                             <span className="font-semibold">
-                                Category:
+                                Categories:
                             </span>{" "}
-                            <Link to={`/products?category=${category}`}>{category}</Link>
-                        </p>
+                            {
+                                categories.map((category) => (
+                                    <Link key={category._id} to={`/products?category=${category}`}>
+                                        <span className="text-gray-500 text-sm"> {category}, </span>
+                                    </Link>
+                                ))
+                            }
+                        </div>
                         <p className="dark:text-gray-300">
                             <span className="font-semibold">
                                 Availability:

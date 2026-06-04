@@ -10,7 +10,7 @@ const useProduct = (params = {}) => {
         search = "",
         sortType = "",
         page = 1,
-        limit = 10,
+        limit = 12,
     } = params;
 
     const [products, setProducts] = useState([]);
@@ -18,18 +18,16 @@ const useProduct = (params = {}) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-
-        axios
-            .get("/products", {
-                params: {
-                    type: type || undefined,
-                    category: category || undefined,
-                    search: search || undefined,
-                    sort: sortType || undefined,
-                    page,
-                    limit,
-                },
-            })
+        axios.get("/products", {
+            params: {
+                type: type || undefined,
+                category: category || undefined,
+                search: search || undefined,
+                sort: sortType || undefined,
+                page,
+                limit,
+            },
+        })
             .then((response) => {
                 setProducts(response.data.products || []);
                 setResult(response.data || {});

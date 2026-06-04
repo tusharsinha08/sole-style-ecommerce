@@ -1,6 +1,5 @@
 // import React, { useEffect, useState } from 'react';
 import headerImage from '../../assets/images/women_header.jpg';
-// import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
@@ -88,20 +87,21 @@ const Shop = () => {
                         value={type}
                         onChange={(e) => updateParams("type", e.target.value)}
                         className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
-                        <option value="">Default type</option>
-                        <option value="Formal">Formal</option>
-                        <option value="Night Dress">Night Dress</option>
-                        <option value="Casual">Casual</option>
+                        <option value="">All Types</option>
+                        <option value="man">Man</option>
+                        <option value="women">Women</option>
+                        <option value="kids">Kids</option>
                     </select>
 
                     <select
                         value={category}
                         onChange={(e) => updateParams("category", e.target.value)}
                         className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
-                        <option value="">Default Category</option>
+                        <option value="">All Categories</option>
                         <option value="Formal">Formal</option>
                         <option value="Night Dress">Night Dress</option>
                         <option value="Casual">Casual</option>
+                        <option value="Jacket">Jacket</option>
                     </select>
 
                     <label className="input dark:bg-gray-700 dark:text-gray-300 w-full max-w-xs">
@@ -209,9 +209,9 @@ const Shop = () => {
                                 className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
                             >
                                 <option value="">All Types</option>
-                                <option value="Formal">Formal</option>
-                                <option value="Night Dress">Night Dress</option>
-                                <option value="Casual">Casual</option>
+                                <option value="man">Man</option>
+                                <option value="women">Women</option>
+                                <option value="kids">Kids</option>
                             </select>
                         </div>
 
@@ -232,6 +232,7 @@ const Shop = () => {
                                 <option value="Formal">Formal</option>
                                 <option value="Night Dress">Night Dress</option>
                                 <option value="Casual">Casual</option>
+                                <option value="Jacket">Jacket</option>
                             </select>
                         </div>
 

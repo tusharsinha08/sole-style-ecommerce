@@ -11,7 +11,7 @@ const { verifyAdmin } = require('../middlewares/verifyAdmin');
 const router = express.Router();
 
 
-router.get('/', verifyToken, getAllUsers)
+router.get('/', getAllUsers)
 
 router.post('/', verifyToken, verifyAdmin, addUser)
 

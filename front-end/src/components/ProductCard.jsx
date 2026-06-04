@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import useScrollToTop from '../hooks/useScrollToTop';
 
 const ProductCard = ({ product }) => {
-    const { name, category, images, price, shortDescription } = product;
+    const { name, categories, images, price, shortDescription } = product;
     const scrollToTop = useScrollToTop();
 
     return (
@@ -45,7 +45,7 @@ const ProductCard = ({ product }) => {
 
             {/* TEXT SECTION (UNCHANGED) */}
             <div className="text-center space-y-1">
-                <p className='capitalize text-gray-500 text-sm '>{category}</p>
+                <p className='capitalize text-gray-500 text-sm '>{categories[0]}</p>
                 <h2 className="font-bold dark:text-white">{name}</h2>
                 <p className='font-semibold text-gray-500'>$ {price}</p>
             </div>

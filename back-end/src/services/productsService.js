@@ -19,37 +19,48 @@ const fetchProducts = async (queryParams) => {
 
     let query = {};
 
+    // Search by product name
     if (search) {
         query.name = {
             $regex: search,
-            $options: 'i'
+            $options: "i"
         };
     }
 
+    // Type filter (man/women/kids)
     if (type) {
-        query.type = type;
+        query.type = {
+            $regex: `^${type.trim()}$`,
+            $options: "i"
+        };
     }
 
+    // Category filter from categories array
     if (category) {
-        query.category = category;
+        query.categories = {
+            $elemMatch: {
+                $regex: `^${category.trim()}$`,
+                $options: "i"
+            }
+        };
     }
 
     let sortOption = {};
 
     switch (sort) {
-        case 'popularity':
+        case "popularity":
             sortOption.popularity = -1;
             break;
 
-        case 'latest':
+        case "latest":
             sortOption.createdAt = -1;
             break;
 
-        case 'lowToHigh':
+        case "lowToHigh":
             sortOption.price = 1;
             break;
 
-        case 'highToLow':
+        case "highToLow":
             sortOption.price = -1;
             break;
 

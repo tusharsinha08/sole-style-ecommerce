@@ -9,7 +9,7 @@ const PopularProducts = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3000/products')
+        fetch(`http://localhost:3000/products?category=popular`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.products);
@@ -17,7 +17,6 @@ const PopularProducts = () => {
             });
     }, []);
 
-    const popular = products.filter(item => item.category === 'popular');
 
     if (loading) {
         return <>
@@ -35,7 +34,7 @@ const PopularProducts = () => {
                 </h3>
             </div>
 
-            {popular.length > 0 && (
+            {products.length > 0 && (
                 <div className='px-6'>
                     <Swiper
                         modules={[Autoplay]}
@@ -52,7 +51,7 @@ const PopularProducts = () => {
                         }}
                         loop={true}
                     >
-                        {popular.map(product => (
+                        {products.map(product => (
                             <SwiperSlide key={product._id}>
                                 <ProductCard product={product} />
                             </SwiperSlide>

@@ -18,6 +18,7 @@ import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
+import Products from "../pages/Admin/Products/Products";
 
 
 export const router = createBrowserRouter([
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
             {
                 path:'dashboard',
                 element: <AdminDashboard></AdminDashboard>
+            },
+            {
+                path: 'products',
+                element: <Products></Products>
             }
         ]
     }

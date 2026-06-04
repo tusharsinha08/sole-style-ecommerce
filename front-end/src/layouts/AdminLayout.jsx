@@ -1,14 +1,13 @@
-import { Link, Outlet } from 'react-router-dom';
-import CustomersSidebar from '../components/CustomersSidebar';
-import useAuth from '../hooks/useAuth';
-import useGreeting from '../hooks/useGreeting';
+import { Outlet } from "react-router-dom";
+import AdminSidebar from "../components/AdminSidebar";
+import useGreeting from "../hooks/useGreeting";
+import useAuth from "../hooks/useAuth";
 
-const CustomerDashboardLayout = () => {
+const AdminLayout = () => {
     const { user } = useAuth();
     const greeting = useGreeting();
 
     return (
-
         <div className='max-w-7xl mx-auto pt-16 scroll-px-px min-h-screen bg-white dark:bg-gray-800'>
             <div className="drawer md:drawer-open">
                 <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
@@ -32,21 +31,20 @@ const CustomerDashboardLayout = () => {
 
                         {/* Top section */}
                         <div className="p-4 border-b dark:border-gray-700">
-                            <h2 className="text-lg font-bold">User Panel</h2>
+                            <h2 className="text-lg font-bold">Admin Panel</h2>
                             <p className="text-sm text-gray-400">{user?.email}</p>
                         </div>
 
                         {/* Sidebar menu (scrollable) */}
                         <div className="flex-1 overflow-y-auto">
-                            <CustomersSidebar></CustomersSidebar>
+                            <AdminSidebar />
                         </div>
 
                     </aside>
                 </div>
             </div>
         </div>
-
     );
 };
 
-export default CustomerDashboardLayout;
+export default AdminLayout;

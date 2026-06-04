@@ -1,39 +1,47 @@
-import { useEffect, useState } from 'react';
-import useAxiosPublic from './useAxiosPublic';
+import { useEffect, useState } from "react";
+import useAxiosPublic from "./useAxiosPublic";
 
-
-const useProduct = ({ type, category, search, sortType, page }) => {
+const useProduct = (params = {}) => {
     const axios = useAxiosPublic();
+
+    const {
+        type = "",
+        category = "",
+        search = "",
+        sortType = "",
+        page = 1,
+        limit = 10,
+    } = params;
 
     const [products, setProducts] = useState([]);
     const [result, setResult] = useState({});
-    
-    
     const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        axios.get('/products', {
-            params: {
-                type,
-                category,
-                search,
-                sort: sortType,
-                page,
-                limit: 10,
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                setProducts(response.data.products);
-                setResult(response.data);
-                setLoading(false);
+
+        axios
+            .get("/products", {
+                params: {
+                    type: type || undefined,
+                    category: category || undefined,
+                    search: search || undefined,
+                    sort: sortType || undefined,
+                    page,
+                    limit,
+                },
             })
-            .catch(error => {
-                console.error('Error fetching products:', error);
+            .then((response) => {
+                setProducts(response.data.products || []);
+                setResult(response.data || {});
+            })
+            .catch((error) => {
+                console.error("Error fetching products:", error);
+            })
+            .finally(() => {
                 setLoading(false);
             });
-    }, [type, category, search, sortType, page]);
+    }, [type, category, search, sortType, page, limit]);
 
-    
     return { products, result, loading };
 };
 

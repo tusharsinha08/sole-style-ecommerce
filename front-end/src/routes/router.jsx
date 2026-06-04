@@ -16,6 +16,8 @@ import MyProfile from "../pages/UserAccount/MyProfile";
 import Notification from "../pages/UserAccount/Notification";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "../pages/Admin/AdminDashboard";
 
 
 export const router = createBrowserRouter([
@@ -44,7 +46,7 @@ export const router = createBrowserRouter([
                 element: <SingleProduct></SingleProduct>
             },
             {
-                path:'check-out',
+                path: 'check-out',
                 element: <Checkout></Checkout>
             },
             {
@@ -82,6 +84,16 @@ export const router = createBrowserRouter([
                     }
                 ]
             },
+        ]
+    },
+    {
+        path: "/admin",
+        element: <AdminLayout></AdminLayout>,
+        children: [
+            {
+                path:'dashboard',
+                element: <AdminDashboard></AdminDashboard>
+            }
         ]
     }
 ])

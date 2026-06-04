@@ -96,7 +96,16 @@ const fetchSingleProduct = async (id) => {
     return await productsCollection.findOne(query);
 };
 
+const deleteProductById = async (id) => {
+    const collection = getProductsCollection()
+
+    const query = { _id: new ObjectId(id) }
+
+    return await collection.deleteOne(query)
+}
+
 module.exports = {
     fetchProducts,
-    fetchSingleProduct
+    fetchSingleProduct,
+    deleteProductById
 };

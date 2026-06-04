@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "./useAxiosPublic";
 
 const useProduct = (params = {}) => {
@@ -13,34 +13,42 @@ const useProduct = (params = {}) => {
         limit = 12,
     } = params;
 
-    const [products, setProducts] = useState([]);
-    const [result, setResult] = useState({});
-    const [loading, setLoading] = useState(true);
+    const {data = {}, isPanding: isLoading, refetch, } = useQuery({
+        queryKey: [
+            "products",
+            type,
+            category,
+            search,
+            sortType,
+            page,
+            limit,
+        ],
 
-    useEffect(() => {
-        axios.get("/products", {
-            params: {
-                type: type || undefined,
-                category: category || undefined,
-                search: search || undefined,
-                sort: sortType || undefined,
-                page,
-                limit,
-            },
-        })
-            .then((response) => {
-                setProducts(response.data.products || []);
-                setResult(response.data || {});
-            })
-            .catch((error) => {
-                console.error("Error fetching products:", error);
-            })
-            .finally(() => {
-                setLoading(false);
+        queryFn: async () => {
+            const res = await axios.get("/products", {
+                params: {
+                    type: type || undefined,
+                    category: category || undefined,
+                    search: search || undefined,
+                    sort: sortType || undefined,
+                    page,
+                    limit,
+                },
             });
-    }, [type, category, search, sortType, page, limit]);
 
-    return { products, result, loading };
+            return res.data;
+        },
+
+        keepPreviousData: true, // smooth pagination
+        staleTime: 1000 * 60 * 5, // 5 min cache
+    });
+
+    return {
+        products: data.products || [],
+        result: data,
+        isLoading,
+        refetch,
+    };
 };
 
 export default useProduct;

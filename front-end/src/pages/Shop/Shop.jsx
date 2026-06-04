@@ -15,7 +15,6 @@ const Shop = () => {
     const page = parseInt(searchParams.get("page")) || 1;
 
     const { products, result, loading } = useProduct({ type, category, search, sortType, page });
-    console.log(products, result, loading);
 
     // Update URL Params
     const updateParams = (key, value) => {

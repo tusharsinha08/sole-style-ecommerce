@@ -1,6 +1,7 @@
 const {
     fetchProducts,
-    fetchSingleProduct
+    fetchSingleProduct,
+    deleteProductById
 } = require('../services/productsService');
 
 const getProducts = async (req, res) => {
@@ -31,7 +32,16 @@ const getSingleProduct = async (req, res) => {
     }
 };
 
+const deleteProduct = async (req, res) => {
+    const id = req.params.id
+    
+    const result = await deleteProductById(id)
+
+    res.send(result)
+}
+
 module.exports = {
     getProducts,
-    getSingleProduct
+    getSingleProduct,
+    deleteProduct
 };

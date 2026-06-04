@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import aboutBanner from "../../assets/images/shop_bg.jpg";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useProduct from "../../hooks/useProduct";
 
 const About = () => {
 
@@ -9,21 +10,13 @@ const About = () => {
 
     const axios = useAxiosPublic();
 
-    const [products, setProducts] = useState([]);
+    const { result } = useProduct()
 
     useEffect(() => {
-        axios.get('/products')
-            .then(response => {
-                setProducts(response.data.products);
-            })
-            .catch(error => {
-                console.error('Error fetching products:', error);
-            });
         axios.get('/users')
             .then(response => {
                 setUser(response.data);
                 console.log(user);
-
             })
             .catch(error => {
                 console.error('Error fetching user:', error);
@@ -108,7 +101,7 @@ const About = () => {
 
                         <div>
                             <h3 className="text-4xl font-bold text-gray-900 dark:text-gray-300">
-                                {products?.length || 500}+
+                                {result?.totalProducts || 500}+
                             </h3>
                             <p className="mt-2">Products</p>
                         </div>

@@ -4,7 +4,8 @@ const { getUsersCollection } = require("../config/db")
 const verifyAdmin = async (req, res, next) => {
     try {
         const usersCollection = getUsersCollection();
-        const email = req.email;
+        const email = req.user?.email;
+        
         const user = await usersCollection.findOne({ email })
 
         if (!user) {

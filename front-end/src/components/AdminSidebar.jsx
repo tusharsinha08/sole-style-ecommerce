@@ -1,10 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { FaHome, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 import { FaBoxOpen, FaMoneyBill, FaUser } from "react-icons/fa6";
 
 const AdminSidebar = () => {
     const { signOutUser } = useAuth();
+    const navigate = useNavigate();
     const navClass = ({ isActive }) =>
         `flex items-center gap-3 px-4 py-3 rounded-sm transition-all
     ${isActive
@@ -14,6 +15,7 @@ const AdminSidebar = () => {
 
     const handleSignOut = () => {
         signOutUser()
+        navigate('/login')
     }
 
     return (

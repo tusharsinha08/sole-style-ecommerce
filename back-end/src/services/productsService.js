@@ -96,6 +96,13 @@ const fetchSingleProduct = async (id) => {
     return await productsCollection.findOne(query);
 };
 
+const addProductToDb = async (product) => {
+    const collection = getProductsCollection()
+    const result = await collection.insertOne(product)
+
+    return result;
+}
+
 const deleteProductById = async (id) => {
     const collection = getProductsCollection()
 
@@ -107,5 +114,6 @@ const deleteProductById = async (id) => {
 module.exports = {
     fetchProducts,
     fetchSingleProduct,
-    deleteProductById
+    deleteProductById,
+    addProductToDb
 };

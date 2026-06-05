@@ -19,6 +19,7 @@ import Contact from "../pages/Contact/Contact";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import Products from "../pages/Admin/Products/Products";
+import AddProduct from "../pages/Admin/Products/AddProduct";
 
 
 export const router = createBrowserRouter([
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
             {
                 path: 'products',
                 element: <Products></Products>
+            },
+            {
+                path: 'products/add-product',
+                element: <AddProduct></AddProduct>
             }
         ]
     }

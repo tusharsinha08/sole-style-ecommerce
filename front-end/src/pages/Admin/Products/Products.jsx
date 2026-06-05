@@ -3,6 +3,7 @@ import useProduct from "../../../hooks/useProduct";
 import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const Products = () => {
 
@@ -66,7 +67,7 @@ const Products = () => {
                 </div>
 
                 <button className="btn bg-neutral text-white hover:opacity-80 transition">
-                    Add Product
+                    <Link to={'add-product'}>Add Product</Link>
                 </button>
             </div>
 
@@ -149,13 +150,13 @@ const Products = () => {
                                 <td>
                                     <div className="flex justify-center gap-3">
                                         <button
-                                            className="text-gray-600 text-lg"
+                                            className="text-gray-600 text-lg cursor-pointer hover:text-gray-800"
                                         >
                                             <FaEdit />
                                         </button>
 
                                         <button onClick={() => handleDeleteProduct(product._id)}
-                                            className="text-lg text-red-500"
+                                            className="text-lg text-red-500 cursor-pointer hover:text-red-700"
                                         >
                                             <FaTrash />
                                         </button>

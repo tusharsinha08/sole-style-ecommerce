@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
             <div className="text-center space-y-1">
                 <p className='capitalize text-gray-500 text-sm '>{categories[0]}</p>
                 <h2 className="font-bold dark:text-white">{name}</h2>
-                <p className='font-semibold text-gray-500'>$ {price}</p>
+                <p className='font-semibold text-gray-500'>৳ {price}</p>
             </div>
 
         </div>

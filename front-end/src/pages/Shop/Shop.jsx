@@ -40,6 +40,9 @@ const Shop = () => {
         setSearchParams(params);
     };
 
+    const categoryList = ["T-Shirts", "Shirts", "Drop Shoulder", "Jeans", "Trousers", "Hoodies", "Jackets", "Streetwear", "Casual Wear", "Formal Wear", "Sportswear", "Graphic T-Shirts", "Accessories"
+    ]
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -97,10 +100,11 @@ const Shop = () => {
                         onChange={(e) => updateParams("category", e.target.value)}
                         className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
                         <option value="">All Categories</option>
-                        <option value="Formal">Formal</option>
-                        <option value="Night Dress">Night Dress</option>
-                        <option value="Casual">Casual</option>
-                        <option value="Jacket">Jacket</option>
+                        {
+                            categoryList.map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))
+                        }
                     </select>
 
                     <label className="input dark:bg-gray-700 dark:text-gray-300 w-full max-w-xs">
@@ -228,10 +232,11 @@ const Shop = () => {
                                 className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
                             >
                                 <option value="">All Categories</option>
-                                <option value="Formal">Formal</option>
-                                <option value="Night Dress">Night Dress</option>
-                                <option value="Casual">Casual</option>
-                                <option value="Jacket">Jacket</option>
+                                {
+                                    categoryList.map(cat => (
+                                        <option key={cat} value={cat}>{cat}</option>
+                                    ))
+                                }
                             </select>
                         </div>
 

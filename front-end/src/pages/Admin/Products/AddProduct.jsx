@@ -155,7 +155,7 @@ const AddProduct = () => {
                     />
 
                     {/* Categories */}
-                    <div className="col-span-2">
+                    <div className="md:col-span-2">
                         <label className="font-medium mb-2 block">Categories</label>
 
                         <div className="flex flex-wrap text-sm gap-2">

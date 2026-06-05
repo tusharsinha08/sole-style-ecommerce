@@ -111,9 +111,30 @@ const deleteProductById = async (id) => {
     return await collection.deleteOne(query)
 }
 
+const updateProductById = async (id, product) => {
+    const collection = getProductsCollection();
+
+    const filter = { _id: new ObjectId(id) };
+
+    const updateDoc = {
+        $set: {
+            ...product,
+            price: Number(product.price),
+            stock: Number(product.stock),
+            rating: Number(product.rating || 0),
+            updatedAt: new Date()
+        }
+    };
+
+    const result = await collection.updateOne(filter, updateDoc);
+
+    return result;
+};
+
 module.exports = {
     fetchProducts,
     fetchSingleProduct,
     deleteProductById,
-    addProductToDb
+    addProductToDb,
+    updateProductById
 };

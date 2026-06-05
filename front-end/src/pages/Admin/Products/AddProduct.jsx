@@ -54,7 +54,7 @@ const AddProduct = () => {
 
             if (data.images?.length > 0) {
                 // const files = Array.from(data.images);
-                const files = (data.images || []).flat();
+                const files = data.images
                 imageUrls = await Promise.all(
                     files.map(file => uploadImage(file))
                 )
@@ -263,15 +263,28 @@ const AddProduct = () => {
 
                         {/* file names */}
                         {filesList.length > 0 && (
-                            <div className="mt-2 flex flex-wrap gap-2">
-                                {filesList.map((file, index) => (
-                                    <span
+                            <div className="flex flex-wrap gap-3">
+                                {filesList.map((img, index) => (
+                                    <div
                                         key={index}
-                                        className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 rounded"
+                                        className="relative"
                                     >
-                                        {file.name}
-                                        <button onClick={() => handleRemoveImage(index)} className="ml-2 cursor-pointer">x</button>
-                                    </span>
+                                        <img
+                                            src={URL.createObjectURL(img)}
+                                            alt=""
+                                            className="w-24 h-24 rounded object-cover"
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                handleRemoveImage(index)
+                                            }
+                                            className="absolute top-0 right-0 bg-red-500 text-white px-2 rounded"
+                                        >
+                                            x
+                                        </button>
+                                    </div>
                                 ))}
                             </div>
                         )}
@@ -289,9 +302,12 @@ const AddProduct = () => {
                             accept="image/*"
                             multiple
                             onChange={(e) => {
-                                const files = Array.from(e.target.files);
-                                setValue("images", [...filesList, files]);
-                                setFilesList((prev) => [...prev, ...files]);
+                                const newFiles = Array.from(e.target.files || []);
+
+                                const updatedFiles = [...filesList, ...newFiles];
+
+                                setFilesList(updatedFiles);
+                                setValue("images", updatedFiles);
                             }}
                             className="file-input file-input-bordered dark:bg-gray-600 w-full max-w-xs"
                         />

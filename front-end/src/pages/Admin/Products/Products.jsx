@@ -149,10 +149,10 @@ const Products = () => {
                                 {/* Actions */}
                                 <td>
                                     <div className="flex justify-center gap-3">
-                                        <button
+                                        <button 
                                             className="text-gray-600 text-lg cursor-pointer hover:text-gray-800"
                                         >
-                                            <FaEdit />
+                                            <Link to={`edit/${product._id}`}><FaEdit /></Link>
                                         </button>
 
                                         <button onClick={() => handleDeleteProduct(product._id)}

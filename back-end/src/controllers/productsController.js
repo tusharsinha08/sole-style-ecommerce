@@ -2,7 +2,8 @@ const {
     fetchProducts,
     fetchSingleProduct,
     deleteProductById,
-    addProductToDb
+    addProductToDb,
+    updateProductById
 } = require('../services/productsService');
 
 const getProducts = async (req, res) => {
@@ -48,9 +49,32 @@ const deleteProduct = async (req, res) => {
     res.send(result)
 }
 
+const updateProduct = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const product = req.body;
+
+        if (!id) {
+            return res.status(400).send({ message: "Product ID required" });
+        }
+
+        const result = await updateProductById(id, product);
+
+        res.send(result)
+
+    } catch (error) {
+        res.status(500).send({
+            message: "Server error",
+            error: error.message
+        });
+    }
+};
+
+
 module.exports = {
     getProducts,
     getSingleProduct,
     deleteProduct,
-    addProduct
+    addProduct,
+    updateProduct
 };

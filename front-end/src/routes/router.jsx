@@ -21,6 +21,7 @@ import AdminDashboard from "../pages/Admin/AdminDashboard";
 import Products from "../pages/Admin/Products/Products";
 import AddProduct from "../pages/Admin/Products/AddProduct";
 import EditProduct from "../pages/Admin/Products/EditProduct";
+import Users from "../pages/Admin/Users/Users";
 
 
 export const router = createBrowserRouter([
@@ -108,6 +109,10 @@ export const router = createBrowserRouter([
             {
                 path: 'products/edit/:id',
                 element: <EditProduct></EditProduct>
+            },
+            {
+                path: 'users',
+                element: <Users></Users>
             }
         ]
     }

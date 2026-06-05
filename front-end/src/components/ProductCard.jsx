@@ -12,16 +12,13 @@ const ProductCard = ({ product }) => {
 
             {/* IMAGE WRAPPER */}
             <figure className='h-80 w-full mb-2 relative group overflow-hidden'>
-
-                <div>
-                    <Link to={`/products/${product._id}`}>
-                        <img
-                            className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
-                            src={images[0]}
-                            alt=""
-                        />
-                    </Link>
-                </div>
+                <Link to={`/products/${product._id}`}>
+                    <img
+                        className='w-full h-full  object-cover transition-transform duration-300 group-hover:scale-105'
+                        src={images[0]}
+                        alt=""
+                    />
+                </Link>
 
                 {/* HOVER OVERLAY */}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col items-center justify-center p-4">

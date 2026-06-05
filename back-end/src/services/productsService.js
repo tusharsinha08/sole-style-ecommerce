@@ -54,6 +54,7 @@ const fetchProducts = async (queryParams) => {
 
         case "latest":
             sortOption.createdAt = -1;
+            sortOption.updatedAt = -1;
             break;
 
         case "lowToHigh":
@@ -98,7 +99,11 @@ const fetchSingleProduct = async (id) => {
 
 const addProductToDb = async (product) => {
     const collection = getProductsCollection()
-    const result = await collection.insertOne(product)
+    const updatedProduct = {
+        ...product,
+        createdAt: new Date()
+    }
+    const result = await collection.insertOne(updatedProduct)
 
     return result;
 }

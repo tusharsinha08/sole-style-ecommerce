@@ -67,9 +67,10 @@ const Login = () => {
             }
         };
 
+        
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 py-10">
-                <div className=" border w-1/2 mx-auto items-center border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-10">
+            <div className="min-h-screen flex items-center justify-center px-4 pt-10">
+                <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-8 md:p-10">
 
                     {/* Heading */}
                     <div className="mb-10">

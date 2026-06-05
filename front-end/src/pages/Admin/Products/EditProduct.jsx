@@ -13,7 +13,7 @@ const EditProduct = () => {
     const axiosSecure = useAxiosSecure();
 
     const [filesList, setFilesList] = useState([]);
-    const [existingImages, setExistingImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
 
     const {
         register,
@@ -47,7 +47,7 @@ const EditProduct = () => {
                 colors: product.colors || [],
             });
 
-            setExistingImages(product.images || []);
+            setPreviewImages(product.images || []);
         }
     }, [product, reset]);
 
@@ -63,7 +63,7 @@ const EditProduct = () => {
     };
 
     const removeExistingImage = (index) => {
-        setExistingImages((prev) =>
+        setPreviewImages((prev) =>
             prev.filter((_, i) => i !== index)
         );
     };
@@ -96,7 +96,7 @@ const EditProduct = () => {
                 colors: data.colors || [],
 
                 images: [
-                    ...existingImages,
+                    ...previewImages,
                     ...newImageUrls
                 ]
             };
@@ -209,6 +209,7 @@ const EditProduct = () => {
                                 "Polo Shirts",
                                 "Drop Shoulder",
                                 "Jeans",
+                                "Pants",
                                 "Trousers",
                                 "Hoodies",
                                 "Jackets",
@@ -305,11 +306,11 @@ const EditProduct = () => {
                     {/* Existing Images */}
                     <div className="md:col-span-2">
                         <label className="font-semibold block mb-2">
-                            Existing Images
+                            Preview Images
                         </label>
 
                         <div className="flex flex-wrap gap-3">
-                            {existingImages.map((img, index) => (
+                            {previewImages.map((img, index) => (
                                 <div
                                     key={index}
                                     className="relative"
@@ -331,6 +332,33 @@ const EditProduct = () => {
                                     </button>
                                 </div>
                             ))}
+                            
+                            {filesList.length > 0 && (
+                            <div className="flex flex-wrap gap-3">
+                                {filesList.map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className="relative"
+                                    >
+                                        <img
+                                            src={URL.createObjectURL(img)}
+                                            alt=""
+                                            className="w-24 h-24 rounded object-cover"
+                                        />
+
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                removeNewImage(index)
+                                            }
+                                            className="absolute top-0 right-0 bg-red-500 text-white px-2 rounded"
+                                        >
+                                            x
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                         </div>
                     </div>
 
@@ -361,27 +389,6 @@ const EditProduct = () => {
                             }}
                             className="file-input file-input-bordered"
                         />
-
-                        <div className="flex flex-wrap gap-2 mt-2">
-                            {filesList.map((file, index) => (
-                                <span
-                                    key={index}
-                                    className="badge badge-outline"
-                                >
-                                    {file.name}
-
-                                    <button
-                                        type="button"
-                                        className="ml-2"
-                                        onClick={() =>
-                                            removeNewImage(index)
-                                        }
-                                    >
-                                        ×
-                                    </button>
-                                </span>
-                            ))}
-                        </div>
                     </div>
 
                     <button

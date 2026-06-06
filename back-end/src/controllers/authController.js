@@ -27,7 +27,8 @@ const addUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await fetchAllUsers();
+        const query = req.query;
+        const users = await fetchAllUsers(query);
 
         res.send(users);
     } catch (error) {

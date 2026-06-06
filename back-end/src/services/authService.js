@@ -1,10 +1,23 @@
 
 const { getUsersCollection } = require('../config/db')
 
-const fetchAllUsers = async () => {
+const fetchAllUsers = async (queryParams) => {
     const usersCollection = getUsersCollection();
 
-    const result = await usersCollection.find({}).toArray();
+    const page = parseInt(queryParams.page) || 1;
+    const limit = parseInt(queryParams.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    let query = {};
+
+
+
+    const result = await usersCollection
+        .find({})
+        .skip(skip)
+        .limit(limit)
+        .toArray();
+
     return result;
 };
 

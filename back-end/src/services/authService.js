@@ -1,4 +1,5 @@
 
+const { ObjectId } = require('mongodb');
 const { getUsersCollection } = require('../config/db')
 
 const fetchAllUsers = async (queryParams) => {
@@ -9,8 +10,6 @@ const fetchAllUsers = async (queryParams) => {
     const skip = (page - 1) * limit;
 
     let query = {};
-
-
 
     const result = await usersCollection
         .find({})
@@ -34,6 +33,14 @@ const fetchUsersByEmail = async (email) => {
     return await usersCollection.findOne({ email })
 }
 
+const fetchUserById = async (id) => {
+    const usersCollection = getUsersCollection()
+
+    const query = { _id: new ObjectId(id) }
+
+    return await usersCollection.findOne(query)
+}
+
 const updateUserDetails = async (user) => {
     const usersCollection = getUsersCollection();
 
@@ -52,9 +59,28 @@ const updateUserDetails = async (user) => {
     return result;
 };
 
+const adminUpdateUserById = async (id, data) => {
+    const usersCollection = getUsersCollection();
+
+
+    const result = await usersCollection.updateOne(
+        { _id: new ObjectId(id) },
+        {
+            $set: {
+                ...data,
+                updatedAt: new Date()
+            }
+        }
+    );
+
+    return result;
+};
+
 module.exports = {
     fetchAllUsers,
     createUser,
     fetchUsersByEmail,
-    updateUserDetails
+    updateUserDetails,
+    fetchUserById,
+    adminUpdateUserById
 }

@@ -3,7 +3,9 @@ const {
     addUser, 
     updateUser, 
     getUser,  
-    getAllUsers
+    getAllUsers,
+    getUserById,
+    updateUserById
 } = require('../controllers/authController');
 const { verifyToken } = require('../middlewares/verifyToken');
 const { verifyAdmin } = require('../middlewares/verifyAdmin');
@@ -15,10 +17,12 @@ router.get('/', getAllUsers)
 
 router.post('/', verifyToken, verifyAdmin, addUser)
 
-router.get("/:email", verifyToken, getUser);
+router.get("/id/:id", verifyToken, verifyAdmin, getUserById);
 
-router.put("/", verifyToken, updateUser);
+router.get("/email/:email", verifyToken, getUser);
 
 router.patch('/', verifyToken, updateUser);
+
+router.patch('/:id', verifyToken, verifyAdmin, updateUserById);
 
 module.exports = router;

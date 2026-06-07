@@ -22,6 +22,7 @@ import Products from "../pages/Admin/Products/Products";
 import AddProduct from "../pages/Admin/Products/AddProduct";
 import EditProduct from "../pages/Admin/Products/EditProduct";
 import Users from "../pages/Admin/Users/Users";
+import EditUser from "../pages/Admin/Users/EditUser";
 
 
 export const router = createBrowserRouter([
@@ -95,7 +96,7 @@ export const router = createBrowserRouter([
         element: <AdminLayout></AdminLayout>,
         children: [
             {
-                path:'dashboard',
+                path: 'dashboard',
                 element: <AdminDashboard></AdminDashboard>
             },
             {
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
             {
                 path: 'users',
                 element: <Users></Users>
+            },
+            {
+                path: 'users/edit/:id',
+                element: <EditUser></EditUser>
             }
         ]
     }

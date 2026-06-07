@@ -20,7 +20,6 @@ const EditProduct = () => {
         handleSubmit,
         reset,
         setValue,
-        watch,
         formState: { isSubmitting }
     } = useForm();
 

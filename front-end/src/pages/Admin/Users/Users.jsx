@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const Users = () => {
-    const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;
@@ -21,7 +21,30 @@ const Users = () => {
         }
     })
 
-
+    const handleDeleteUser = async (id) => {
+        Swal.fire({
+            title: "Not allowed!",
+            text: "Delete a user currently not available",
+            icon: "warning",
+        })
+        
+        // .then(async (result) => {
+        //     if (result.isConfirmed) {
+        //         try {
+        //             const res = await axiosSecure.delete(`/users/${id}`);
+        //             console.log(res.data);
+        //             refetch()
+        //         } catch (error) {
+        //             console.error('Error removing item:', error);
+        //             Swal.fire({
+        //                 title: "Error!",
+        //                 text: "Failed to delete this user. Please try again.",
+        //                 icon: "error"
+        //             });
+        //         }
+        //     }
+        // })
+    }
 
     return (
         <div className="p-4 md:p-6">
@@ -125,7 +148,7 @@ const Users = () => {
                                         </Link>
 
                                         <button
-                                            // onClick={() => handleDeleteUser(user._id)}
+                                            onClick={() => handleDeleteUser(user._id)}
                                             className="text-lg text-red-500 hover:text-red-700 cursor-pointer"
                                         >
                                             <FaTrash />

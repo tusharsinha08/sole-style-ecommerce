@@ -9,7 +9,7 @@ const useAuth = () => {
     const { refetch, data: dbUser = {}} = useQuery({
         queryKey: ['dbUser', auth?.user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/users/${auth?.user?.email}`)
+            const res = await axiosSecure.get(`/users/email/${auth?.user?.email}`)
             return res.data;
         }
     })

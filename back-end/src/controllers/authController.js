@@ -4,6 +4,8 @@ const {
     updateUserDetails,
     fetchUsersByEmail,
     fetchAllUsers,
+    fetchUserById,
+    adminUpdateUserById,
 } = require("../services/authService")
 
 
@@ -40,8 +42,28 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const email = req.params.email;
+        console.log('hit the email', email);
+        
 
         const user = await fetchUsersByEmail(email);
+
+        if (!user) {
+            return res.status(404).send({ message: "User not found" });
+        }
+
+        res.send(user);
+    } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+    }
+};
+
+
+const getUserById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+
+        const user = await fetchUserById(id);
 
         if (!user) {
             return res.status(404).send({ message: "User not found" });
@@ -66,9 +88,25 @@ const updateUser = async (req, res) => {
 };
 
 
+const updateUserById = async (req, res) => {
+    try {
+        const id = req.params;
+        const data = req.body;
+        
+        const result = await adminUpdateUserById(id, data);
+
+        res.send(result);
+    } catch (error) {
+        res.status(500).send({ message: "Server Error" });
+    }
+};
+
+
 module.exports = {
     addUser,
     getUser,
     updateUser,
-    getAllUsers
+    getAllUsers,
+    getUserById,
+    updateUserById
 };

@@ -4,9 +4,7 @@ const notificationsService = require("../services/notificationsService");
 const createNotification = async (req, res) => {
     try {
         const result = await notificationsService.createNotification(req.body);
-        console.log(req.body);
         
-
         res.status(201).send(result);
     } catch (error) {
         res.status(500).send({

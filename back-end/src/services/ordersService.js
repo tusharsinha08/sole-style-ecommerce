@@ -16,6 +16,14 @@ const getOrdersByEmail = async (email) => {
     return result
 }
 
+const getOrderById = async (id) => {
+    const collection = getOrdersCollection()
+    const query = { _id: new ObjectId(id) }
+    const result = await collection.findOne(query)
+
+    return result
+}
+
 const getAllOrdersForAdmin = async ({
     city,
     status,
@@ -88,6 +96,28 @@ const updateOrderById = async (id, action) => {
     return result
 }
 
+const updateOrderByAdmin = async (id, data) => {
+    const ordersCollection = getOrdersCollection();
+
+    const query = {
+        _id: new ObjectId(id)
+    };
+
+    const updateDoc = {
+        $set: {
+            customer: data.customer,
+            shippingAddress: data.shippingAddress,
+            paymentStatus: data.paymentStatus,
+            orderStatus: data.orderStatus,
+            updatedAt: new Date()
+        }
+    };
+
+    const result = await ordersCollection.updateOne(query, updateDoc);
+
+    return result;
+};
+
 const deleteOrderById = async (id) => {
     const collection = getOrdersCollection();
 
@@ -105,5 +135,7 @@ module.exports = {
     getOrdersByEmail,
     updateOrderById,
     getAllOrdersForAdmin,
-    deleteOrderById
+    deleteOrderById,
+    getOrderById,
+    updateOrderByAdmin
 }

@@ -9,11 +9,13 @@ import useNotification from "../../hooks/useNotification";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
 
 const Notification = () => {
     const { notifications, isLoading, refetch } = useNotification();
     const axiosSecure = useAxiosSecure()
     const { user } = useAuth()
+    const navigate = useNavigate();
 
     const markAsRead = async (id) => {
 
@@ -110,8 +112,8 @@ const Notification = () => {
                                 {/* Content */}
                                 <div className="flex-1">
                                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                                        <h3
-                                            className={`font-semibold
+                                        <h3  onClick={() => navigate('/my-account/orders')}
+                                            className={`font-semibold cursor-pointer
                                             ${notification.read
                                                     ? "text-gray-700 dark:text-gray-200"
                                                     : "text-gray-900 dark:text-white"
@@ -134,7 +136,7 @@ const Notification = () => {
                                             onClick={() =>
                                                 markAsRead(notification._id)
                                             }
-                                            className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                            className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
                                         >
                                             Mark as Read
                                         </button>

@@ -1,4 +1,4 @@
-const { addOrderDetails, getOrdersByEmail, updateOrderById, getAllOrdersForAdmin } = require("../services/ordersService")
+const { addOrderDetails, getOrdersByEmail, updateOrderById, getAllOrdersForAdmin, getOrderById, updateOrderByAdmin } = require("../services/ordersService")
 
 const addOrder = async (req, res) => {
     const orderItem = req.body;
@@ -11,6 +11,13 @@ const getOrders = async (req, res) => {
     const email = req.query.email;
     
     const result = await getOrdersByEmail(email)
+
+    res.send(result)
+}
+
+const getSingleOrder = async (req, res) => {
+    const id = req.params.id;
+    const result = await getOrderById(id)
 
     res.send(result)
 }
@@ -44,19 +51,16 @@ const updateOrder = async (req, res) => {
     res.send(result)
 }
 
-// const updateOrderAdmin = async (req, res) => {
+const updateOrderDetails = async (req, res) => {
 
-//     const id = req.params.id;
+    const id = req.params.id;
 
-//     const { action } = req.body;
+    const data = req.body;
 
-//     const result = await updateOrderStatus(
-//         id,
-//         action
-//     );
+    const result = await updateOrderByAdmin(id, data );
 
-//     res.send(result);
-// };
+    res.send(result);
+};
 
 const deleteOrder = async (req, res) => {
 
@@ -72,5 +76,7 @@ module.exports = {
     getOrders,
     updateOrder,
     getAllOrders,
-    deleteOrder
+    deleteOrder,
+    getSingleOrder,
+    updateOrderDetails
 }

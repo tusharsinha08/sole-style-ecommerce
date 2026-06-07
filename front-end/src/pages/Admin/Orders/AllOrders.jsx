@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const AllOrders = () => {
     const axiosSecure = useAxiosSecure();
@@ -223,8 +224,9 @@ const AllOrders = () => {
                                     <div className="flex items-center gap-2">
                                         <button
                                             className="text-xl cursor-pointer text-gray-900 hover:text-gray-800"
-                                        >
+                                        ><Link to={`edit/${order._id}`}>
                                             <FaEdit />
+                                        </Link>
                                         </button>
 
                                         <button

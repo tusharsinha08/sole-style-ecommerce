@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const { getNotificationsCollection } = require("../config/db");
 
 const createNotification = async (notification) => {
@@ -23,8 +24,8 @@ const getUserNotifications = async (email) => {
 
 const markAsRead = async (id) => {
     const collection = getNotificationsCollection();
-
-    return await collection.updateOne(
+    
+    const result = await collection.updateOne(
         {
             _id: new ObjectId(id),
         },
@@ -34,6 +35,8 @@ const markAsRead = async (id) => {
             },
         }
     );
+    
+    return result
 };
 
 

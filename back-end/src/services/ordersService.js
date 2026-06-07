@@ -10,21 +10,55 @@ const addOrderDetails = async (orderItem) => {
 
 const getOrdersByEmail = async (email) => {
     const ordersCollection = getOrdersCollection()
-    const query = { 'customer.email' :  email }
+    const query = { 'customer.email': email }
     const result = await ordersCollection.find(query).toArray()
 
     return result
 }
 
-const getAllOrdersForAdmin = async () => {
-    const collection = getOrdersCollection()
+const getAllOrdersForAdmin = async ({
+    city,
+    status,
+    sort
+}) => {
+
+    const collection = getOrdersCollection();
+
+    const query = {};
+
+    if (city) {
+        query["shippingAddress.city"] = city;
+    }
+
+    if (status) {
+        query.orderStatus = status;
+    }
+
+    const sortOption = {};
+
+    if (sort === "oldest") {
+        sortOption.updatedAt = 1;
+    } else {
+        sortOption.updatedAt = -1;
+    }
+
     const result = await collection
-        .find()
-        .sort({ createdAt: -1 })
-        .toArray()
+        .find(query)
+        .sort(sortOption)
+        .toArray();
 
     return result;
-}
+};
+
+// const getAllOrdersForAdmin = async () => {
+//     const collection = getOrdersCollection()
+//     const result = await collection
+//         .find()
+//         .sort({ createdAt: -1 })
+//         .toArray()
+
+//     return result;
+// }
 
 const updateOrderById = async (id, action) => {
     const ordersCollection = getOrdersCollection()
@@ -33,10 +67,17 @@ const updateOrderById = async (id, action) => {
 
     let updateStatus;
 
-    if (action === 'cancel') {
+    if (action === 'cancelOrder') {
         updateStatus = {
             $set: {
                 orderStatus: 'cancelled',
+                updatedAt: new Date()
+            }
+        };
+    } else {
+        updateStatus = {
+            $set: {
+                orderStatus: action,
                 updatedAt: new Date()
             }
         };
@@ -47,9 +88,22 @@ const updateOrderById = async (id, action) => {
     return result
 }
 
+const deleteOrderById = async (id) => {
+    const collection = getOrdersCollection();
+
+    const query = {
+        _id: new ObjectId(id)
+    };
+
+    const result = await collection.deleteOne(query);
+
+    return result;
+};
+
 module.exports = {
     addOrderDetails,
     getOrdersByEmail,
     updateOrderById,
-    getAllOrdersForAdmin
+    getAllOrdersForAdmin,
+    deleteOrderById
 }

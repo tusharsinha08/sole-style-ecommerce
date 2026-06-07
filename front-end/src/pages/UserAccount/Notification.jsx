@@ -6,16 +6,37 @@ import {
     FaTag,
 } from "react-icons/fa";
 import useNotification from "../../hooks/useNotification";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useAuth from "../../hooks/useAuth";
 
 const Notification = () => {
     const { notifications, isLoading, refetch } = useNotification();
+    const axiosSecure = useAxiosSecure()
+    const { user } = useAuth()
 
-    const markAsRead = (id) => {
-        //todo: mark as read api call
+    const markAsRead = async (id) => {
+
+        const res = await axiosSecure.patch(
+            `/notifications/mark-read/${id}`
+        );
+
+        if (res.data.modifiedCount > 0) {
+            refetch();
+        }
+
     };
 
-    const markAllAsRead = () => {
-        // todo: mark all as read api call
+    const markAllAsRead = async () => {
+
+        const res = await axiosSecure.patch(
+            `/notifications/mark-all-read/${user.email}`
+        );
+
+        if (res.data.modifiedCount > 0) {
+            refetch();
+        }
+
     };
 
     const unreadCount = notifications.filter(
@@ -57,7 +78,7 @@ const Notification = () => {
                         onClick={markAllAsRead}
                         className="btn bg-gray-900 text-white hover:bg-gray-700 dark:bg-gray-200 dark:text-gray-900 dark:hover:bg-gray-300"
                     >
-                        Mark All Read
+                        Mark All as Read
                     </button>
                 </div>
 
@@ -65,10 +86,10 @@ const Notification = () => {
                 <div className="space-y-4">
                     {notifications.map((notification) => (
                         <div
-                            key={notification.id}
+                            key={notification._id}
                             className={`border rounded-xl p-4 transition-all duration-200
               
-              ${notification.read
+                            ${notification.read
                                     ? "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                                     : "bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800"
                                 }`}
@@ -78,7 +99,7 @@ const Notification = () => {
                                 <div
                                     className={`text-xl mt-1
                   
-                  ${notification.read
+                                    ${notification.read
                                             ? "text-gray-500"
                                             : "text-blue-600 dark:text-blue-400"
                                         }`}
@@ -91,8 +112,7 @@ const Notification = () => {
                                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                                         <h3
                                             className={`font-semibold
-                      
-                      ${notification.read
+                                            ${notification.read
                                                     ? "text-gray-700 dark:text-gray-200"
                                                     : "text-gray-900 dark:text-white"
                                                 }`}
@@ -112,7 +132,7 @@ const Notification = () => {
                                     {!notification.read && (
                                         <button
                                             onClick={() =>
-                                                markAsRead(notification.id)
+                                                markAsRead(notification._id)
                                             }
                                             className="mt-3 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline"
                                         >

@@ -44,11 +44,23 @@ const Checkout = () => {
         }
     });
 
-    const handleCashOnDelivery = (orderItem) => {
-        axiosSecure.post('/orders', orderItem)
+    const handleCashOnDelivery = async (orderItem) => {
+        await axiosSecure.post('/orders', orderItem)
             .then(res => {
                 if (res.data.insertedId) {
                     console.log(res.data);
+
+                    const notification = {
+                        userEmail: user?.email,
+                        type: 'order',
+                        title: 'Order placed',
+                        message: 'Your order has been placed successfully',
+                        orderId: res.data.insertedId,
+                        read: false,
+                        createdAt: new Date()
+                    }
+                    const resNotify = axiosSecure.post(`/notifications`, notification)
+                    console.log(resNotify.data);
 
                     Swal.fire({
                         toast: true,
@@ -90,8 +102,7 @@ const Checkout = () => {
             ...pendingOrder,
             paymentStatus: 'paid',
             transactionId: transactionId,
-            orderStatus: 'pending',
-            orderTime: new Date()
+            orderStatus: 'pending'
         }
 
         const cartIds = carts.map(item => item._id)
@@ -101,6 +112,19 @@ const Checkout = () => {
         if (res.data.insertedId) {
             await axiosSecure.post('/orders', orderItem)
             await axiosSecure.delete("/carts/delete-many", { data: cartIds });
+
+            const notification = {
+                userEmail: user?.email,
+                type: 'order',
+                title: 'Order placed',
+                message: 'Your order has been placed successfully',
+                orderId: res.data.insertedId,
+                read: false,
+                createdAt: new Date()
+            }
+            const resNotify = await axiosSecure.post(`/notifications`, notification)
+            console.log(resNotify.data);
+
 
             refetch();
 

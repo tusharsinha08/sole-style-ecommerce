@@ -19,7 +19,7 @@ const Orders = () => {
             if (result.isConfirmed) {
                 try {
                     const response = await axiosSecure.patch(`/orders/${id}`, {
-                        action: 'cancel'
+                        action: 'cancelOrder'
                     });
 
                     if (response.data.modifiedCount > 0) {

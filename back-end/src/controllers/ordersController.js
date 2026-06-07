@@ -16,10 +16,25 @@ const getOrders = async (req, res) => {
 }
 
 const getAllOrders = async (req, res) => {
-    const result = await getAllOrdersForAdmin()
+
+    const city = req.query.city;
+    const status = req.query.status;
+    const sort = req.query.sort;
+
+    const result = await getAllOrdersForAdmin({
+        city,
+        status,
+        sort
+    });
+
+    res.send(result);
+};
+
+// const getAllOrders = async (req, res) => {
+//     const result = await getAllOrdersForAdmin()
     
-    res.send(result)
-}
+//     res.send(result)
+// }
 
 const updateOrder = async (req, res) => {
     const id = req.params.id
@@ -29,9 +44,33 @@ const updateOrder = async (req, res) => {
     res.send(result)
 }
 
+// const updateOrderAdmin = async (req, res) => {
+
+//     const id = req.params.id;
+
+//     const { action } = req.body;
+
+//     const result = await updateOrderStatus(
+//         id,
+//         action
+//     );
+
+//     res.send(result);
+// };
+
+const deleteOrder = async (req, res) => {
+
+    const id = req.params.id;
+
+    const result = await deleteOrderById(id);
+
+    res.send(result);
+};
+
 module.exports = {
     addOrder,
     getOrders,
     updateOrder,
-    getAllOrders
+    getAllOrders,
+    deleteOrder
 }

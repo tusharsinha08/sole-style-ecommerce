@@ -25,6 +25,7 @@ const Checkout = () => {
     const navigate = useNavigate()
     const scrollToTop = useScrollToTop()
     const [pendingOrder, setPendingOrder] = useState(null);
+    console.log(carts);
 
 
     const {
@@ -123,20 +124,32 @@ const Checkout = () => {
 
         const { name, email, phone, address, city, district, postalCode, paymentMethod } = data
         const orderItem = {
-            customer_name: name,
-            email: email,
-            phone: phone,
-            address: address,
-            city: city,
-            district: district,
-            postalCode: postalCode,
+            customer: {
+                name: name,
+                email: email,
+                phone: phone
+            },
+            shippingAddress: {
+                address: address,
+                district: district,
+                city: city,
+                phone: phone,
+                postalCode: postalCode,
+            },
             paymentMethod: paymentMethod,
-            cartIds: carts.map(item => item._id),
-            productIds: carts.map(item => item.productId),
+            products: carts.map(item => ({
+                productId: item.productId,
+                name: item.name,
+                color: item.color,
+                size: item.size,
+                quantity: item.quantity,
+                price: item.totalPrice
+            })),
             totalPrice: subtotal + shippingFee,
             paymentStatus: 'pending',
             orderStatus: 'pending',
-            orderTime: new Date()
+            createdAt: new Date(),
+            updatedAt: new Date()
         }
         console.log(" order item", orderItem);
 
@@ -413,7 +426,7 @@ const Checkout = () => {
                                 <div>
                                     {/* divider */}
                                     <hr className="my-4 text-gray-300 dark:text-gray-700" />
-                                    
+
                                     <h4 className="text-lg font-semibold mb-4">Enter your card details</h4>
                                     <Elements stripe={stripePromise}>
                                         <StripePayment

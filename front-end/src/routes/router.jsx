@@ -23,6 +23,7 @@ import AddProduct from "../pages/Admin/Products/AddProduct";
 import EditProduct from "../pages/Admin/Products/EditProduct";
 import Users from "../pages/Admin/Users/Users";
 import EditUser from "../pages/Admin/Users/EditUser";
+import AllOrders from "../pages/Admin/Orders/AllOrders";
 
 
 export const router = createBrowserRouter([
@@ -118,6 +119,10 @@ export const router = createBrowserRouter([
             {
                 path: 'users/edit/:id',
                 element: <EditUser></EditUser>
+            },
+            {
+                path: 'orders',
+                element: <AllOrders></AllOrders>
             }
         ]
     }

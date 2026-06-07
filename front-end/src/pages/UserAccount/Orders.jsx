@@ -77,15 +77,15 @@ const Orders = () => {
                                         <td>
                                             <div className="flex items-center gap-3 w-48">
                                                 <div>
-                                                    <h4 className="font-bold text-gray-900 dark:text-gray-300">{order.customer_name}</h4>
-                                                    <p className="text-xs opacity-80">Address: {order.address}</p>
+                                                    <h4 className="font-bold text-gray-900 dark:text-gray-300">{order.customer.name}</h4>
+                                                    <p className="text-xs opacity-80">Address: {order.shippingAddress.address}</p>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div>
-                                                    <div className="font-bold">{order.productIds.length}</div>
+                                                    <div className="font-bold">{order.products.length}</div>
                                                 </div>
                                             </div>
                                         </td>

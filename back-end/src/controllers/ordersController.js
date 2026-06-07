@@ -1,4 +1,4 @@
-const { addOrderDetails, getOrdersByEmail, updateOrderById } = require("../services/ordersService")
+const { addOrderDetails, getOrdersByEmail, updateOrderById, getAllOrdersForAdmin } = require("../services/ordersService")
 
 const addOrder = async (req, res) => {
     const orderItem = req.body;
@@ -9,8 +9,15 @@ const addOrder = async (req, res) => {
 
 const getOrders = async (req, res) => {
     const email = req.query.email;
+    
     const result = await getOrdersByEmail(email)
 
+    res.send(result)
+}
+
+const getAllOrders = async (req, res) => {
+    const result = await getAllOrdersForAdmin()
+    
     res.send(result)
 }
 
@@ -25,5 +32,6 @@ const updateOrder = async (req, res) => {
 module.exports = {
     addOrder,
     getOrders,
-    updateOrder
+    updateOrder,
+    getAllOrders
 }

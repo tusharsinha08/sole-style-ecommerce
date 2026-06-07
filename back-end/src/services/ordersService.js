@@ -10,19 +10,29 @@ const addOrderDetails = async (orderItem) => {
 
 const getOrdersByEmail = async (email) => {
     const ordersCollection = getOrdersCollection()
-    const query = { email: email }
+    const query = { 'customer.email' :  email }
     const result = await ordersCollection.find(query).toArray()
 
     return result
 }
 
+const getAllOrdersForAdmin = async () => {
+    const collection = getOrdersCollection()
+    const result = await collection
+        .find()
+        .sort({ createdAt: -1 })
+        .toArray()
+
+    return result;
+}
+
 const updateOrderById = async (id, action) => {
     const ordersCollection = getOrdersCollection()
-    const query = { _id: new ObjectId(id)}
+    const query = { _id: new ObjectId(id) }
     const orderItem = await ordersCollection.findOne(query)
 
     let updateStatus;
-    
+
     if (action === 'cancel') {
         updateStatus = {
             $set: {
@@ -40,5 +50,6 @@ const updateOrderById = async (id, action) => {
 module.exports = {
     addOrderDetails,
     getOrdersByEmail,
-    updateOrderById
+    updateOrderById,
+    getAllOrdersForAdmin
 }

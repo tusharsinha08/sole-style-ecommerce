@@ -42,7 +42,6 @@ const getAllUsers = async (req, res) => {
 const getUser = async (req, res) => {
     try {
         const email = req.params.email;
-        console.log('hit the email', email);
         
 
         const user = await fetchUsersByEmail(email);

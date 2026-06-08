@@ -14,7 +14,7 @@ const Shop = () => {
     const search = searchParams.get("search") || "";
     const page = parseInt(searchParams.get("page")) || 1;
 
-    const { products, result, loading } = useProduct({ type, category, search, sortType, page });
+    const { products, result, isLoading } = useProduct({ type, category, search, sortType, page });
 
     // Update URL Params
     const updateParams = (key, value) => {
@@ -43,7 +43,7 @@ const Shop = () => {
     const categoryList = ["T-Shirts", "Shirts", "Drop Shoulder", "Jeans", "Trousers", "Hoodies", "Jackets", "Streetwear", "Casual Wear", "Formal Wear", "Sportswear", "Graphic T-Shirts", "Accessories"
     ]
 
-    if (loading) {
+    if (isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <progress className="progress w-56"></progress>

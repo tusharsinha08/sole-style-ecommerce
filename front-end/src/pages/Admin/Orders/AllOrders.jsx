@@ -9,7 +9,7 @@ const AllOrders = () => {
 
     const {
         data: orders = [],
-        isPending,
+        isPending: isLoading,
         refetch,
     } = useQuery({
         queryKey: ["admin-orders"],
@@ -75,10 +75,10 @@ const AllOrders = () => {
         }
     };
 
-    if (isPending) {
+    if (isLoading) {
         return (
-            <div className="flex justify-center py-20">
-                <span className="loading loading-spinner loading-lg"></span>
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
             </div>
         );
     }

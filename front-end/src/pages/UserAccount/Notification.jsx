@@ -60,6 +60,14 @@ const Notification = () => {
         }
     };
 
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-8 px-4">
             <div className="max-w-5xl mx-auto">

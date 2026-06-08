@@ -13,7 +13,7 @@ const useProduct = (params = {}) => {
         limit = 12,
     } = params;
 
-    const {data = {}, isPanding: isLoading, refetch, } = useQuery({
+    const {data = {}, isPending: isLoading, refetch, } = useQuery({
         queryKey: [
             "products",
             type,

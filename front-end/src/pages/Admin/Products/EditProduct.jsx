@@ -24,7 +24,7 @@ const EditProduct = () => {
     } = useForm();
 
     // Fetch Product
-    const { data: product, isLoading } = useQuery({
+    const { data: product, isPending: isLoading } = useQuery({
         queryKey: ["product", id],
         queryFn: async () => {
             const res = await axiosSecure.get(`/products/${id}`);
@@ -126,8 +126,8 @@ const EditProduct = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center py-20">
-                <span className="loading loading-spinner loading-lg"></span>
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
             </div>
         );
     }

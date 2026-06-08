@@ -1,5 +1,6 @@
+import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
-import useOrder from "../../hooks/useOrder";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useProduct from "../../hooks/useProduct";
 import useUsers from "../../hooks/useUsers";
 
@@ -9,14 +10,24 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
-  const { orders } = useOrder()
   const { products } = useProduct()
-
+  const axiosSecure = useAxiosSecure()
   const { users = [] } = useUsers();
+
+  const {
+    data: orders = [],
+    isPending: isLoading,
+  } = useQuery({
+    queryKey: ["admin-orders"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/orders/admin");
+      return res.data;
+    },
+  });
 
   // Revenue calculation (example)
   const totalRevenue = orders.reduce(
-    (sum, order) => sum + (order.totalAmount || 0),
+    (sum, order) => sum + (order?.totalPrice || 0),
     0
   );
 
@@ -28,6 +39,14 @@ const AdminDashboard = () => {
   ];
 
   const COLORS = ["#3B82F6", "#10B981", "#F59E0B"];
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <progress className="progress w-56"></progress>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 md:p-6 space-y-6 dark:text-gray-100">

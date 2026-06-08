@@ -102,6 +102,14 @@ const MyCart = () => {
         });
     };
 
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
+            </div>
+        );
+    }
+
     return (
         <div className='text-gray-900 dark:text-gray-300'>
             <div className=''>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Link } from 'react-router-dom';
@@ -11,7 +10,7 @@ const Users = () => {
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data: users = [], refetch, isPending: isLoading } = useQuery({
+    const { data: users = [], isPending: isLoading } = useQuery({
         queryKey: ['users', page, limit],
         queryFn: async () => {
             const res = await axiosSecure.get('/users', { params: { page, limit } })
@@ -27,6 +26,8 @@ const Users = () => {
             text: "Delete a user currently not available",
             icon: "warning",
         })
+        console.log(id);
+        
         
         // .then(async (result) => {
         //     if (result.isConfirmed) {
@@ -44,6 +45,14 @@ const Users = () => {
         //         }
         //     }
         // })
+    }
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
+            </div>
+        );
     }
 
     return (

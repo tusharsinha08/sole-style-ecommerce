@@ -9,7 +9,7 @@ const Products = () => {
 
     const [page, setPage] = useState(1)
     const limit = 10
-    const { products, result, refetch } = useProduct({ limit, page });
+    const { products, result, isLoading, refetch } = useProduct({ limit, page });
     const axiosSecure = useAxiosSecure()
 
     const handleDeleteProduct = async (id) => {
@@ -50,6 +50,14 @@ const Products = () => {
                 }
             }
         })
+    }
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <progress className="progress w-56"></progress>
+            </div>
+        );
     }
 
 

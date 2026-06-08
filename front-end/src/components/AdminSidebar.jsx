@@ -50,14 +50,6 @@ const AdminSidebar = () => {
                         Products
                     </NavLink>
                 </li>
-
-                <li>
-                    <NavLink to="payments" className={navClass}>
-                        <FaMoneyBill />
-                        Payments
-                    </NavLink>
-                </li>
-
             </ul>
 
             {/* Logout */}

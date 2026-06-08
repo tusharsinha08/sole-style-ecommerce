@@ -127,7 +127,7 @@ const AddProduct = () => {
                     >
                         <option value="" disabled>Select Type</option>
                         <option value="women">Women</option>
-                        <option value="man">Man</option>
+                        <option value="men">Men</option>
                         <option value="kids">Kids</option>
                     </select>
 

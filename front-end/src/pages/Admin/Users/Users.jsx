@@ -9,16 +9,23 @@ const Users = () => {
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;
+    const totalPages = Math.ceil(users.length / limit);
+
+    const paginatedUsers = users.slice(
+        (page - 1) * limit,
+        page * limit
+    );
 
     const { data: users = [], isPending: isLoading } = useQuery({
         queryKey: ['users', page, limit],
         queryFn: async () => {
-            const res = await axiosSecure.get('/users', { params: { page, limit } })
+            const res = await axiosSecure.get('/users')
             console.log(res.data);
 
             return res.data
         }
     })
+
 
     const handleDeleteUser = async (id) => {
         Swal.fire({
@@ -27,8 +34,8 @@ const Users = () => {
             icon: "warning",
         })
         console.log(id);
-        
-        
+
+
         // .then(async (result) => {
         //     if (result.isConfirmed) {
         //         try {
@@ -85,7 +92,7 @@ const Users = () => {
                     </thead>
 
                     <tbody>
-                        {users?.map((user, index) => (
+                        {paginatedUsers?.map((user, index) => (
                             <tr
                                 key={user._id}
                                 className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
@@ -196,7 +203,7 @@ const Users = () => {
 
                     <button
                         className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
-                        disabled={page === users?.length / limit}
+                        disabled={page === totalPages}
                         onClick={() => setPage(page + 1)}
                     >
                         »

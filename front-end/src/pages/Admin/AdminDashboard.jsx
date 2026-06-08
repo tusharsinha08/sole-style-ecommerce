@@ -10,7 +10,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
-  const { products } = useProduct()
+  const { products, result } = useProduct()
   const axiosSecure = useAxiosSecure()
   const { users = [] } = useUsers();
 
@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   // Pie chart data (dynamic)
   const chartData = [
     { name: "Users", value: users.length },
-    { name: "Products", value: products.length },
+    { name: "Products", value: result.length },
     { name: "Orders", value: orders.length },
   ];
 

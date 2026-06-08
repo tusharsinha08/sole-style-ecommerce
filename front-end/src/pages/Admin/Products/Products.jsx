@@ -4,13 +4,33 @@ import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { useDebounce } from "use-debounce";
 
 const Products = () => {
 
     const [page, setPage] = useState(1)
     const limit = 10
-    const { products, result, isLoading, refetch } = useProduct({ limit, page });
+
+    const [search, setSearch] = useState("");
+    const [category, setCategory] = useState("");
+    const [type, setType] = useState("");
+    const [sortType, setSortType] = useState("");
+    const [debouncedSearch] = useDebounce(search, 2000);
+
+
+    const { products, result, isLoading, refetch } =
+        useProduct({
+            limit,
+            page,
+            search: debouncedSearch,
+            category,
+            type,
+            sortType
+        });
     const axiosSecure = useAxiosSecure()
+
+    const categoryList = ["T-Shirts", "Shirts", "Drop Shoulder", "Jeans", "Trousers", "Hoodies", "Jackets", "Streetwear", "Casual Wear", "Formal Wear", "Sportswear", "Graphic T-Shirts", "Accessories"
+    ]
 
     const handleDeleteProduct = async (id) => {
         Swal.fire({
@@ -76,6 +96,83 @@ const Products = () => {
 
                 <button className="btn bg-neutral text-white hover:opacity-80 transition">
                     <Link to={'add-product'}>Add Product</Link>
+                </button>
+            </div>
+
+            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+                    {/* Search */}
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        className="input input-bordered w-full"
+                        value={search}
+                        onChange={(e) => {
+                            setSearch(e.target.value);
+                            setPage(1);
+                        }}
+                    />
+
+                    {/* Type */}
+                    <select
+                        className="select select-bordered w-full"
+                        value={type}
+                        onChange={(e) => {
+                            setType(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">All Types</option>
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                        <option value="Kids">Kids</option>
+                    </select>
+
+                    {/* Category */}
+                    <select
+                        className="select select-bordered w-full"
+                        value={category}
+                        onChange={(e) => {
+                            setCategory(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">All Categories</option>
+                        {
+                            categoryList.map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
+                            ))
+                        }
+                    </select>
+
+                    {/* sortType */}
+                    <select
+                        className="select select-bordered w-full"
+                        value={sortType}
+                        onChange={(e) => {
+                            setSortType(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">Default sortType</option>
+                        <option value="latest">Latest</option>
+                        <option value="popularity">Popularity</option>
+                        <option value="lowToHigh">Price: Low → High</option>
+                        <option value="highToLow">Price: High → Low</option>
+                    </select>
+                </div>
+                <button
+                    className="btn btn-outline btn-sm mt-4"
+                    onClick={() => {
+                        setSearch("");
+                        setCategory("");
+                        setType("");
+                        setSortType("");
+                        setPage(1);
+                    }}
+                >
+                    Clear Filters
                 </button>
             </div>
 
@@ -157,7 +254,7 @@ const Products = () => {
                                 {/* Actions */}
                                 <td>
                                     <div className="flex justify-center gap-3">
-                                        <button 
+                                        <button
                                             className="text-gray-600 text-lg cursor-pointer hover:text-gray-800"
                                         >
                                             <Link to={`edit/${product._id}`}><FaEdit /></Link>

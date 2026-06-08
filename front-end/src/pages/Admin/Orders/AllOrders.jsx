@@ -3,45 +3,32 @@ import Swal from "sweetalert2";
 import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const AllOrders = () => {
     const axiosSecure = useAxiosSecure();
-
+    
     const {
         data: orders = [],
         isPending: isLoading,
         refetch,
     } = useQuery({
-        queryKey: ["admin-orders"],
+        queryKey: ["orders"],
         queryFn: async () => {
             const res = await axiosSecure.get("/orders/admin");
             return res.data;
         },
     });
+    
+    const [page, setPage] = useState(1);
+    const limit = 10;
+    const totalPages = Math.ceil(orders.length / limit);
 
-    const handleStatusChange = async (id, status) => {
-        try {
-            await axiosSecure.patch(`/orders/${id}`, {
-                action: status,
-            });
+    const paginatedOrders = orders.slice(
+        (page - 1) * limit,
+        page * limit
+    );
 
-            Swal.fire({
-                icon: "success",
-                title: "Order Updated",
-                timer: 1500,
-                showConfirmButton: false,
-            });
-
-            refetch();
-        } catch (error) {
-            console.log(error);
-
-            Swal.fire({
-                icon: "error",
-                title: "Update Failed",
-            });
-        }
-    };
 
     const handleDelete = async (id) => {
         const result = await Swal.fire({
@@ -84,7 +71,7 @@ const AllOrders = () => {
     }
 
     return (
-        <div className="bg-base-100 rounded-xl shadow">
+        <div className="bg-base-100 ml-4 rounded-xl shadow">
             <div className="p-5 border-b">
                 <h2 className="text-2xl font-bold">
                     All Orders ({orders.length})
@@ -107,7 +94,7 @@ const AllOrders = () => {
                     </thead>
 
                     <tbody>
-                        {orders.map((order, index) => (
+                        {paginatedOrders.map((order, index) => (
                             <tr key={order._id}>
                                 <td>{index + 1}</td>
 
@@ -156,11 +143,10 @@ const AllOrders = () => {
                                         </p>
 
                                         <div
-                                            className={`badge badge-sm ${
-                                                order.paymentStatus === "paid"
-                                                    ? "badge-success"
-                                                    : "badge-warning"
-                                            }`}
+                                            className={`badge badge-sm ${order.paymentStatus === "paid"
+                                                ? "badge-success"
+                                                : "badge-warning"
+                                                }`}
                                         >
                                             {order.paymentStatus}
                                         </div>
@@ -176,40 +162,14 @@ const AllOrders = () => {
 
                                 {/* STATUS */}
                                 <td>
-                                    <select
-                                        className="border rounded-lg p-1 select-sm"
-                                        value={order.orderStatus}
-                                        onChange={(e) =>
-                                            handleStatusChange(
-                                                order._id,
-                                                e.target.value
-                                            )
-                                        }
+                                    <p
+                                        className={`badge badge-sm ${order.orderStatus === "cancelled"
+                                            ? "badge-ghost"
+                                            : "badge-info"
+                                            }`}
                                     >
-                                        <option value="pending">
-                                            Pending
-                                        </option>
-
-                                        <option value="confirmed">
-                                            Confirmed
-                                        </option>
-
-                                        <option value="processing">
-                                            Processing
-                                        </option>
-
-                                        <option value="shipped">
-                                            Shipped
-                                        </option>
-
-                                        <option value="delivered">
-                                            Delivered
-                                        </option>
-
-                                        <option value="cancelled">
-                                            Cancelled
-                                        </option>
-                                    </select>
+                                        {order.orderStatus}
+                                    </p>
                                 </td>
 
                                 {/* TOTAL */}
@@ -225,8 +185,8 @@ const AllOrders = () => {
                                         <button
                                             className="text-xl cursor-pointer text-gray-900 hover:text-gray-800"
                                         ><Link to={`edit/${order._id}`}>
-                                            <FaEdit />
-                                        </Link>
+                                                <FaEdit />
+                                            </Link>
                                         </button>
 
                                         <button
@@ -243,6 +203,29 @@ const AllOrders = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="join join-horizontal w-full flex justify-center py-6">
+                <button
+                    className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                >
+                    «
+                </button>
+
+                <button className="join-item px-4 border-y border-gray-500 dark:bg-gray-800 dark:text-gray-300">
+                    Page {page}
+                </button>
+
+                <button
+                    className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                >
+                    »
+                </button>
             </div>
         </div>
     );

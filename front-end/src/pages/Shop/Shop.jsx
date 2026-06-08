@@ -3,6 +3,8 @@ import headerImage from '../../assets/images/women_header.jpg';
 import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
+import { useDebounce } from "use-debounce";
+
 
 const Shop = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -13,8 +15,9 @@ const Shop = () => {
     const sortType = searchParams.get("sort") || "";
     const search = searchParams.get("search") || "";
     const page = parseInt(searchParams.get("page")) || 1;
+    const [debouncedSearch] = useDebounce(search, 2000);
 
-    const { products, result, isLoading } = useProduct({ type, category, search, sortType, page });
+    const { products, result, isLoading } = useProduct({ type, category, search: debouncedSearch, sortType, page });
 
     // Update URL Params
     const updateParams = (key, value) => {
@@ -90,7 +93,7 @@ const Shop = () => {
                         onChange={(e) => updateParams("type", e.target.value)}
                         className="select select-bordered w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
                         <option value="">All Types</option>
-                        <option value="man">Man</option>
+                        <option value="men">Men</option>
                         <option value="women">Women</option>
                         <option value="kids">Kids</option>
                     </select>
@@ -212,7 +215,7 @@ const Shop = () => {
                                 className="select select-bordered w-full dark:bg-gray-700 dark:text-gray-300"
                             >
                                 <option value="">All Types</option>
-                                <option value="man">Man</option>
+                                <option value="men">Men</option>
                                 <option value="women">Women</option>
                                 <option value="kids">Kids</option>
                             </select>

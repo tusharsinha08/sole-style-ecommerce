@@ -9,24 +9,24 @@ const Dashboard = () => {
 
     return (
         <div>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6 text-gray-900 dark:text-gray-300">
                 <div className="stats shadow">
                     <div className="stat">
-                        <div className="stat-title">Cart Items</div>
+                        <div className="text-xl font-semibold">Cart Items</div>
                         <div className="stat-value text-primary"> {carts.length} </div>
                     </div>
                 </div>
 
                 <div className="stats shadow">
                     <div className="stat">
-                        <div className="stat-title">Orders</div>
+                        <div className="text-xl font-semibold">Orders</div>
                         <div className="stat-value text-success">{orders.length}</div>
                     </div>
                 </div>
 
                 <div className="stats shadow">
                     <div className="stat">
-                        <div className="stat-title">Wishlist</div>
+                        <div className="text-xl font-semibold">Wishlist</div>
                         <div className="stat-value text-secondary">8</div>
                     </div>
                 </div>

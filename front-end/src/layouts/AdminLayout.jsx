@@ -18,7 +18,7 @@ const AdminLayout = () => {
                 <div className="drawer-content p-4">
 
                     {/* HEADER BAR */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-4 md:ml-6">
 
                         {/* Toggle Button (VISIBLE NOW) */}
                         <label
@@ -30,9 +30,9 @@ const AdminLayout = () => {
 
                         {/* Greeting */}
                         <div className="text-center md:text-left space-y-1">
-                            <h3 className="text-xl font-medium text-gray-500">
+                            <h3 className="md:text-xl text-sm font-medium text-gray-500">
                                 {greeting}{" "}
-                                <span className="font-bold font-cormorant text-xl uppercase">
+                                <span className="font-bold font-cormorant md:text-xl uppercase">
                                     {user?.displayName || "Customer"} 👋
                                 </span>
                             </h3>

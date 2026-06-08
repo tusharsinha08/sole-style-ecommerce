@@ -33,7 +33,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex="-1"
-                            className="menu menu-sm dropdown-content bg-gray-100/70 rounded-sm z-1 mt-3 w-52 p-2 shadow dark:bg-gray-800/70 dark:text-gray-300">
+                            className="menu menu-sm dropdown-content bg-gray-100 rounded-sm z-1 mt-3 w-52 p-2 shadow dark:bg-gray-800 dark:text-gray-300">
                             {navOptions}
                         </ul>
                     </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
 
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-gray-100/70 rounded-sm z-1 mt-5 w-52 p-2 shadow-xl dark:bg-gray-800/70 dark:text-gray-300"
+                            className="menu menu-sm dropdown-content bg-gray-100 rounded-sm z-1 mt-5 w-52 p-2 shadow-xl dark:bg-gray-800 dark:text-gray-300"
                         >
                             <li>
                                 <Link to="my-account/dashboard">Dashboard</Link>

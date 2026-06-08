@@ -16,8 +16,8 @@ const CustomerDashboardLayout = () => {
                 {/* Main Content */}
                 <div className="drawer-content p-4">
                     <div className='text-center md:text-left mb-4 space-y-2'>
-                        <h3 className='text-xl font-medium text-gray-500'>
-                            {greeting} <span className='font-bold font-cormorant text-xl uppercase'>{user?.displayName || "Customer"} 👋</span>
+                        <h3 className='md:text-xl font-medium text-gray-500'>
+                            {greeting} <span className='font-bold font-cormorant uppercase'>{user?.displayName || "Customer"} 👋</span>
                         </h3>
                     </div>
 

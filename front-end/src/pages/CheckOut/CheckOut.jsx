@@ -377,7 +377,7 @@ const Checkout = () => {
                                     Cash on Delivery
                                 </label>
 
-                                <label className="flex items-center gap-3 border p-3 rounded-lg">
+                                {/* <label className="flex items-center gap-3 border p-3 rounded-lg">
                                     <input
                                         type="radio"
                                         value="bKash"
@@ -388,7 +388,7 @@ const Checkout = () => {
                                         }}
                                     />
                                     bKash
-                                </label>
+                                </label> */}
 
                                 <label className="flex items-center gap-3 border p-3 rounded-lg">
                                     <input

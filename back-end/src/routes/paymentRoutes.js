@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
 const { addPaymentStripe, addPayment } = require('../controllers/paymentController');
+const { verifyToken } = require('../middlewares/verifyToken');
 
-router.post('/create-payment-intent', addPaymentStripe)
+const router = express.Router();
 
-router.post('/', addPayment)
+router.post('/create-payment-intent', verifyToken, addPaymentStripe)
+
+router.post('/', verifyToken, addPayment)
 
 module.exports = router;

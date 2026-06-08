@@ -239,7 +239,7 @@ const Products = () => {
                                         </span>
                                     ) : (
                                         <span className="badge badge-error">
-                                            Out of Stock
+                                            0
                                         </span>
                                     )}
                                 </td>

@@ -2,30 +2,29 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { Link } from 'react-router-dom';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaUser } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const Users = () => {
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;
-    const totalPages = Math.ceil(users.length / limit);
-
-    const paginatedUsers = users.slice(
-        (page - 1) * limit,
-        page * limit
-    );
-
+    
     const { data: users = [], isPending: isLoading } = useQuery({
         queryKey: ['users', page, limit],
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
             console.log(res.data);
-
+            
             return res.data
         }
     })
-
+    
+    const totalPages = Math.ceil(users.length / limit);
+    const paginatedUsers = users.slice(
+        (page - 1) * limit,
+        page * limit
+    );
 
     const handleDeleteUser = async (id) => {
         Swal.fire({
@@ -107,14 +106,15 @@ const Users = () => {
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
                                             <div className="w-8 h-8 rounded-full">
+                                                { user.image ? 
                                                 <img
-                                                    src={
-                                                        user.image ||
-                                                        "https://i.ibb.co/2kR4R6L/user.png"
-                                                    }
+                                                    src={user.image }
                                                     alt={user.name}
                                                     className="object-cover"
-                                                />
+                                                /> : 
+                                                <FaUser className='border rounded-full text-xl w-full h-full text-gray-500'></FaUser>
+
+                                                }
                                             </div>
                                         </div>
 

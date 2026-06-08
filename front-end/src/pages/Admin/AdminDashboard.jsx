@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   // Pie chart data (dynamic)
   const chartData = [
     { name: "Users", value: users.length },
-    { name: "Products", value: result.length },
+    { name: "Products", value: result.totalProducts },
     { name: "Orders", value: orders.length },
   ];
 
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
           <FaBox className="text-green-500 text-3xl" />
           <div>
             <p className="text-gray-500 dark:text-gray-400 text-sm">Products</p>
-            <h2 className="text-xl font-bold">{products.length}</h2>
+            <h2 className="text-xl font-bold">{result.totalProducts}</h2>
           </div>
         </div>
 

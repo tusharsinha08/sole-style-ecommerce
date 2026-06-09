@@ -53,12 +53,13 @@ const CustomersSidebar = () => {
                     </NavLink>
                 </li>
 
-                <li>
+                {/* -------------todo--------------------- */}
+                {/* <li>
                     <NavLink to="wishlist" className={navClass}>
                         <FaHeart />
                         Wishlist
                     </NavLink>
-                </li>
+                </li> */}
 
                 <li>
                     <NavLink to="profile" className={navClass}>
@@ -73,13 +74,14 @@ const CustomersSidebar = () => {
                         Notifications
                     </NavLink>
                 </li>
-
-                <li>
+                
+                {/* -----------------todo------------- */}
+                {/* <li>
                     <NavLink to="reviews" className={navClass}>
                         <FaStar />
                         Reviews
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
 
             {/* Logout */}

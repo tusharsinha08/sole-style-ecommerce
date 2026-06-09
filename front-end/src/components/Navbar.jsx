@@ -2,10 +2,18 @@ import ToggleDarkMode from './ToggleDarkMode';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegCircleUser } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
+import useNotification from '../hooks/useNotification';
 
 const Navbar = () => {
     const { signOutUser, user, dbUser } = useAuth();
     const navigate = useNavigate();
+    const { notifications } = useNotification()
+    console.log(notifications);
+    const unreadNotifications = notifications?.filter(
+        notification => !notification.read
+    );
+
+
     const closeDropdown = () => document.activeElement.blur();
 
     const navOptions = <>
@@ -85,8 +93,22 @@ const Navbar = () => {
                             </li>
 
                             <li onClick={closeDropdown}>
-                                <Link to="my-account/notifications">Notifications</Link>
+                                <Link to="my-account/notifications">
+                                    Notifications ({unreadNotifications.length})
+                                </Link>
                             </li>
+
+                            {dbUser?.role === 'admin' &&
+                                <>
+                                    <div className="divider my-1"></div>
+
+                                    <li onClick={closeDropdown}>
+                                        <Link to="admin/dashboard">
+                                            Admin Panel
+                                        </Link>
+                                    </li>
+                                </>
+                            }
 
                             <div className="divider my-1"></div>
 

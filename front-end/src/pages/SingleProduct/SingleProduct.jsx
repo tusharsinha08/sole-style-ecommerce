@@ -447,8 +447,8 @@ const SingleProduct = () => {
                                 Categories:
                             </span>{" "}
                             {
-                                categories.map((category) => (
-                                    <Link key={category._id} to={`/products?category=${category}`}>
+                                categories.map((category, index) => (
+                                    <Link key={`${category._id}-${index}`} to={`/products?category=${category}`}>
                                         <span className="text-gray-500 text-sm"> {category}, </span>
                                     </Link>
                                 ))

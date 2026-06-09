@@ -4,6 +4,8 @@ import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
 import { useDebounce } from "use-debounce";
+import useAOS from '../../hooks/useAos';
+import { useEffect } from 'react';
 
 
 const Shop = () => {
@@ -18,6 +20,12 @@ const Shop = () => {
     const [debouncedSearch] = useDebounce(search, 2000);
 
     const { products, result, isLoading } = useProduct({ type, category, search: debouncedSearch, sortType, page });
+
+    const { refreshAOS } = useAOS();
+
+    useEffect(() => {
+        refreshAOS(); // important when data loads from API
+    }, [products]);
 
     // Update URL Params
     const updateParams = (key, value) => {
@@ -137,7 +145,7 @@ const Shop = () => {
                 </div>
 
                 {/* Mobile Search + Filter */}
-                <div className="lg:hidden flex gap-3 mx-4 my-6">
+                <div className="lg:hidden flex gap-3 mx-4 my-6" data-aos='fade-zoom'>
                     <label className="input flex-1 dark:bg-gray-700 dark:text-gray-300">
                         <svg
                             className="h-[1em] opacity-50"
@@ -273,7 +281,10 @@ const Shop = () => {
                 <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-6'>
                     {
                         products.map((product) => (
-                            <div key={product._id}>
+                            <div
+                                key={product._id}
+                                data-aos='fade-up'
+                            >
                                 <ProductCard product={product} />
                             </div>
                         ))

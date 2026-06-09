@@ -14,9 +14,11 @@ const ProductCard = ({ product }) => {
             <figure className='h-80 w-full mb-2 relative group overflow-hidden'>
                 <Link to={`/products/${product._id}`}>
                     <img
-                        className='w-full h-full  object-cover transition-transform duration-300 group-hover:scale-105'
                         src={images[0]}
+                        className='w-full h-full  object-cover transition-transform duration-300 group-hover:scale-105'
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                     />
                 </Link>
 

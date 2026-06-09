@@ -5,9 +5,11 @@ import { FaShoppingCart } from 'react-icons/fa';
 import CartButton from '../components/CartButton';
 import AddToCart from '../components/AddToCart';
 import { useState } from 'react';
+import useAOS from '../hooks/useAos';
 
 const MainLayout = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const aos = useAOS();
 
     return (
         <>

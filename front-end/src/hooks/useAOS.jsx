@@ -11,14 +11,11 @@ const useAOS = (config = {}) => {
             easing: "ease-out",
             ...config, // allow override if needed
         });
-    }, [config]);
 
-    // refresh helper for dynamic data (API, pagination, etc.)
-    const refreshAOS = () => {
         AOS.refresh();
-    };
-
-    return { refreshAOS };
+        
+        return () => AOS.refresh();
+    }, [config]);
 };
 
 export default useAOS;

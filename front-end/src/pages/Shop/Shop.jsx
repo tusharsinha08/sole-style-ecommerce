@@ -21,11 +21,6 @@ const Shop = () => {
 
     const { products, result, isLoading } = useProduct({ type, category, search: debouncedSearch, sortType, page });
 
-    const { refreshAOS } = useAOS();
-
-    useEffect(() => {
-        refreshAOS(); // important when data loads from API
-    }, [products]);
 
     // Update URL Params
     const updateParams = (key, value) => {

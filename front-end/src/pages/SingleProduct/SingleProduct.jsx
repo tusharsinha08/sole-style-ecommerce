@@ -9,6 +9,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
+import { useForm } from "react-hook-form";
 
 
 const SingleProduct = () => {
@@ -31,6 +32,7 @@ const SingleProduct = () => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const { user } = useAuth();
     const { refetch } = useCart();
+    const [reviews, setReviews] = useState([])
 
     useEffect(() => {
         axios.get(`/products/${id}`)
@@ -44,8 +46,15 @@ const SingleProduct = () => {
                 setLoading(false);
             });
 
-    }, [id]);
-    console.log(product);
+
+        axios.get(`/reviews/${id}`)
+            .then(res => {
+                
+                setReviews(res.data.data)
+            })
+
+
+    }, [id, reviews]);
 
     useEffect(() => {
         if (!product?.type) return;
@@ -138,6 +147,43 @@ const SingleProduct = () => {
         // setIsCartOpen(true);
     };
 
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = async (data) => {
+        const newReview = {
+            userName: data.user,
+            email: user?.email,
+            productId: id,
+            comment: data.comment,
+            rating: Number(data.rating),
+        };
+
+
+        const res = await axiosSecure.post(`/reviews`, newReview)
+
+
+        if (res.data.insertedId) {
+            Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: `Your review is added`,
+                showConfirmButton: false,
+                timer: 500,
+                customClass: {
+                    popup: 'w-56 p-2 text-sm'
+                }
+            });
+        }
+
+        reset();
+    };
+
 
     if (loading) {
         return (
@@ -157,7 +203,7 @@ const SingleProduct = () => {
         );
     }
 
-    const { images, name, price, shortDescription, description, categories, rating, stock, sizes, colors, reviews } = product;
+    const { images, name, price, shortDescription, description, categories, rating, stock, sizes, colors } = product;
 
     return (
 
@@ -510,14 +556,77 @@ const SingleProduct = () => {
                     </div>
                 )}
                 {activeTab === "Reviews" && (
-                    <div className="mt-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                        {product.reviews.map((review, index) => (
-                            <div key={index} className="border p-2 mb-2">
-                                <p><strong>User:</strong> {review.user}</p>
-                                <p><strong>Comment:</strong> {review.comment}</p>
-                                <p><strong>Rating:</strong> {review.rating}</p>
-                            </div>
-                        ))}
+                    <div className="mt-6">
+
+                        {/* REVIEW FORM (ONLY IF DELIVERED) */}
+
+                        <form
+                            onSubmit={handleSubmit(onSubmit)}
+                            className="mb-6 p-4 border rounded-sm bg-gray-50 dark:bg-gray-800 dark:border-gray-500 text-gray-900 dark:text-gray-400"
+                        >
+                            <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
+                                Write a Review
+                            </h3>
+
+                            <input
+                                {...register("user", { required: true })}
+                                placeholder="Your name"
+                                className="w-full p-2 mb-2 border rounded"
+                            />
+                            {errors.user && <p className="text-red-500">Name is required</p>}
+
+                            <textarea
+                                {...register("comment", { required: true })}
+                                placeholder="Write your review..."
+                                className="w-full p-2 mb-2 border rounded"
+                            />
+                            {errors.comment && (
+                                <p className="text-red-500">Comment is required</p>
+                            )}
+
+                            <select
+                                {...register("rating", { required: true })}
+                                className="w-full p-2 mb-3 border rounded dark:bg-gray-800"
+                            >
+                                <option value="">Select Rating</option>
+                                <option value="1">1 ⭐</option>
+                                <option value="2">2 ⭐⭐</option>
+                                <option value="3">3 ⭐⭐⭐</option>
+                                <option value="4">4 ⭐⭐⭐⭐</option>
+                                <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                            </select>
+                            {errors.rating && (
+                                <p className="text-red-500">Rating is required</p>
+                            )}
+
+                            <button
+                                type="submit"
+                                className="btn btn-neutral"
+                            >
+                                Submit Review
+                            </button>
+                        </form>
+
+                        {/* REVIEW LIST (ALWAYS SHOWN) */}
+                        <div className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            {reviews.length === 0 ? (
+                                <p>No reviews yet.</p>
+                            ) : (
+                                reviews.map((review, index) => (
+                                    <div key={index} className="border p-3 mb-2 rounded">
+                                        <p>
+                                            <strong>User:</strong> {review.userName}
+                                        </p>
+                                        <p>
+                                            <strong>Comment:</strong> {review.comment}
+                                        </p>
+                                        <p>
+                                            <strong>Rating:</strong> {review.rating}
+                                        </p>
+                                    </div>
+                                ))
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
@@ -530,7 +639,10 @@ const SingleProduct = () => {
                     {/* Placeholder for related products */}
                     {!loading ?
                         relatedProducts.slice(0, 4).map((relatedProduct) => (
-                            <div key={relatedProduct._id}>
+                            <div
+                                key={relatedProduct._id}
+                                data-aos='fade-up'
+                            >
                                 <ProductCard product={relatedProduct} />
                             </div>
                         )) : (

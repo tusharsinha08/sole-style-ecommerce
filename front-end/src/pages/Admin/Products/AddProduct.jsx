@@ -36,7 +36,6 @@ const AddProduct = () => {
         const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_KEY}`;
 
         const imageRes = await axios.post(imageUploadUrl, formData);
-        console.log('imga response: ', imageRes);
 
         const imgUrl = imageRes.data.data.display_url
 
@@ -49,8 +48,6 @@ const AddProduct = () => {
             console.log(data);
 
             let imageUrls = []
-            console.log("RAW images:", data.images);
-            console.log("IS ARRAY:", Array.isArray(data.images));
 
             if (data.images?.length > 0) {
                 // const files = Array.from(data.images);

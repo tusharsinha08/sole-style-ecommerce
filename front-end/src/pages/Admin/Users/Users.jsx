@@ -14,7 +14,6 @@ const Users = () => {
         queryKey: ['users', page, limit],
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
-            console.log(res.data);
             
             return res.data
         }
@@ -32,14 +31,12 @@ const Users = () => {
             text: "Delete a user currently not available",
             icon: "warning",
         })
-        console.log(id);
 
 
         // .then(async (result) => {
         //     if (result.isConfirmed) {
         //         try {
         //             const res = await axiosSecure.delete(`/users/${id}`);
-        //             console.log(res.data);
         //             refetch()
         //         } catch (error) {
         //             console.error('Error removing item:', error);

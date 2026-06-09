@@ -39,7 +39,7 @@ const useAxiosSecure = () => {
             const status = error.response.status;
             if (status === 401 || status === 403){
                 // todo: changed with better details ----------
-                console.log("Un authorized, don't try next time");  
+                console.log("Unauthorized, don't try next time");  
             }
             return Promise.reject(error);
         }

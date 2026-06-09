@@ -29,9 +29,7 @@ const Register = () => {
 
         try {
             await createUser(email, password)
-                .then(result => {
-                    const user = result.user;
-                    console.log(user);
+                .then(response => {
 
 
                     updateUserProfile(name)
@@ -47,7 +45,6 @@ const Register = () => {
 
                             axios.post('/users', userInfo)
                                 .then(res => {
-                                    console.log(res.data);
                                     if (res.data.insertedId) {
                                         reset();
                                         navigate(from, { replace: true })

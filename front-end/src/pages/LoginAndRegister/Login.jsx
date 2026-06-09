@@ -10,9 +10,8 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
-    const { carts, refetch } = useCart();
+    const { refetch } = useCart();
     const axiosSecure = useAxiosSecure()
-    console.log(carts);
     const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
 
 
@@ -28,9 +27,7 @@ const Login = () => {
 
         try {
             await signInUser(email, password)
-                .then(result => {
-                    const user = result.user;
-                    console.log(user);
+                .then(response => {
 
                     guestCart.forEach(cart => {
                         const updatedCartItem = {

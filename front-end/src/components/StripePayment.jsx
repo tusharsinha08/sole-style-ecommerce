@@ -63,8 +63,6 @@ const StripePayment = ({ totalAmount, onSuccess }) => {
             return;
 
         } else {
-            console.log(paymentIntent.id);
-
             onSuccess(
                 paymentIntent.id
             );

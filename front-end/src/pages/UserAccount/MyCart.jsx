@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 const MyCart = () => {
     const { carts, refetch, subtotal, isLoading } = useCart();
     const axiosSecure = useAxiosSecure();
-    console.log(carts);
 
     // Increase quantity with optimistic update
     const handleIncrease = async (id) => {

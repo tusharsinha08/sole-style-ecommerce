@@ -54,8 +54,6 @@ const MyProfile = () => {
 
     const onSubmit = async (data) => {
         try {
-            console.log('onsubmit data', data);
-
             let imageUrl = dbUser?.image || "";
 
             // Check if new image selected
@@ -77,7 +75,6 @@ const MyProfile = () => {
                     },
                 }
                 );
-                console.log('imga response: ', imageRes);
 
                 imageUrl = imageRes.data.data.display_url;
             }
@@ -91,7 +88,6 @@ const MyProfile = () => {
             };
 
             const res = await axiosSecure.patch("/users", userInfo);
-            console.log(res.data);
 
 
             if (res.data) {

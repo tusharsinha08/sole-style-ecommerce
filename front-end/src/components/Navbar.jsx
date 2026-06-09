@@ -8,7 +8,6 @@ const Navbar = () => {
     const { signOutUser, user, dbUser } = useAuth();
     const navigate = useNavigate();
     const { notifications } = useNotification()
-    console.log(notifications);
     const unreadNotifications = notifications?.filter(
         notification => !notification.read
     );

@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 
 const Orders = () => {
     const { orders, refetch } = useOrder();
-    console.log(orders);
     const axiosSecure = useAxiosSecure()
 
     const handleCancelOrder = async (id) => {

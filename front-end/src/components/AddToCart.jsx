@@ -32,7 +32,7 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
         if (!user) {
             localStorage.setItem('carts', JSON.stringify(guestCarts));
         }
-        console.log(guestCarts);
+        // console.log(guestCarts);
     }, [guestCarts, user]);
 
 
@@ -103,9 +103,6 @@ const AddToCart = ({ isOpen, setIsOpen }) => {
                     // const storedCart = JSON.parse(localStorage.getItem("carts")) || [];
 
                     const updatedCart = guestCarts.filter((_, i) => i !== id);
-
-                    console.log("before:", guestCarts);
-                    console.log("after:", updatedCart);
 
                     localStorage.setItem('carts', JSON.stringify(updatedCart));
                     setGuestCarts(updatedCart);

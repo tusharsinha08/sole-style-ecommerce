@@ -25,8 +25,6 @@ const Checkout = () => {
     const navigate = useNavigate()
     const scrollToTop = useScrollToTop()
     const [pendingOrder, setPendingOrder] = useState(null);
-    console.log(carts);
-
 
     const {
         register,
@@ -48,7 +46,6 @@ const Checkout = () => {
         await axiosSecure.post('/orders', orderItem)
             .then(res => {
                 if (res.data.insertedId) {
-                    console.log(res.data);
 
                     const notification = {
                         userEmail: user?.email,
@@ -59,8 +56,7 @@ const Checkout = () => {
                         read: false,
                         createdAt: new Date()
                     }
-                    const resNotify = axiosSecure.post(`/notifications`, notification)
-                    console.log(resNotify.data);
+                    axiosSecure.post(`/notifications`, notification)
 
                     Swal.fire({
                         toast: true,
@@ -75,13 +71,12 @@ const Checkout = () => {
                     });
 
                     const cartIds = carts.map(item => item._id)
-                    console.log({ data: { cartIds } });
 
                     axiosSecure.delete('/carts/delete-many', { data: cartIds })
-                        .then(res => console.log(res.data)
-                        )
-                    reset()
-                    refetch()
+                        .then(res => {
+                            reset()
+                            refetch()
+                        })
                     scrollToTop()
                     navigate('/my-account/orders')
                 }
@@ -113,17 +108,16 @@ const Checkout = () => {
             await axiosSecure.post('/orders', orderItem)
             await axiosSecure.delete("/carts/delete-many", { data: cartIds });
 
-            const notification = {
-                userEmail: user?.email,
-                type: 'order',
-                title: 'Order placed',
-                message: 'Your order has been placed successfully',
-                orderId: res.data.insertedId,
-                read: false,
-                createdAt: new Date()
-            }
-            const resNotify = await axiosSecure.post(`/notifications`, notification)
-            console.log(resNotify.data);
+            // const notification = {
+            //     userEmail: user?.email,
+            //     type: 'order',
+            //     title: 'Order placed',
+            //     message: 'Your order has been placed successfully',
+            //     orderId: res.data.insertedId,
+            //     read: false,
+            //     createdAt: new Date()
+            // }
+            // const resNotify = await axiosSecure.post(`/notifications`, notification)
 
 
             refetch();
@@ -144,7 +138,6 @@ const Checkout = () => {
 
 
     const onSubmit = async (data) => {
-        console.log(data);
 
         const { name, email, phone, address, city, district, postalCode, paymentMethod } = data
         const orderItem = {
@@ -175,7 +168,6 @@ const Checkout = () => {
             createdAt: new Date(),
             updatedAt: new Date()
         }
-        console.log(" order item", orderItem);
 
 
         if (paymentMethod === 'bKash') {

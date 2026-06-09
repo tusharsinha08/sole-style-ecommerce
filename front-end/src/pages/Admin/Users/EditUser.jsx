@@ -8,7 +8,6 @@ import axios from "axios";
 
 const EditUser = () => {
     const { id } = useParams();
-    console.log(id);
 
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
@@ -21,7 +20,6 @@ const EditUser = () => {
             return res.data;
         }
     });
-    console.log("user:", editUser);
 
 
     const [previewImage, setPreviewImage] = useState(editUser?.image || "");
@@ -84,7 +82,6 @@ const EditUser = () => {
     const onSubmit = async (data) => {
         
         try {
-            console.log("data: ", data);
             let imageUrl = editUser?.image || "";
 
             // Check if new image selected
@@ -97,8 +94,6 @@ const EditUser = () => {
                 // Upload to ImageBB
                 const formData = new FormData();
                 formData.append("image", imageFile);
-                console.log("formdata:", formData);
-                
 
                 const imageUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_UPLOAD_KEY}`;
 
@@ -108,12 +103,8 @@ const EditUser = () => {
                     },
                 });
 
-                console.log('imga response: ', imageRes);
-
                 imageUrl = imageRes.data.data.display_url;
             }
-            console.log("imageUrl", imageUrl);
-            
 
             const updatedUser = {
                 name: data.name,
@@ -128,8 +119,6 @@ const EditUser = () => {
                 `/users/${editUser._id}`,
                 updatedUser
             );
-            console.log(res.data);
-
 
             if (res.data.modifiedCount > 0) {
                 Swal.fire({

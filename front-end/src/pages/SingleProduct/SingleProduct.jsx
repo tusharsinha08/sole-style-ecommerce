@@ -140,11 +140,7 @@ const SingleProduct = () => {
         existingCart.push(cartItem);
         localStorage.setItem("carts", JSON.stringify(existingCart));
 
-        // localStorage.setItem("carts", JSON.stringify(existingCart));
-        console.log(' line 141', existingCart);
-
         setIsCartOpen(true);
-        // setIsCartOpen(true);
     };
 
     const {

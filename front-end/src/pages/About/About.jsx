@@ -16,7 +16,6 @@ const About = () => {
         axios.get('/users')
             .then(response => {
                 setUser(response.data);
-                console.log(user);
             })
             .catch(error => {
                 console.error('Error fetching user:', error);

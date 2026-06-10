@@ -19,10 +19,10 @@ const Accessories = () => {
                 }}
             >
                 <div className='min-h-[700px] items-center grid md:grid-cols-3'>
-                    <div className='w-86 text-center space-y-2 py-12 col-start-3'>
+                    <div className='w-86 text-center space-y-2 py-12 md:col-start-2 lg:col-start-3'>
                         <img
                             src={product.image}
-                            className='w-full h-[400px]  object-cover transition-transform duration-300 group-hover:scale-105'
+                            className='lg:w-full h-[400px]  object-cover transition-transform duration-300'
                             alt=""
                             loading="lazy"
                             decoding="async"

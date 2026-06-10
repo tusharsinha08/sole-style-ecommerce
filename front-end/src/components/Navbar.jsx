@@ -3,14 +3,44 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaRegCircleUser } from "react-icons/fa6";
 import useAuth from '../hooks/useAuth';
 import useNotification from '../hooks/useNotification';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { useLocation } from "react-router-dom";
+
 
 const Navbar = () => {
-    const { signOutUser, user, dbUser } = useAuth();
+    const { signOutUser, user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const { data: dbUser = {} } = useQuery({
+        queryKey: ['dbUser', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/email/${user?.email}`)
+            return res.data;
+        }
+    })
     const navigate = useNavigate();
     const { notifications } = useNotification()
     const unreadNotifications = notifications?.filter(
         notification => !notification.read
     );
+
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 100);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+    
+    const { pathname } = useLocation();
+    const transparentRoutes = ["/", "/about", "/contact"];
+    const hasBgImage = transparentRoutes.includes(pathname);
+    const showSolidBg = scrolled || !hasBgImage;
 
 
     const closeDropdown = () => document.activeElement.blur();
@@ -33,7 +63,11 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar lg:px-10 bg-gray-100 shadow-lg fixed z-50 text-gray-900 mx-auto dark:text-gray-300 dark:bg-gray-900">
+            <div className={`navbar lg:px-10 fixed top-0 left-0 w-full z-50 transition-all duration-300
+                ${showSolidBg
+                    ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-300 shadow-"
+                    : "bg-transparent text-gray-300"
+                }`}>
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

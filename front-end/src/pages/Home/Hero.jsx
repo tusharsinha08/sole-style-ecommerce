@@ -1,5 +1,5 @@
 import React from 'react';
-import headerImage from '../../assets/images/shop_bg.jpg';
+import headerImage from '../../assets/images/cover_image.png';
 import { Link } from 'react-router-dom';
 
 const Hero = () => {

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import aboutBanner from "../../assets/images/shop_bg.jpg";
+import aboutBanner from "../../assets/images/about.png";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useProduct from "../../hooks/useProduct";

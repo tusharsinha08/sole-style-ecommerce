@@ -1,11 +1,9 @@
 // import React, { useEffect, useState } from 'react';
-import headerImage from '../../assets/images/women_header.jpg';
+import productImage from '../../assets/images/products.png';
 import ProductCard from '../../components/ProductCard';
 import { useSearchParams } from 'react-router-dom';
 import useProduct from '../../hooks/useProduct';
 import { useDebounce } from "use-debounce";
-import useAOS from '../../hooks/useAos';
-import { useEffect } from 'react';
 
 
 const Shop = () => {
@@ -64,7 +62,7 @@ const Shop = () => {
                 className="hero  bg-fixed min-h-[70vh]"
                 style={{
                     backgroundImage:
-                        `url(${headerImage})`,
+                        `url(${productImage})`,
                 }}
             >
                 <div className="hero-overlay"></div>

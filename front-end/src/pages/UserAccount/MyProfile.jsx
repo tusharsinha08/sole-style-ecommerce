@@ -4,10 +4,19 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const MyProfile = () => {
-    const { user, dbUser, refetch } = useAuth();
+    const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+
+    const { refetch, data: dbUser = {}} = useQuery({
+        queryKey: ['dbUser', user?.email],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/users/email/${user?.email}`)
+            return res.data;
+        }
+    })
     const {
         register,
         handleSubmit,
@@ -112,7 +121,7 @@ const MyProfile = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-6">
+        <div className=" mx-auto p-6">
             <div className="bg-white rounded-xl shadow-md p-8 dark:bg-gray-800 dark:text-gray-500">
                 <h2 className="text-3xl font-bold text-center mb-8">
                     My Profile

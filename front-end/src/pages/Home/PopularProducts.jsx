@@ -27,9 +27,9 @@ const PopularProducts = () => {
     }
 
     return (
-        <section className='max-w-7xl mx-auto dark:bg-gray-800 py-12'>
+        <section className='max-w-7xl mx-auto text-gray-900 dark:bg-gray-800 py-12'>
             <div className='mb-12 px-6'>
-                <h3 className='text-4xl md:text-4xl font-cormorant italic text-center dark:text-gray-300'>
+                <h3 className='text-4xl font-bold md:text-5xl font-cormorant italic text-center dark:text-gray-300'>
                     Most Popular
                 </h3>
             </div>
@@ -38,8 +38,8 @@ const PopularProducts = () => {
                 <div className='px-6'>
                     <Swiper
                         modules={[Autoplay]}
-                        spaceBetween={30}
-                        slidesPerView={1}
+                        spaceBetween={20}
+                        slidesPerView={2}
                         breakpoints={{
                             640: { slidesPerView: 2 },
                             768: { slidesPerView: 3 },

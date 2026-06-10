@@ -49,7 +49,7 @@ const SingleProduct = () => {
 
         axios.get(`/reviews/${id}`)
             .then(res => {
-                
+
                 setReviews(res.data.data)
             })
 
@@ -604,23 +604,69 @@ const SingleProduct = () => {
                         </form>
 
                         {/* REVIEW LIST (ALWAYS SHOWN) */}
-                        <div className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {/* REVIEW LIST */}
+                        <div className="mt-8">
+                            <h3 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+                                Customer Reviews ({reviews.length})
+                            </h3>
+
                             {reviews.length === 0 ? (
-                                <p>No reviews yet.</p>
+                                <div className="text-center py-10 border rounded-xl bg-gray-50 dark:bg-gray-800">
+                                    <p className="text-gray-500 dark:text-gray-400">
+                                        No reviews yet. Be the first to review this product.
+                                    </p>
+                                </div>
                             ) : (
-                                reviews.map((review, index) => (
-                                    <div key={index} className="border p-3 mb-2 rounded">
-                                        <p>
-                                            <strong>User:</strong> {review.userName}
-                                        </p>
-                                        <p>
-                                            <strong>Comment:</strong> {review.comment}
-                                        </p>
-                                        <p>
-                                            <strong>Rating:</strong> {review.rating}
-                                        </p>
-                                    </div>
-                                ))
+                                <div className="space-y-4">
+                                    {reviews.map((review) => (
+                                        <div
+                                            key={review._id}
+                                            className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow"
+                                        >
+                                            {/* Header */}
+                                            <div className="flex items-start justify-between mb-3">
+                                                <div className="flex items-center gap-3">
+                                                    {/* Avatar */}
+                                                    <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">
+                                                        {review.userName?.charAt(0)?.toUpperCase()}
+                                                    </div>
+
+                                                    <div>
+                                                        <h4 className="font-semibold text-gray-900 dark:text-white">
+                                                            {review.userName}
+                                                        </h4>
+
+                                                        {review.createdAt && (
+                                                            <p className="text-xs text-gray-500">
+                                                                {new Date(review.createdAt).toLocaleDateString()}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Rating */}
+                                                <div className="flex items-center gap-1">
+                                                    {[...Array(5)].map((_, i) => (
+                                                        <span
+                                                            key={i}
+                                                            className={`text-lg ${i < review.rating
+                                                                    ? "text-yellow-400"
+                                                                    : "text-gray-300"
+                                                                }`}
+                                                        >
+                                                            ★
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            {/* Review Comment */}
+                                            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                                {review.comment}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
                     </div>

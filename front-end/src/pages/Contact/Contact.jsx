@@ -1,4 +1,4 @@
-import contactBanner from "../../assets/images/shop_bg.jpg";
+import contactBanner from "../../assets/images/contact.png";
 
 import { useForm } from "react-hook-form";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";

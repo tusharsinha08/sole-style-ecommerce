@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -6,17 +7,16 @@ const Footer = () => {
             <footer className="footer sm:footer-horizontal text-base-content p-10 bg-base-300 mx-auto dark:bg-gray-900 dark:text-gray-300">
                 <nav>
                     <h6 className="footer-title">Services</h6>
-                    <a className="link link-hover">Branding</a>
-                    <a className="link link-hover">Design</a>
-                    <a className="link link-hover">Marketing</a>
-                    <a className="link link-hover">Advertisement</a>
+                    <Link to={'/'} className="link link-hover">Home</Link>
+                    <Link to={'/products'} className="link link-hover">Shop Now</Link>
+                    <Link to={'/about'} className="link link-hover">About Us</Link>
+                    <Link to={'/contact'} className="link link-hover">Contact Us</Link>
                 </nav>
                 <nav>
-                    <h6 className="footer-title">Company</h6>
-                    <a className="link link-hover">About us</a>
-                    <a className="link link-hover">Contact</a>
-                    <a className="link link-hover">Jobs</a>
-                    <a className="link link-hover">Press kit</a>
+                    <h6 className="footer-title">Sole Style</h6>
+                    <Link to={'/products'} className="link link-hover">Shop Now</Link>
+                    <Link to={'/about'} className="link link-hover">About Us</Link>
+                    <Link to={'/contact'} className="link link-hover">Contact Us</Link>
                 </nav>
                 <nav>
                     <h6 className="footer-title">Social</h6>

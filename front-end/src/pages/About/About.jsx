@@ -3,6 +3,7 @@ import aboutBanner from "../../assets/images/about.png";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useProduct from "../../hooks/useProduct";
+import aboutImage from '../../assets/images/shop_bg.jpg'
 
 const About = () => {
 
@@ -51,7 +52,7 @@ const About = () => {
                     {/* Image */}
                     <div>
                         <img
-                            src="https://images.unsplash.com/photo-1542291026-7eec264c27ff"
+                            src={aboutImage}
                             alt="Sole Style"
                             className="rounded-2xl shadow-xl w-full h-[500px] object-cover"
                         />
@@ -139,7 +140,7 @@ const About = () => {
 
                 <div className="grid md:grid-cols-3 gap-8">
 
-                    <div className="card bg-base-100 dark:bg-gray-800 shadow-lg">
+                    <div className="card bg-gray-100 dark:bg-gray-800 shadow-lg">
                         <div className="card-body text-center">
                             <h3 className="text-2xl font-semibold">
                                 Premium Quality
@@ -150,7 +151,7 @@ const About = () => {
                         </div>
                     </div>
 
-                    <div className="card bg-base-100 dark:bg-gray-800 shadow-lg">
+                    <div className="card bg-gray-100 dark:bg-gray-800 shadow-lg">
                         <div className="card-body text-center">
                             <h3 className="text-2xl font-semibold">
                                 Fast Delivery
@@ -161,7 +162,7 @@ const About = () => {
                         </div>
                     </div>
 
-                    <div className="card bg-base-100 dark:bg-gray-800 shadow-lg">
+                    <div className="card bg-gray-100 dark:bg-gray-800 shadow-lg">
                         <div className="card-body text-center">
                             <h3 className="text-2xl font-semibold">
                                 Secure Shopping

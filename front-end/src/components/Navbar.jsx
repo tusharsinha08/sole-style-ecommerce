@@ -7,6 +7,7 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
+import logo from '../assets/logo/logo_canva-removebg-preview.png'
 
 
 const Navbar = () => {
@@ -36,7 +37,7 @@ const Navbar = () => {
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    
+
     const { pathname } = useLocation();
     const transparentRoutes = ["/", "/about", "/contact"];
     const hasBgImage = transparentRoutes.includes(pathname);
@@ -80,7 +81,14 @@ const Navbar = () => {
                             {navOptions}
                         </ul>
                     </div>
-                    <Link to="/" className="btn btn-ghost text-xl">Sole Style</Link>
+                    <Link to={'/'} className='w-32'>
+                        <p>
+                            <span className='dark:text-white tracking-widest font-bold text-2xl'>Sole</span>
+                            <span className='text-cyan-300 font-bold text-2xl'>Style</span>
+                        </p>
+
+                        <span className='inline-block text-xs tracking-[0.15em] uppercase text-gray-500'>Clothes Store</span>
+                    </Link>
                 </div>
                 <div className="navbar-center  hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 font-semibold space-x-4">
@@ -99,7 +107,7 @@ const Navbar = () => {
                                 />
                             ) : (
                                 <FaRegCircleUser
-                                    className="text-gray-900 dark:text-gray-300 cursor-pointer"
+                                    className=" cursor-pointer"
                                     size={24}
                                 />
                             )}

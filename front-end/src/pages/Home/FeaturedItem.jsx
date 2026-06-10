@@ -47,7 +47,7 @@ const FeaturedItem = () => {
                             </p>
 
                             <Link
-                                to={`/products?category=Accessories`}
+                                to={`/products?category=best+seller`}
                                 className="inline-block border border-white text-white px-6 py-2 uppercase text-xs tracking-wider hover:bg-white hover:text-black transition"
                             >
                                 View Collection

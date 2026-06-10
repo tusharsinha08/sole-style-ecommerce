@@ -7,7 +7,6 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
-import logo from '../assets/logo/logo_canva-removebg-preview.png'
 
 
 const Navbar = () => {

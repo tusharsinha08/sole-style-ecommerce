@@ -4,8 +4,8 @@ import headerImage from '../../assets/images/accessories.png';
 const Accessories = () => {
     const product = {
         _id: '1',
-        name: 'Excusive bag for Womens',
-        image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf'
+        name: 'Explore our exquisite Bag Collection now!',
+        image: 'https://i.ibb.co.com/ymcR9mFC/bag-hanging-from-furniture-item-indoors.jpg'
     }
 
     return (
@@ -21,7 +21,7 @@ const Accessories = () => {
                 <div className='w-86 text-center space-y-2 py-12 md:col-start-3'>
                     <img
                         src={product.image}
-                        className='lg:w-full h-[400px]  object-cover transition-transform duration-300'
+                        className='lg:w-full border h-[400px]  object-cover transition-transform duration-300'
                         alt=""
                         loading="lazy"
                         decoding="async"

@@ -5,6 +5,7 @@ const axiosPublic = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true
 });
 
 const useAxiosPublic = () => {

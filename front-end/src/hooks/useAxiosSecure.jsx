@@ -5,6 +5,7 @@ const axiosSecure = axios.create({
     headers: {
         'Content-Type': 'application/json',  // instructions describing the data
     },
+    withCredentials: true
 })
 
 const useAxiosSecure = () => {

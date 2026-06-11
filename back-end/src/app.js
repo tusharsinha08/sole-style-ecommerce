@@ -15,7 +15,10 @@ const reviewRoutes = require("./routes/reviewsRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(express.json());
 
 app.post('/jwt', (req, res) => {

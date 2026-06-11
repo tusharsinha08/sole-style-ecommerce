@@ -74,11 +74,26 @@ const adminUpdateUserById = async (id, data) => {
     return result;
 };
 
+const getAdminUser = async (email) => {
+    const collection = getUsersCollection()
+    const query = { email: email }
+    const user = await collection.findOne(query)
+
+    let admin = false
+
+    if (user) {
+        admin = user?.role === 'admin'
+    }
+
+    return { admin }
+}
+
 module.exports = {
     fetchAllUsers,
     createUser,
     fetchUsersByEmail,
     updateUserDetails,
     fetchUserById,
-    adminUpdateUserById
+    adminUpdateUserById,
+    getAdminUser
 }

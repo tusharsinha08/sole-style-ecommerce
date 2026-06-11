@@ -89,6 +89,31 @@ const AddProduct = () => {
         }
     };
 
+    const categories = [
+        "Men Fashion",
+        "Women Fashion",
+        "Kids Fashion",
+        "T-Shirts",
+        "Shirts",
+        "Jersey",
+        "Polo Shirts",
+        "Drop Shoulder",
+        "Jeans",
+        "Trousers",
+        "Hoodies",
+        "Blazer",
+        "Jackets",
+        "Streetwear",
+        "Casual Wear",
+        "Formal Wear",
+        "Sportswear",
+        "Graphic T-Shirts",
+        "New Arrival",
+        "Best Seller",
+        "Popular",
+        "Accessories"
+    ]
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200">
             <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
@@ -156,28 +181,7 @@ const AddProduct = () => {
                         <label className="font-medium mb-2 block">Categories</label>
 
                         <div className="flex flex-wrap text-sm gap-2">
-                            {[
-                                "Men Fashion",
-                                "Women Fashion",
-                                "Kids Fashion",
-                                "T-Shirts",
-                                "Shirts",
-                                "Polo Shirts",
-                                "Drop Shoulder",
-                                "Jeans",
-                                "Trousers",
-                                "Hoodies",
-                                "Jackets",
-                                "Streetwear",
-                                "Casual Wear",
-                                "Formal Wear",
-                                "Sportswear",
-                                "Graphic T-Shirts",
-                                "New Arrival",
-                                "Best Seller",
-                                "Popular",
-                                "Accessories"
-                            ].map((category) => (
+                            {categories.map((category) => (
                                 <label
                                     key={category}
                                     className="label cursor-pointer justify-start gap-2"

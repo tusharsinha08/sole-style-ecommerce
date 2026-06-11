@@ -6,6 +6,7 @@ const {
     fetchAllUsers,
     fetchUserById,
     adminUpdateUserById,
+    getAdminUser,
 } = require("../services/authService")
 
 
@@ -60,7 +61,7 @@ const getUser = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const id = req.params.id;
-        
+
 
         const user = await fetchUserById(id);
 
@@ -100,6 +101,23 @@ const updateUserById = async (req, res) => {
     }
 };
 
+const getAdmin = async (req, res) => {
+    try {
+        const email = req.params.email;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email is required" });
+        }
+
+        const result = await getAdminUser(email);
+
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error in getAdminUserController:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 
 module.exports = {
     addUser,
@@ -107,5 +125,6 @@ module.exports = {
     updateUser,
     getAllUsers,
     getUserById,
-    updateUserById
+    updateUserById,
+    getAdmin
 };

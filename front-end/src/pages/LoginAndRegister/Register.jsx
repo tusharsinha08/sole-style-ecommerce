@@ -13,7 +13,7 @@ const Register = () => {
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || '/my-account/dashboard';
     const { refetch } = useCart();
     const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
 

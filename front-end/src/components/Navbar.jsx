@@ -7,18 +7,25 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
+import useAdmin from '../hooks/useAdmin';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 
 const Navbar = () => {
-    const { signOutUser, user } = useAuth();
+    const { signOutUser, user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const scrollToTop = useScrollToTop()
+
     const { data: dbUser = {} } = useQuery({
         queryKey: ['dbUser', user?.email],
+        enabled: !loading && !!user?.email,
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/email/${user?.email}`)
             return res.data;
         }
     })
+    const { isAdmin, isAdminLoading } = useAdmin()
+
     const navigate = useNavigate();
     const { notifications } = useNotification()
     const unreadNotifications = notifications?.filter(
@@ -38,7 +45,7 @@ const Navbar = () => {
     }, []);
 
     const { pathname } = useLocation();
-    const transparentRoutes = ["/", "/about", "/contact"];
+    const transparentRoutes = ["/", "/about", "/contact", "/products"];
     const hasBgImage = transparentRoutes.includes(pathname);
     const showSolidBg = scrolled || !hasBgImage;
 
@@ -46,10 +53,10 @@ const Navbar = () => {
     const closeDropdown = () => document.activeElement.blur();
 
     const navOptions = <>
-        <li><Link onClick={closeDropdown} to={'/'}>Home</Link></li>
-        <li><Link onClick={closeDropdown} to={'/products'}>Shop</Link></li>
-        <li><Link onClick={closeDropdown} to={'/about'}>About</Link></li>
-        <li><Link onClick={closeDropdown} to={'/contact'}>Contact</Link></li>
+        <li><Link onClick={closeDropdown, scrollToTop} to={'/'}>Home</Link></li>
+        <li><Link onClick={closeDropdown, scrollToTop} to={'/products'}>Shop</Link></li>
+        <li><Link onClick={closeDropdown, scrollToTop} to={'/about'}>About</Link></li>
+        <li><Link onClick={closeDropdown, scrollToTop} to={'/contact'}>Contact</Link></li>
     </>
 
     const handleLogout = async () => {
@@ -114,7 +121,7 @@ const Navbar = () => {
 
                         <ul
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-gray-100 rounded-sm z-1 mt-4 w-40 p-2 shadow-xl dark:bg-gray-800 dark:text-gray-300"
+                            className="menu menu-sm dropdown-content text-gray-900 bg-gray-100 rounded-sm z-1 mt-4 w-40 p-2 shadow-xl dark:bg-gray-800 dark:text-gray-300"
                         >
                             <li onClick={closeDropdown}>
                                 <Link to="my-account/dashboard">Dashboard</Link>
@@ -138,7 +145,7 @@ const Navbar = () => {
                                 </Link>
                             </li>
 
-                            {dbUser?.role === 'admin' &&
+                            { isAdmin && !isAdminLoading &&
                                 <>
                                     <div className="divider my-1"></div>
 

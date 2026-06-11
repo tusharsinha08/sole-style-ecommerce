@@ -44,7 +44,29 @@ const Shop = () => {
         setSearchParams(params);
     };
 
-    const categoryList = ["T-Shirts", "Shirts", "Drop Shoulder", "Jeans", "Trousers", "Hoodies", "Jackets", "Streetwear", "Casual Wear", "Formal Wear", "Sportswear", "Graphic T-Shirts", "Accessories"
+    const categoryList = [
+        "Men Fashion",
+        "Women Fashion",
+        "Kids Fashion",
+        "T-Shirts",
+        "Shirts",
+        "Jersey",
+        "Polo Shirts",
+        "Drop Shoulder",
+        "Jeans",
+        "Trousers",
+        "Hoodies",
+        "Blazer",
+        "Jackets",
+        "Streetwear",
+        "Casual Wear",
+        "Formal Wear",
+        "Sportswear",
+        "Graphic T-Shirts",
+        "New Arrival",
+        "Best Seller",
+        "Popular",
+        "Accessories"
     ]
 
     if (isLoading) {
@@ -81,7 +103,7 @@ const Shop = () => {
                     <select
                         value={sortType}
                         onChange={(e) => updateParams("sort", e.target.value)}
-                        className="select select-bordered bg-gray-300 dark:bg-gray-700 dark:text-gray-300">
+                        className="select select-bordered border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:text-gray-300">
                         <option value="">Default sorting</option>
                         <option value="popularity">Sort by popularity</option>
                         <option value="latest">Sort by latest</option>
@@ -92,7 +114,7 @@ const Shop = () => {
                     <select
                         value={type}
                         onChange={(e) => updateParams("type", e.target.value)}
-                        className="select select-bordered bg-gray-300 w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
+                        className="select select-bordered border-gray-300 dark:border-gray-600 bg-white w-full max-w-xs dark:bg-gray-800 dark:text-gray-300">
                         <option value="">All Types</option>
                         <option value="men">Men</option>
                         <option value="women">Women</option>
@@ -102,7 +124,7 @@ const Shop = () => {
                     <select
                         value={category}
                         onChange={(e) => updateParams("category", e.target.value)}
-                        className="select select-bordered bg-gray-300 w-full max-w-xs dark:bg-gray-700 dark:text-gray-300">
+                        className="select  border-gray-300 dark:border-gray-600 bg-white w-full max-w-xs dark:bg-gray-800 dark:text-gray-300">
                         <option value="">All Categories</option>
                         {
                             categoryList.map(cat => (
@@ -111,7 +133,7 @@ const Shop = () => {
                         }
                     </select>
 
-                    <label className="input dark:bg-gray-700 bg-gray-300 dark:text-gray-300 w-full max-w-xs">
+                    <label className="input dark:bg-gray-800 border-gray-300 dark:border-gray-600 bg-white dark:text-gray-300 w-full max-w-xs">
                         <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <g
                                 strokeLinejoin="round"
@@ -139,7 +161,7 @@ const Shop = () => {
 
                 {/* Mobile Search + Filter */}
                 <div className="lg:hidden flex gap-3 mx-4 my-6" data-aos='fade-zoom'>
-                    <label className="input flex-1 dark:bg-gray-700 dark:text-gray-300">
+                    <label className="input flex-1 dark:bg-gray-800 dark:text-gray-300">
                         <svg
                             className="h-[1em] opacity-50"
                             xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +214,7 @@ const Shop = () => {
                             <select
                                 value={sortType}
                                 onChange={(e) => updateParams("sort", e.target.value)}
-                                className="select select-bordered bg-gray-300 w-full dark:bg-gray-700 dark:text-gray-300"
+                                className="select  border-gray-300 dark:border-gray-600 bg-white w-full dark:bg-gray-800 dark:text-gray-300"
                             >
                                 <option value="">Default sorting</option>
                                 <option value="popularity">Sort by popularity</option>
@@ -213,7 +235,7 @@ const Shop = () => {
                             <select
                                 value={type}
                                 onChange={(e) => updateParams("type", e.target.value)}
-                                className="select select-bordered bg-gray-300 w-full dark:bg-gray-700 dark:text-gray-300"
+                                className="select  border-gray-300 dark:border-gray-600 bg-white w-full dark:bg-gray-800 dark:text-gray-300"
                             >
                                 <option value="">All Types</option>
                                 <option value="men">Men</option>
@@ -233,7 +255,7 @@ const Shop = () => {
                             <select
                                 value={category}
                                 onChange={(e) => updateParams("category", e.target.value)}
-                                className="select select-bordered bg-gray-300 w-full dark:bg-gray-700 dark:text-gray-300"
+                                className="select  border-gray-300 dark:border-gray-600 bg-white w-full dark:bg-gray-800 dark:text-gray-300"
                             >
                                 <option value="">All Categories</option>
                                 {
@@ -285,14 +307,14 @@ const Shop = () => {
                 </div>
 
                 <div className="join join-horizontal w-full flex justify-center py-6">
-                    <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
+                    <button className="join-item btn border-0 dark:bg-gray-800 dark:text-gray-300"
                         disabled={page === 1}
                         onClick={() => updateParams("page", page - 1)}
                     >«</button>
 
                     <button className="join-item px-4 border-y-1 border-gray-500 dark:text-gray-300 dark:bg-gray-800">Page {page}</button>
 
-                    <button className="join-item btn border-0 dark:bg-gray-700 dark:text-gray-300"
+                    <button className="join-item btn border-0 dark:bg-gray-800 dark:text-gray-300"
                         disabled={(page === result.totalPages)}
                         onClick={() => updateParams("page", page + 1)}
                     >»</button>

@@ -104,7 +104,7 @@ const EditProduct = () => {
                 `/products/${id}`,
                 updatedProduct
             );
-            
+
 
             if (res.data.modifiedCount > 0) {
                 Swal.fire({
@@ -131,6 +131,31 @@ const EditProduct = () => {
             </div>
         );
     }
+
+    const categories = [
+        "Men Fashion",
+        "Women Fashion",
+        "Kids Fashion",
+        "T-Shirts",
+        "Shirts",
+        "Jersey",
+        "Polo Shirts",
+        "Drop Shoulder",
+        "Jeans",
+        "Trousers",
+        "Hoodies",
+        "Blazer",
+        "Jackets",
+        "Streetwear",
+        "Casual Wear",
+        "Formal Wear",
+        "Sportswear",
+        "Graphic T-Shirts",
+        "New Arrival",
+        "Best Seller",
+        "Popular",
+        "Accessories"
+    ]
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
@@ -199,29 +224,7 @@ const EditProduct = () => {
                         </label>
 
                         <div className="flex flex-wrap gap-3">
-                            {[
-                                "Men Fashion",
-                                "Women Fashion",
-                                "Kids Fashion",
-                                "T-Shirts",
-                                "Shirts",
-                                "Polo Shirts",
-                                "Drop Shoulder",
-                                "Jeans",
-                                "Pants",
-                                "Trousers",
-                                "Hoodies",
-                                "Jackets",
-                                "Streetwear",
-                                "Casual Wear",
-                                "Formal Wear",
-                                "Sportswear",
-                                "Graphic T-Shirts",
-                                "New Arrival",
-                                "Best Seller",
-                                "Popular",
-                                "Accessories"
-                            ].map((item) => (
+                            {categories.map((item) => (
                                 <label
                                     key={item}
                                     className="flex items-center gap-2"
@@ -331,33 +334,33 @@ const EditProduct = () => {
                                     </button>
                                 </div>
                             ))}
-                            
-                            {filesList.length > 0 && (
-                            <div className="flex flex-wrap gap-3">
-                                {filesList.map((img, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative"
-                                    >
-                                        <img
-                                            src={URL.createObjectURL(img)}
-                                            alt=""
-                                            className="w-24 h-24 rounded object-cover"
-                                        />
 
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                removeNewImage(index)
-                                            }
-                                            className="absolute top-0 right-0 bg-red-500 text-white px-2 rounded"
+                            {filesList.length > 0 && (
+                                <div className="flex flex-wrap gap-3">
+                                    {filesList.map((img, index) => (
+                                        <div
+                                            key={index}
+                                            className="relative"
                                         >
-                                            x
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                                            <img
+                                                src={URL.createObjectURL(img)}
+                                                alt=""
+                                                className="w-24 h-24 rounded object-cover"
+                                            />
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    removeNewImage(index)
+                                                }
+                                                className="absolute top-0 right-0 bg-red-500 text-white px-2 rounded"
+                                            >
+                                                x
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
 

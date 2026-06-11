@@ -25,6 +25,8 @@ import Users from "../pages/Admin/Users/Users";
 import EditUser from "../pages/Admin/Users/EditUser";
 import AllOrders from "../pages/Admin/Orders/AllOrders";
 import UpdateOrder from "../pages/Admin/Orders/UpdateOrder";
+import AdminRoutes from "./AdminRoutes";
+import AuthRedirect from "./AuthRedirect";
 
 
 export const router = createBrowserRouter([
@@ -38,11 +40,17 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/login',
-                element: <Login></Login>
+                element:
+                    <AuthRedirect>
+                        <Login></Login>
+                    </AuthRedirect>
             },
             {
                 path: '/register',
-                element: <Register></Register>
+                element:
+                    <AuthRedirect>
+                        <Register></Register>
+                    </AuthRedirect>
             },
             {
                 path: '/products',
@@ -95,7 +103,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <AdminLayout></AdminLayout>,
+        element: <AdminRoutes><AdminLayout></AdminLayout></AdminRoutes>,
         children: [
             {
                 path: 'dashboard',

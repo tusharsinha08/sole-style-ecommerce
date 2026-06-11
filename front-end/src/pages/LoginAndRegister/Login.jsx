@@ -9,7 +9,7 @@ const Login = () => {
     const { signInUser } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || '/my-account/dashboard';
     const { refetch } = useCart();
     const axiosSecure = useAxiosSecure()
     const guestCart = JSON.parse(localStorage.getItem("carts")) || [];

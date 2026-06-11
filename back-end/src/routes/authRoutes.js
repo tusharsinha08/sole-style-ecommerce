@@ -5,10 +5,12 @@ const {
     getUser,  
     getAllUsers,
     getUserById,
-    updateUserById
+    updateUserById,
+    getAdmin
 } = require('../controllers/authController');
 const { verifyToken } = require('../middlewares/verifyToken');
 const { verifyAdmin } = require('../middlewares/verifyAdmin');
+const { getAdminUser } = require('../services/authService');
 
 const router = express.Router();
 
@@ -24,5 +26,7 @@ router.get("/email/:email", verifyToken, getUser);
 router.patch('/', verifyToken, updateUser);
 
 router.patch('/:id', verifyToken, verifyAdmin, updateUserById);
+
+router.get("/admin/:email", getAdmin);
 
 module.exports = router;

@@ -26,7 +26,7 @@ const Reviews = () => {
                     effortlessly blends chic trends with timeless elegance, making every
                     purchase a delightful discovery. The quality of their pieces is
                     unmatched, and I appreciate the brand's commitment to sustainable
-                    fashion. What truly sets FemmeWardrobe apart is their customer-centric approach.”
+                    fashion. What truly sets Sole Style apart is their customer-centric approach.”
                 </p>
 
                 {/* Divider */}
@@ -34,7 +34,7 @@ const Reviews = () => {
 
                 {/* Author */}
                 <h4 className="text-sm md:text-base uppercase tracking-widest text-gray-200">
-                    — Olivia Bennett
+                    — Angelina
                 </h4>
 
             </div>

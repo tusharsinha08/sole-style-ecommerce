@@ -5,7 +5,7 @@ const Accessories = () => {
     const product = {
         _id: '1',
         name: 'Explore our exquisite Bag Collection now!',
-        image: 'https://i.ibb.co.com/ymcR9mFC/bag-hanging-from-furniture-item-indoors.jpg'
+        image: "https://i.ibb.co.com/Mx9shFST/bag-hanging-from-furniture-item-indoors.jpg"
     }
 
     return (

@@ -93,7 +93,7 @@ const Navbar = () => {
                             <span className='text-cyan-300 font-bold text-2xl'>Style</span>
                         </p>
 
-                        <span className='inline-block text-xs tracking-[0.15em] uppercase text-gray-500'>Clothes Store</span>
+                        <span className='inline-block text-xs tracking-[0.23em] uppercase text-gray-500'>Clothe Store</span>
                     </Link>
                 </div>
                 <div className="navbar-center  hidden lg:flex">

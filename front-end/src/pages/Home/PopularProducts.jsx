@@ -9,7 +9,7 @@ const PopularProducts = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`http://localhost:3000/products?category=popular`)
+        fetch(`${import.meta.env.VITE_API_URL}/products?category=popular`)
             .then(res => res.json())
             .then(data => {
                 setProducts(data.products);

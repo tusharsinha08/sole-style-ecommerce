@@ -32,7 +32,7 @@ const CustomerDashboardLayout = () => {
 
                         {/* Top section */}
                         <div className="p-4 border-b dark:border-gray-700">
-                            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-300">User Panel</h2>
+                            <h2 className="text-lg font-bold dark:text-gray-300">User Panel</h2>
                             <p className="text-sm text-gray-400">{user?.email}</p>
                         </div>
 

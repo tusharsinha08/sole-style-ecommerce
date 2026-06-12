@@ -29,9 +29,9 @@ const CustomersSidebar = () => {
     }
 
     return (
-        <div className="min-h-screen text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-300">
+        <div className="h-full text-gray-700 bg-white dark:bg-gray-800 dark:text-gray-300">
             {/* Menu */}
-            <ul className=" p-4 space-y-2">
+            <ul className="p-4 space-y-2">
                 <li>
                     <NavLink to={"dashboard"} className={navClass}>
                         <FaHome />

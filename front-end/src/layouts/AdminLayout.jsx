@@ -7,56 +7,57 @@ const AdminLayout = () => {
     const { user } = useAuth();
 
     return (
-        <div className="max-w-7xl mx-auto min-h-screen bg-gray-100 dark:bg-gray-800">
+        <section className=" bg-white dark:bg-gray-800">
+            <div className="h-full max-w-7xl mx-auto">
+                <div className="drawer md:drawer-open">
+                    <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
 
-            <div className="drawer md:drawer-open">
-                <input id="dashboard-drawer" type="checkbox" className="drawer-toggle" />
+                    {/* Main Content */}
+                    <div className="drawer-content">
 
-                {/* Main Content */}
-                <div className="drawer-content">
+                        {/* HEADER BAR */}
+                        <div className="flex items-center justify-between">
 
-                    {/* HEADER BAR */}
-                    <div className="flex items-center justify-between">
+                            {/* Toggle Button (VISIBLE NOW) */}
+                            <label
+                                htmlFor="dashboard-drawer"
+                                className="text-3xl p-4 dark:text-gray-300 text-gray-900 md:hidden"
+                            >
+                                <HiMenuAlt1></HiMenuAlt1>
+                            </label>
 
-                        {/* Toggle Button (VISIBLE NOW) */}
-                        <label
-                            htmlFor="dashboard-drawer"
-                            className="text-3xl p-4 dark:text-gray-300 bg-none text-gray-900 md:hidden"
-                        >
-                            <HiMenuAlt1></HiMenuAlt1>
-                        </label>
+                            {/* Right side spacer (optional for alignment) */}
+                            <div className="w-10 md:hidden"></div>
 
-                        {/* Right side spacer (optional for alignment) */}
-                        <div className="w-10 md:hidden"></div>
+                        </div>
 
+                        <Outlet />
                     </div>
 
-                    <Outlet />
-                </div>
+                    {/* Sidebar */}
+                    <div className="drawer-side">
+                        <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
 
-                {/* Sidebar */}
-                <div className="drawer-side">
-                    <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
+                        <aside className="w-64 min-h-screen bg-white dark:bg-gray-800 flex flex-col">
 
-                    <aside className="w-64 min-h-screen bg-white dark:bg-gray-800 flex flex-col">
+                            {/* Brand Header */}
+                            <div className="p-4 border-b dark:border-gray-700">
+                                <h2 className="text-lg font-bold tracking-wide text-gray-900 dark:text-gray-300">
+                                    SOLE STYLE ADMIN
+                                </h2>
+                                <p className="text-sm text-gray-400">{user?.email}</p>
+                            </div>
 
-                        {/* Brand Header */}
-                        <div className="p-4 border-b dark:border-gray-700">
-                            <h2 className="text-lg font-bold tracking-wide text-gray-900 dark:text-gray-300">
-                                SOLE STYLE ADMIN
-                            </h2>
-                            <p className="text-sm text-gray-400">{user?.email}</p>
-                        </div>
+                            {/* Menu */}
+                            <div className="flex-1 overflow-y-auto">
+                                <AdminSidebar />
+                            </div>
 
-                        {/* Menu */}
-                        <div className="flex-1 overflow-y-auto">
-                            <AdminSidebar />
-                        </div>
-
-                    </aside>
+                        </aside>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

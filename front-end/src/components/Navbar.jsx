@@ -53,10 +53,10 @@ const Navbar = () => {
     const closeDropdown = () => document.activeElement.blur();
 
     const navOptions = <>
-        <li><Link onClick={closeDropdown, scrollToTop} to={'/'}>Home</Link></li>
-        <li><Link onClick={closeDropdown, scrollToTop} to={'/products'}>Shop</Link></li>
-        <li><Link onClick={closeDropdown, scrollToTop} to={'/about'}>About</Link></li>
-        <li><Link onClick={closeDropdown, scrollToTop} to={'/contact'}>Contact</Link></li>
+        <li><Link onClick={closeDropdown(), scrollToTop} to={'/'}>Home</Link></li>
+        <li><Link onClick={closeDropdown(), scrollToTop} to={'/products'}>Shop</Link></li>
+        <li><Link onClick={closeDropdown(), scrollToTop} to={'/about'}>About</Link></li>
+        <li><Link onClick={closeDropdown(), scrollToTop} to={'/contact'}>Contact</Link></li>
     </>
 
     const handleLogout = async () => {
@@ -82,7 +82,7 @@ const Navbar = () => {
                         </div>
                         <ul
                             tabIndex={1}
-                            className="menu menu-sm dropdown-content bg-gray-100 rounded-sm z-1 mt-3 w-40 p-2 shadow dark:bg-gray-800 dark:text-gray-300"
+                            className="menu menu-sm dropdown-content bg-gray-100 rounded-sm z-1 mt-3 w-40 p-2 shadow dark:bg-gray-800 text-gray-900 dark:text-gray-300"
                         >
                             {navOptions}
                         </ul>

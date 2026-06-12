@@ -10,6 +10,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
 import { useForm } from "react-hook-form";
+import checkoutOption from '../../assets/images/checkout_options.png'
 
 
 const SingleProduct = () => {
@@ -462,16 +463,13 @@ const SingleProduct = () => {
                         </p>
                     </div>
 
-                    <fieldset className="max-w-2xl mx-auto border border-gray-300 dark:border-gray-700 p-6 text-center">
+                    <fieldset className="max-w-2xl mx-auto border-t border-gray-300 dark:border-gray-700 text-center">
                         <legend className="text-gray-700 px-3 mx-auto dark:text-gray-300">
                             Guaranteed Safe Checkout
                         </legend>
 
-                        <div className="flex flex-wrap justify-center items-center gap-4 mt-2">
-                            <img src="visa.svg" alt="Visa" className="h-8 w-auto object-contain" />
-                            <img src="mastercard.svg" alt="Mastercard" className="h-8 w-auto object-contain" />
-                            <img src="amex.svg" alt="American Express" className="h-8 w-auto object-contain" />
-                            <img src="discover.svg" alt="Discover" className="h-8 w-auto object-contain" />
+                        <div className="flex flex-wrap justify-center items-center">
+                            <img src={checkoutOption} alt="Visa" className="w-auto mt-2 object-contain" />
                         </div>
                     </fieldset>
                 </div>

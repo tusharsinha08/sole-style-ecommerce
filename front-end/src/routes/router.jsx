@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 
 import CustomerDashboardLayout from "../layouts/CustomerDashboardLayout";
 import Dashboard from "../pages/UserAccount/Dashboard";
-import Checkout from "../pages/CheckOut/Checkout";
+import CheckOut from "../pages/CheckOut/CheckOut";
 import Orders from "../pages/UserAccount/Orders";
 import MyCart from "../pages/UserAccount/MyCart";
 import MyProfile from "../pages/UserAccount/MyProfile";
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'check-out',
-                element: <Checkout></Checkout>
+                element: <CheckOut></CheckOut>
             },
             {
                 path: '/about',

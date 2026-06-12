@@ -16,7 +16,7 @@ const stripePromise = loadStripe(
 );
 
 
-const Checkout = () => {
+const CheckOut = () => {
     const { carts, subtotal, refetch } = useCart();
     const { user } = useAuth();
     const [shippingFee, setShippingFee] = useState(0)
@@ -460,4 +460,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default CheckOut;

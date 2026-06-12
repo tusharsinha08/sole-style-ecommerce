@@ -54,7 +54,7 @@ const About = () => {
                         <img
                             src={aboutImage}
                             alt="Sole Style"
-                            className="rounded-2xl shadow-xl w-full h-[500px] object-cover"
+                            className="rounded-lg shadow-xl w-full h-[500px] object-cover"
                         />
                     </div>
 

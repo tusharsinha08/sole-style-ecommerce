@@ -27,6 +27,7 @@ import AllOrders from "../pages/Admin/Orders/AllOrders";
 import UpdateOrder from "../pages/Admin/Orders/UpdateOrder";
 import AdminRoutes from "./AdminRoutes";
 import AuthRedirect from "./AuthRedirect";
+import ForgotPassword from "../pages/LoginAndRegister/ForgotPasswordModal";
 
 
 export const router = createBrowserRouter([
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
                     <AuthRedirect>
                         <Register></Register>
                     </AuthRedirect>
+            },
+            {
+                path: '/forgot-password',
+                element: <ForgotPassword></ForgotPassword>
             },
             {
                 path: '/products',

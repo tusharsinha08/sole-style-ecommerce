@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useCart from "../../hooks/useCart";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useState } from "react";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const Login = () => {
     const { signInUser } = useAuth();
@@ -13,6 +15,7 @@ const Login = () => {
     const { refetch } = useCart();
     const axiosSecure = useAxiosSecure()
     const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
+    const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
 
 
@@ -95,7 +98,7 @@ const Login = () => {
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                className="input w-full mt-2 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                                className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
                                 {...register("email", { required: true })}
                             />
                         </div>
@@ -109,22 +112,25 @@ const Login = () => {
                             <input
                                 type="password"
                                 placeholder="Enter your password"
-                                className="input w-full mt-2 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                                className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
                                 {...register("password", { required: true })}
                             />
                         </div>
 
                         {/* Forgot */}
                         <div className="flex justify-end">
-                            <a className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition">
+                            <button 
+                                onClick={() => setIsForgotModalOpen(true)}
+                            className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition"
+                            >
                                 Forgot password?
-                            </a>
+                            </button>
                         </div>
 
                         {/* Button */}
                         <button
                             type="submit"
-                            className="btn w-full rounded-none border-0 bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 text-lg"
+                            className="btn w-full border-0 bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 text-lg"
                         >
                             Login
                         </button>
@@ -136,6 +142,11 @@ const Login = () => {
                         </Link>
                     </p>
                 </div>
+
+                <ForgotPasswordModal 
+                    isModalOpen={isForgotModalOpen}
+                    setIsModalOpen={setIsForgotModalOpen}
+                ></ForgotPasswordModal>
             </div>
 
         );

@@ -128,7 +128,7 @@ const Register = () => {
                         <input
                             type="text"
                             placeholder="Enter your name"
-                            className="input w-full mt-2 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                            className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
                             {...register("name", { required: true })}
                         />
                     </div>
@@ -142,7 +142,7 @@ const Register = () => {
                         <input
                             type="email"
                             placeholder="Enter your email"
-                            className="input w-full mt-2 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                            className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
                             {...register("email", { required: true })}
                         />
                     </div>
@@ -156,7 +156,7 @@ const Register = () => {
                         <input
                             type="password"
                             placeholder="Create password"
-                            className="input w-full mt-2 rounded-lg border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                            className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
                             {...register("password", { required: true })}
                         />
                     </div>

@@ -24,7 +24,7 @@ const FeaturedItem = () => {
             <div className="absolute inset-0 bg-black/50" />
 
             {/* Content Container */}
-            <div className="relative w-full max-w-6xl px-6 lg:px-12 flex items-center">
+            <div className="relative w-full max-w-6xl lg:px-12 flex items-center">
 
                 <div className="w-full md:w-1/2 relative">
 
@@ -37,7 +37,7 @@ const FeaturedItem = () => {
                                 src={product.image}
                                 alt={product.name}
                                 loading="lazy"
-                                className="w-full h-[600px] object-cover -mt-24"
+                                className="w-full md:h-[600px] h-[500px] object-cover -mt-24"
                             />
                             <p className="font-bold text-xl md:text-2xl text-white">
                                 {product.name}

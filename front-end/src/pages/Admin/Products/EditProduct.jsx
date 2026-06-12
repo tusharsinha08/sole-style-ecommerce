@@ -158,7 +158,7 @@ const EditProduct = () => {
     ]
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
             <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-xl shadow">
 
                 <h2 className="text-2xl font-bold mb-6">
@@ -172,7 +172,7 @@ const EditProduct = () => {
                     {/* Name */}
                     <input
                         {...register("name")}
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                         placeholder="Product Name"
                     />
 
@@ -180,14 +180,14 @@ const EditProduct = () => {
                     <input
                         type="number"
                         {...register("price")}
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                         placeholder="Price"
                     />
 
                     {/* Type */}
                     <select
                         {...register("type")}
-                        className="select select-bordered w-full"
+                        className="select select-bordered bg-gray-200 dark:bg-gray-700 w-full"
                     >
                         <option value="women">Women</option>
                         <option value="man">Man</option>
@@ -198,14 +198,14 @@ const EditProduct = () => {
                     <input
                         type="number"
                         {...register("stock")}
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                         placeholder="Stock"
                     />
 
                     {/* Short Description */}
                     <input
                         {...register("shortDescription")}
-                        className="input input-bordered w-full md:col-span-2"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full md:col-span-2"
                         placeholder="Short Description"
                     />
 
@@ -213,7 +213,7 @@ const EditProduct = () => {
                     <textarea
                         {...register("description")}
                         rows={4}
-                        className="textarea textarea-bordered w-full md:col-span-2"
+                        className="textarea textarea-bordered bg-gray-200 dark:bg-gray-700 w-full md:col-span-2"
                         placeholder="Description"
                     />
 
@@ -233,7 +233,7 @@ const EditProduct = () => {
                                         type="checkbox"
                                         value={item}
                                         {...register("categories")}
-                                        className="checkbox checkbox-sm"
+                                        className="checkbox checkbox-xs bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700"
                                     />
                                     {item}
                                 </label>
@@ -266,7 +266,7 @@ const EditProduct = () => {
                                         type="checkbox"
                                         value={size}
                                         {...register("sizes")}
-                                        className="checkbox checkbox-sm"
+                                        className="checkbox checkbox-xs bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700"
                                     />
                                     {size}
                                 </label>
@@ -297,7 +297,7 @@ const EditProduct = () => {
                                         type="checkbox"
                                         value={color}
                                         {...register("colors")}
-                                        className="checkbox checkbox-sm"
+                                        className="checkbox checkbox-xs bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700"
                                     />
                                     {color}
                                 </label>
@@ -389,7 +389,7 @@ const EditProduct = () => {
                                     ...files
                                 ]);
                             }}
-                            className="file-input file-input-bordered"
+                            className="file-input file-input-bordered bg-gray-200 dark:bg-gray-700 w-full max-w-xs"
                         />
                     </div>
 

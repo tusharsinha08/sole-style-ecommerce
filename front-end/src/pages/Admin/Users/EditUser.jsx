@@ -80,7 +80,7 @@ const EditUser = () => {
     };
 
     const onSubmit = async (data) => {
-        
+
         try {
             let imageUrl = editUser?.image || "";
 
@@ -143,8 +143,8 @@ const EditUser = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-4 md:p-6">
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6">
+        <div className="max-w-5xl min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 mx-auto p-4 md:p-6">
+            <div className="bg-white dark:bg-gray-900 rounded-sm shadow-md p-6">
                 {/* Header */}
                 <div className="mb-6">
                     <h2 className="text-2xl font-bold dark:text-white">
@@ -161,7 +161,7 @@ const EditUser = () => {
                     className="space-y-6"
                 >
                     {/* Image Preview */}
-                    <div className="flex justify-center">
+                    <div className="flex max-w-sm mx-auto flex-col gap-4 items-center col-span-2">
                         <div className="avatar">
                             <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                 <img
@@ -170,6 +170,14 @@ const EditUser = () => {
                                 />
                             </div>
                         </div>
+
+                        {/* Photo URL */}
+                        <input
+                            type="file"
+                            className="file-input file-input-bordered dark:file-input bg-gray-200 dark:bg-gray-600 dark:text-gray-300 w-full max-w-xs"
+                            {...register("image")}
+                            onChange={handleImageChange}
+                        />
                     </div>
 
                     {/* Name + Email */}
@@ -184,7 +192,7 @@ const EditUser = () => {
 
                             <input
                                 type="text"
-                                className="input input-bordered w-full dark:bg-gray-800"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 defaultValue={editUser?.name}
                                 {...register("name", {
                                     required: "Name is required",
@@ -210,7 +218,7 @@ const EditUser = () => {
                                 type="email"
                                 readOnly
                                 defaultValue={editUser?.email}
-                                className="input input-bordered w-full bg-gray-100 dark:bg-gray-700 cursor-not-allowed"
+                                className="input input-bordered w-full bg-gray-300 dark:bg-gray-600 cursor-not-allowed"
                                 {...register("email")}
                             />
                         </div>
@@ -227,25 +235,9 @@ const EditUser = () => {
                         <input
                             type="text"
                             defaultValue={editUser?.address}
-                            className="input input-bordered w-full dark:bg-gray-800"
+                            className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                             placeholder="Enter address"
                             {...register("address")}
-                        />
-                    </div>
-
-                    {/* Photo URL */}
-                    <div>
-                        <label className="label">
-                            <span className="label-text font-medium">
-                                Profile Image
-                            </span>
-                        </label>
-
-                        <input
-                            type="file"
-                            className="file-input file-input-bordered w-full dark:bg-gray-800"
-                            {...register("image")}
-                            onChange={handleImageChange}
                         />
                     </div>
 
@@ -258,7 +250,7 @@ const EditUser = () => {
                         </label>
 
                         <select
-                            className="select select-bordered w-full dark:bg-gray-800"
+                            className="select select-bordered bg-gray-200 dark:bg-gray-700 w-full"
                             defaultValue={editUser?.role}
                             {...register("role", {
                                 required: true,

@@ -54,10 +54,10 @@ const Orders = () => {
             </div>
             <div>
                 <div className="overflow-x-auto">
-                    <table className="table dark:text-gray-300">
+                    <table className="table text-gray-900 dark:text-gray-300">
                         {/* head */}
                         <thead>
-                            <tr className='dark:text-gray-400'>
+                            <tr className='text-gray-900 dark:text-gray-300'>
                                 <th></th>
                                 <th>Order Title</th>
                                 <th>Products</th>

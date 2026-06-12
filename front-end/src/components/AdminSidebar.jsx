@@ -53,13 +53,19 @@ const AdminSidebar = () => {
             </ul>
 
             {/* Logout */}
-            <div className="p-4 border-t">
+            <div className="p-4 space-y-1 border-t">
                 <button
                     onClick={handleSignOut}
                     className="btn btn-error btn-outline w-full">
                     <FaSignOutAlt />
                     Logout
                 </button>
+
+                <NavLink to={'/'}
+                    className="btn btn-success btn-outline w-full">
+                    <FaHome />
+                    Go to Home
+                </NavLink>
             </div>
         </div>
 

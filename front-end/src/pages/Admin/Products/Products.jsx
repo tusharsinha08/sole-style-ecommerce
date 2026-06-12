@@ -82,7 +82,7 @@ const Products = () => {
 
 
     return (
-        <div className="p-4 md:p-6">
+        <div className="p-4 md:p-6 text-gray-900 dark:text-gray-300">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div>
@@ -99,14 +99,14 @@ const Products = () => {
                 </button>
             </div>
 
-            <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mb-6">
+            <div className="rounded-sm shadow-sm p-4 mb-6">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
                     {/* Search */}
                     <input
                         type="text"
                         placeholder="Search products..."
-                        className="input input-bordered w-full"
+                        className="input input-bordered w-full bg-gray-100 dark:bg-gray-700"
                         value={search}
                         onChange={(e) => {
                             setSearch(e.target.value);
@@ -116,7 +116,7 @@ const Products = () => {
 
                     {/* Type */}
                     <select
-                        className="select select-bordered w-full"
+                        className="select select-bordered w-full bg-gray-100 dark:bg-gray-700"
                         value={type}
                         onChange={(e) => {
                             setType(e.target.value);
@@ -131,7 +131,7 @@ const Products = () => {
 
                     {/* Category */}
                     <select
-                        className="select select-bordered w-full"
+                        className="select select-bordered w-full bg-gray-100 dark:bg-gray-700"
                         value={category}
                         onChange={(e) => {
                             setCategory(e.target.value);
@@ -148,7 +148,7 @@ const Products = () => {
 
                     {/* sortType */}
                     <select
-                        className="select select-bordered w-full"
+                        className="select select-bordered w-full bg-gray-100 dark:bg-gray-700"
                         value={sortType}
                         onChange={(e) => {
                             setSortType(e.target.value);
@@ -177,9 +177,9 @@ const Products = () => {
             </div>
 
             {/* Table */}
-            <div className="overflow-x-auto bg-white dark:bg-gray-900 rounded-lg shadow-md">
+            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-md">
                 <table className="table w-full">
-                    <thead className="bg-gray-100 dark:bg-gray-800">
+                    <thead className="bg-gray-100 text-gray-900 dark:text-gray-300 dark:bg-gray-800">
                         <tr>
                             <th>#</th>
                             <th>Product</th>
@@ -194,7 +194,7 @@ const Products = () => {
                         {products?.map((product, index) => (
                             <tr
                                 key={product._id}
-                                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+                                className="hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                             >
                                 <td>{(page - 1) * limit + index + 1}</td>
 
@@ -225,7 +225,7 @@ const Products = () => {
                                     <span className="space-x-0.5 space-y-1">
                                         {
                                             product.categories.map(category => (
-                                                <span key={category} className="badge badge-ghost badge-sm truncate">{category}</span>
+                                                <span key={category} className="badge badge-neutral badge-sm truncate">{category}</span>
                                             ))
                                         }
                                     </span>
@@ -255,7 +255,7 @@ const Products = () => {
                                 <td>
                                     <div className="flex justify-center gap-3">
                                         <button
-                                            className="text-gray-600 text-lg cursor-pointer hover:text-gray-800"
+                                            className="text-gray-700 hover:text-gray-900 dark:text-gray-400 text-lg cursor-pointer dark:hover:text-gray-800"
                                         >
                                             <Link to={`edit/${product._id}`}><FaEdit /></Link>
                                         </button>

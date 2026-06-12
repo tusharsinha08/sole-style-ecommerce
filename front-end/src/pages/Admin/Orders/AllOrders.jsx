@@ -71,16 +71,16 @@ const AllOrders = () => {
     }
 
     return (
-        <div className="bg-base-100 ml-4 rounded-xl shadow">
-            <div className="p-5 border-b">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+            <div className="p-5">
                 <h2 className="text-2xl font-bold">
                     All Orders ({orders.length})
                 </h2>
             </div>
 
-            <div className="overflow-x-auto">
-                <table className="table table-zebra">
-                    <thead>
+            <div className="overflow-x-auto m-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+                <table className="table">
+                    <thead className="bg-gray-100 text-gray-900 dark:text-gray-300 dark:bg-gray-800">
                         <tr>
                             <th>#</th>
                             <th>Customer</th>
@@ -95,7 +95,7 @@ const AllOrders = () => {
 
                     <tbody>
                         {paginatedOrders.map((order, index) => (
-                            <tr key={order._id}>
+                            <tr className="hover:bg-gray-200 dark:hover:bg-gray-700 transition" key={order._id}>
                                 <td>{index + 1}</td>
 
                                 {/* CUSTOMER */}
@@ -183,7 +183,7 @@ const AllOrders = () => {
                                 <td>
                                     <div className="flex items-center gap-2">
                                         <button
-                                            className="text-xl cursor-pointer text-gray-900 hover:text-gray-800"
+                                            className="text-xl cursor-pointer text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-400"
                                         ><Link to={`edit/${order._id}`}>
                                                 <FaEdit />
                                             </Link>

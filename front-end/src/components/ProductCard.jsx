@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
         <div className="text-center w-full ">
 
             {/* IMAGE WRAPPER */}
-            <figure className='h-80 w-full mb-2 relative group overflow-hidden'>
+            <figure className='md:h-80 h-48 w-full mb-2 relative group overflow-hidden'>
                 <Link to={`/products/${product._id}`}>
                     <img
                         src={images[0]}

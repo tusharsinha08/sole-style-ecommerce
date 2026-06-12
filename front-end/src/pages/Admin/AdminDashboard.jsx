@@ -49,7 +49,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="p-4 md:p-6 space-y-6 dark:text-gray-100">
+    <div className="p-4 md:p-6 space-y-6 text-gray-900 dark:text-gray-300">
 
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between">

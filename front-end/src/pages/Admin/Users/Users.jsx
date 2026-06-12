@@ -59,7 +59,7 @@ const Users = () => {
     }
 
     return (
-        <div className="p-4 md:p-6">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-6">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div>
@@ -76,7 +76,7 @@ const Users = () => {
             {/* Table */}
             <div className="overflow-x-auto bg-white dark:bg-gray-900 rounded-lg shadow-md">
                 <table className="table w-full">
-                    <thead className="bg-gray-100 dark:bg-gray-800">
+                    <thead className="bg-gray-100 text-gray-900 dark:text-gray-300 dark:bg-gray-800">
                         <tr>
                             <th>#</th>
                             <th>User</th>

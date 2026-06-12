@@ -115,8 +115,8 @@ const AddProduct = () => {
     ]
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-800 dark:text-gray-200">
-            <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+            <div className="max-w-4xl mx-auto p-6 rounded-sm">
 
                 <h2 className="text-2xl font-bold mb-6">
                     Add New Product
@@ -130,7 +130,7 @@ const AddProduct = () => {
                     <input
                         {...register("name", { required: true })}
                         placeholder="Product Name"
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                     />
 
                     {/* Price */}
@@ -138,14 +138,14 @@ const AddProduct = () => {
                         type="number"
                         {...register("price", { required: true })}
                         placeholder="Price"
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                     />
 
                     {/* Type */}
                     <select
                         {...register("type", { required: true })}
                         defaultValue={''}
-                        className="select select-bordered w-full"
+                        className="select select-bordered bg-gray-200 dark:bg-gray-700 w-full"
                     >
                         <option value="" disabled>Select Type</option>
                         <option value="women">Women</option>
@@ -158,21 +158,21 @@ const AddProduct = () => {
                         type="number"
                         {...register("stock")}
                         placeholder="Stock"
-                        className="input input-bordered w-full"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                     />
 
                     {/* Short Description */}
                     <input
                         {...register("shortDescription")}
                         placeholder="Short Description"
-                        className="input input-bordered w-full md:col-span-2"
+                        className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full md:col-span-2"
                     />
 
                     {/* Description */}
                     <textarea
                         {...register("description")}
                         placeholder="Full Description"
-                        className="textarea textarea-bordered w-full md:col-span-2"
+                        className="textarea textarea-bordered bg-gray-200 dark:bg-gray-700 w-full md:col-span-2"
                         rows={4}
                     />
 
@@ -190,7 +190,7 @@ const AddProduct = () => {
                                         type="checkbox"
                                         value={category}
                                         {...register("categories")}
-                                        className="checkbox checkbox-neutral checkbox-xs"
+                                        className="checkbox bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700 checkbox-xs"
                                     />
                                     <span>{category}</span>
                                 </label>
@@ -221,7 +221,7 @@ const AddProduct = () => {
                                         type="checkbox"
                                         value={size}
                                         {...register("sizes")}
-                                        className="checkbox checkbox-neutral checkbox-xs"
+                                        className="checkbox checkbox-xs bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700"
                                     />
                                     <span>{size}</span>
                                 </label>
@@ -250,7 +250,7 @@ const AddProduct = () => {
                                         type="checkbox"
                                         value={color}
                                         {...register("colors")}
-                                        className="checkbox checkbox-neutral checkbox-xs"
+                                        className="checkbox checkbox-xs bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700"
                                     />
                                     <span>{color}</span>
                                 </label>
@@ -295,7 +295,7 @@ const AddProduct = () => {
                             multiple
                             {...register("images")}
                             onChange={handleFileChange}
-                            className="file-input file-input-bordered dark:bg-gray-600 w-full max-w-xs"
+                            className="file-input file-input-bordered bg-gray-200 dark:bg-gray-700 dark:bg-gray-600 w-full max-w-xs"
                         /> */}
 
                         <input
@@ -310,7 +310,7 @@ const AddProduct = () => {
                                 setFilesList(updatedFiles);
                                 setValue("images", updatedFiles);
                             }}
-                            className="file-input file-input-bordered dark:bg-gray-600 w-full max-w-xs"
+                            className="file-input file-input-bordered bg-gray-200 dark:bg-gray-700 w-full max-w-xs"
                         />
                     </div>
 

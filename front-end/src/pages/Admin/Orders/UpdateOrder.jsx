@@ -118,9 +118,9 @@ const UpdateOrder = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-6xl mx-auto p-6 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-300">
 
-            <div className="bg-base-100 rounded-xl shadow-lg p-6">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-sm p-6">
 
                 <h2 className="text-3xl font-bold mb-8">
                     Update Order
@@ -142,19 +142,19 @@ const UpdateOrder = () => {
 
                             <input
                                 {...register("name")}
-                                className="input input-bordered w-full"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full w-full"
                                 placeholder="Customer Name"
                             />
 
                             <input
                                 {...register("email")}
                                 readOnly
-                                className="input input-bordered w-full bg-base-200"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full w-full"
                             />
 
                             <input
                                 {...register("phone")}
-                                className="input input-bordered w-full"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full w-full"
                                 placeholder="Phone"
                             />
 
@@ -172,25 +172,25 @@ const UpdateOrder = () => {
 
                             <input
                                 {...register("address")}
-                                className="input input-bordered"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 placeholder="Address"
                             />
 
                             <input
                                 {...register("district")}
-                                className="input input-bordered"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 placeholder="District"
                             />
 
                             <input
                                 {...register("city")}
-                                className="input input-bordered"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 placeholder="City"
                             />
 
                             <input
                                 {...register("postalCode")}
-                                className="input input-bordered"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 placeholder="Postal Code"
                             />
 
@@ -209,19 +209,19 @@ const UpdateOrder = () => {
                             <input
                                 value={order?.paymentMethod}
                                 readOnly
-                                className="input input-bordered bg-base-200"
+                                className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                             />
                             {order?.transactionId &&
                                 <input
                                     value={order?.transactionId}
                                     readOnly
-                                    className="input input-bordered bg-base-200"
+                                    className="input input-bordered bg-gray-200 dark:bg-gray-700 w-full"
                                 />
                             }
 
                             <select
                                 {...register("paymentStatus")}
-                                className="select select-bordered"
+                                className="select select-bordered bg-gray-200 dark:bg-gray-700"
                             >
                                 <option value="pending">
                                     Pending
@@ -252,7 +252,7 @@ const UpdateOrder = () => {
 
                         <select
                             {...register("orderStatus")}
-                            className="select select-bordered w-full"
+                            className="select select-bordered bg-gray-200 dark:bg-gray-700 w-full"
                         >
                             <option value="pending">
                                 Pending
@@ -288,9 +288,9 @@ const UpdateOrder = () => {
                         </h3>
 
                         <div className="overflow-x-auto">
-                            <table className="table table-zebra">
+                            <table className="table">
 
-                                <thead>
+                                <thead className="text-gray-900 dark:text-gray-300">
                                     <tr>
                                         <th>Name</th>
                                         <th>Color</th>

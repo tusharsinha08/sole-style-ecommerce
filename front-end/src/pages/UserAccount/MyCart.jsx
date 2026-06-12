@@ -116,10 +116,10 @@ const MyCart = () => {
             </div>
             <div>
                 <div className="overflow-x-auto">
-                    <table className="table dark:text-gray-300">
+                    <table className="table text-gray-900 dark:text-gray-300">
                         {/* head */}
                         <thead>
-                            <tr className='dark:text-gray-400'>
+                            <tr className='dark:text-gray-300 text-gray-900'>
                                 <th></th>
                                 <th>Product</th>
                                 <th>Details</th>
@@ -131,7 +131,7 @@ const MyCart = () => {
 
                         {
                             carts.map((item, index) => (
-                                <tbody key={item._id} className='text-gray-400 dark:text-gray-500'>
+                                <tbody key={item._id} className='text-gray-800 dark:text-gray-500'>
                                     {/* row 1 */}
                                     <tr>
                                         <td>{index + 1}</td>
@@ -183,11 +183,11 @@ const MyCart = () => {
                                             </div>
                                         </td>
                                         <td>
-                                            <p className='font-bold'>৳ {item.price * item.quantity}</p>
+                                            <p className='font-bold text-green-400'>৳ {item.price * item.quantity}</p>
                                         </td>
                                         <td>
                                             <div className='flex gap-2 justify-center'>
-                                                <button className='btn'>Edit</button>
+                                                {/* <button className='btn'>Edit</button> */}
                                                 <div className="flex items-center gap-3">
                                                     <button
                                                         onClick={() => handleRemove(item._id)}

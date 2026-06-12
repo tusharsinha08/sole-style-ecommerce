@@ -203,7 +203,7 @@ const SingleProduct = () => {
 
     return (
 
-        <section className="max-w-7xl mx-auto px-4 py-20">
+        <section className="max-w-7xl mx-auto px-4 py-20 text-gray-900 dark:text-gray-300">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10  mb-12">
                 {/* Product Image */}
                 <div>
@@ -437,7 +437,7 @@ const SingleProduct = () => {
                     <hr className="my-4 text-gray-300 dark:text-gray-700" />
 
                     {/* Extra Info */}
-                    <div className="flex gap-6">
+                    <div className="flex flex-col gap-6">
                         <div className="dark:text-gray-300">
                             <span className="font-semibold">
                                 Categories:
@@ -677,7 +677,7 @@ const SingleProduct = () => {
                 <h3 className="text-4xl font-cormorant font-semibold dark:text-gray-300 mb-4">
                     Related Products
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {/* Placeholder for related products */}
                     {!loading ?
                         relatedProducts.slice(0, 4).map((relatedProduct) => (

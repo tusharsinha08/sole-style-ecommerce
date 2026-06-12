@@ -123,7 +123,7 @@ const MyProfile = () => {
     return (
         <div className=" mx-auto p-6">
             <div className="bg-white rounded-xl shadow-md p-8 dark:bg-gray-800 dark:text-gray-500">
-                <h2 className="text-3xl font-bold text-center mb-8">
+                <h2 className="text-3xl text-gray-900 dark:text-gray-300 font-bold text-center mb-8">
                     My Profile
                 </h2>
 
@@ -149,13 +149,13 @@ const MyProfile = () => {
                             accept="image/*"
                             {...register("photo")}
                             onChange={handleImageChange}
-                            className="file-input file-input-bordered file-input-neutral dark:file-input dark:bg-gray-600 w-full max-w-xs"
+                            className="file-input file-input-bordered file-input-neutral dark:file-input bg-gray-700 dark:bg-gray-600 dark:text-gray-300 w-full max-w-xs"
                         />
                     </div>
 
                     {/* Full Name */}
                     <div>
-                        <label className="block mb-2 font-medium">
+                        <label className="block text-gray-900 dark:text-gray-300 mb-2 font-medium">
                             Full Name
                         </label>
                         <input
@@ -164,7 +164,7 @@ const MyProfile = () => {
                             {...register("name", {
                                 required: "Name is required",
                             })}
-                            className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                            className="w-full border bg-gray-100 text-gray-900 dark:text-gray-300 dark:bg-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-800"
                             placeholder="Enter your full name"
                         />
 
@@ -177,7 +177,7 @@ const MyProfile = () => {
 
                     {/* Email */}
                     <div>
-                        <label className="block mb-2 font-medium">
+                        <label className="block text-gray-900 dark:text-gray-300 mb-2 font-medium">
                             Email Address
                         </label>
 
@@ -186,13 +186,13 @@ const MyProfile = () => {
                             defaultValue={dbUser?.email || user?.email}
                             readOnly
                             {...register("email")}
-                            className="w-full border rounded-lg px-4 py-3 bg-gray-100 cursor-not-allowed dark:bg-gray-700"
+                            className="w-full border bg-gray-300 text-gray-900 dark:text-gray-300 dark:bg-gray-700  rounded-lg px-4 py-3 cursor-not-allowed "
                         />
                     </div>
 
                     {/* Address */}
                     <div>
-                        <label className="block mb-2 font-medium">
+                        <label className="block text-gray-900 dark:text-gray-300 mb-2 font-medium">
                             Address
                         </label>
 
@@ -200,7 +200,7 @@ const MyProfile = () => {
                             rows="4"
                             defaultValue={dbUser?.address || ""}
                             {...register("address")}
-                            className="w-full border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-800"
+                            className="w-full border bg-gray-100 text-gray-900 dark:text-gray-300 dark:bg-gray-800  rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-800"
                             placeholder="Enter your address"
                         />
                     </div>
@@ -208,7 +208,7 @@ const MyProfile = () => {
                     {/* Save Button */}
                     <button
                         type="submit"
-                        className="w-full cursor-pointer bg-gray-900 text-white py-3 rounded-lg font-semibold hover:bg-gray-700 transition"
+                        className="w-full cursor-pointer bg-neutral text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition"
                     >
                         Save Profile
                     </button>

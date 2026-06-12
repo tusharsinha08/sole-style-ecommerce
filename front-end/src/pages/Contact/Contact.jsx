@@ -37,7 +37,7 @@ const Contact = () => {
     };
 
     return (
-        <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+        <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-200">
             {/* Header */}
             <div
                 className="hero bg-fixed min-h-[70vh]"
@@ -62,7 +62,7 @@ const Contact = () => {
                 <div className="grid lg:grid-cols-3 gap-8">
                     {/* Contact Info */}
                     <div className="space-y-6">
-                        <div className="card bg-base-100 dark:bg-gray-800 shadow-lg">
+                        <div className="card bg-gray-100 dark:bg-gray-800 shadow-lg">
                             <div className="card-body">
                                 <h2 className="card-title dark:text-white">
                                     Get In Touch
@@ -115,7 +115,7 @@ const Contact = () => {
                         </div>
 
                         {/* Extra Card */}
-                        <div className="card bg-gray-900 text-gray-400 dark:bg-gray-100 dark:text-gray-900 shadow-lg">
+                        <div className="card bg-gray-800 text-gray-400 dark:bg-gray-100 dark:text-gray-900 shadow-lg">
                             <div className="card-body">
                                 <h2 className="card-title">
                                     Customer Support
@@ -130,7 +130,7 @@ const Contact = () => {
 
                     {/* Contact Form */}
                     <div className="lg:col-span-2">
-                        <div className="card bg-base-100 dark:bg-gray-800 shadow-lg">
+                        <div className="card bg-gray-100 dark:bg-gray-800 shadow-lg">
                             <div className="card-body">
                                 <h2 className="card-title mb-4 dark:text-white">
                                     Send a Message
@@ -151,7 +151,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             placeholder="Enter your name"
-                                            className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
+                                            className="input input-bordered w-full dark:bg-gray-700 bg-gray-300 dark:text-white"
                                             {...register("name", {
                                                 required: "Name is required",
                                             })}
@@ -175,7 +175,7 @@ const Contact = () => {
                                         <input
                                             type="email"
                                             placeholder="Enter your email"
-                                            className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
+                                            className="input input-bordered w-full dark:bg-gray-700 bg-gray-300 dark:text-white"
                                             {...register("email", {
                                                 required: "Email is required",
                                                 pattern: {
@@ -205,7 +205,7 @@ const Contact = () => {
                                         <input
                                             type="text"
                                             placeholder="Subject"
-                                            className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
+                                            className="input input-bordered w-full dark:bg-gray-700 bg-gray-300 dark:text-white"
                                             {...register("subject", {
                                                 required: "Subject is required",
                                             })}
@@ -229,7 +229,7 @@ const Contact = () => {
                                         <textarea
                                             rows="6"
                                             placeholder="Write your message..."
-                                            className="textarea textarea-bordered w-full dark:bg-gray-700 dark:text-white"
+                                            className="textarea textarea-bordered w-full dark:bg-gray-700 bg-gray-300 dark:text-white"
                                             {...register("message", {
                                                 required:
                                                     "Message cannot be empty",

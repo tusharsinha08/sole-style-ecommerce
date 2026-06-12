@@ -161,7 +161,7 @@ const Shop = () => {
 
                 {/* Mobile Search + Filter */}
                 <div className="lg:hidden flex gap-3 mx-4 my-6" data-aos='fade-zoom'>
-                    <label className="input flex-1 dark:bg-gray-800 dark:text-gray-300">
+                    <label className="input flex-1 bg-gray-200 text-gray-900 dark:bg-gray-800 dark:text-gray-300">
                         <svg
                             className="h-[1em] opacity-50"
                             xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +197,7 @@ const Shop = () => {
 
 
                 <dialog id="filter_modal" className="modal">
-                    <div className="modal-box dark:bg-gray-800 dark:text-gray-300">
+                    <div className="modal-box bg-gray-100 dark:bg-gray-800 dark:text-gray-300">
 
                         <h3 className="font-bold text-lg mb-5">
                             Filter Products
@@ -235,7 +235,7 @@ const Shop = () => {
                             <select
                                 value={type}
                                 onChange={(e) => updateParams("type", e.target.value)}
-                                className="select  border-gray-300 dark:border-gray-600 bg-white w-full dark:bg-gray-800 dark:text-gray-300"
+                                className="select border-gray-300 dark:border-gray-600 bg-white w-full dark:bg-gray-800 dark:text-gray-300"
                             >
                                 <option value="">All Types</option>
                                 <option value="men">Men</option>
@@ -293,7 +293,7 @@ const Shop = () => {
 
 
                 {/* products mapping ------------------------------------- */}
-                <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 p-6'>
+                <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4 p-6'>
                     {
                         products.map((product) => (
                             <div

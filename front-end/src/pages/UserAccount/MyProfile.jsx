@@ -151,7 +151,7 @@ const MyProfile = () => {
                             accept="image/*"
                             {...register("photo")}
                             onChange={handleImageChange}
-                            className="file-input file-input-bordered file-input-neutral dark:file-input bg-gray-700 dark:bg-gray-600 dark:text-gray-300 w-full max-w-xs"
+                            className="file-input file-input-bordered file-input-neutral dark:file-input bg-gray-300 text-gray-900 dark:bg-gray-600 dark:text-gray-300 w-full max-w-xs"
                         />
                     </div>
 
@@ -221,7 +221,7 @@ const MyProfile = () => {
                 <div>
                     <button
                         onClick={() => setIsForgotModalOpen(true)}
-                        className="text-sm mt-6 font-semibold text-red-500 hover:text-red-700  transition cursor-pointer"
+                        className="mt-6 text-sm text-gray-700 font-semibold hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
                     >
                         Reset password?
                     </button>

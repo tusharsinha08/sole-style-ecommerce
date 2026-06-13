@@ -121,7 +121,7 @@ const Login = () => {
                         <div className="flex justify-end">
                             <button 
                                 onClick={() => setIsForgotModalOpen(true)}
-                            className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition"
+                            className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition cursor-pointer"
                             >
                                 Forgot password?
                             </button>

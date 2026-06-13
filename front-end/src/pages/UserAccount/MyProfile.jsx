@@ -5,12 +5,14 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import ForgotPasswordModal from "../LoginAndRegister/ForgotPasswordModal";
 
 const MyProfile = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
-    const { refetch, data: dbUser = {}} = useQuery({
+    const { refetch, data: dbUser = {} } = useQuery({
         queryKey: ['dbUser', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/email/${user?.email}`)
@@ -30,7 +32,7 @@ const MyProfile = () => {
             setPreview(dbUser?.image || "");
         }
     }, [dbUser]);
-    
+
     const handleImageChange = (e) => {
         const file = e.target.files[0];
 
@@ -205,15 +207,30 @@ const MyProfile = () => {
                         />
                     </div>
 
+
                     {/* Save Button */}
                     <button
                         type="submit"
-                        className="w-full cursor-pointer bg-neutral text-white py-3 rounded-lg font-semibold hover:bg-gray-900 transition"
+                        className="w-full cursor-pointer bg-neutral text-white py-3 rounded font-semibold hover:bg-gray-900 transition"
                     >
                         Save Profile
                     </button>
                 </form>
+
+                {/* Forgot */}
+                <div>
+                    <button
+                        onClick={() => setIsForgotModalOpen(true)}
+                        className="text-sm mt-6 font-semibold text-red-500 hover:text-red-700  transition cursor-pointer"
+                    >
+                        Reset password?
+                    </button>
+                </div>
             </div>
+            <ForgotPasswordModal
+                isModalOpen={isForgotModalOpen}
+                setIsModalOpen={setIsForgotModalOpen}
+            ></ForgotPasswordModal>
         </div>
     );
 };

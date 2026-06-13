@@ -80,7 +80,7 @@ const ForgotPasswordModal = ({ isModalOpen, setIsModalOpen }) => {
                             <input
                                 type="email"
                                 placeholder="Enter your email address"
-                                className="input input-bordered w-full focus:input-primary"
+                                className="input input-bordered w-full bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-300"
                                 {...register("email", {
                                     required: "Email is required",
                                     pattern: {

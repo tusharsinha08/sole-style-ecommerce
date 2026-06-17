@@ -63,7 +63,7 @@ const Notification = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
+                <progress className="progress w-56 text-black dark:text-white"></progress>
             </div>
         );
     }
@@ -120,7 +120,7 @@ const Notification = () => {
                                 {/* Content */}
                                 <div className="flex-1">
                                     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                                        <h3  onClick={() => navigate('/my-account/orders')}
+                                        <h3 onClick={() => navigate('/my-account/orders')}
                                             className={`font-semibold cursor-pointer
                                             ${notification.read
                                                     ? "text-gray-700 dark:text-gray-200"

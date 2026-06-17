@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const AllOrders = () => {
     const axiosSecure = useAxiosSecure();
-    
+
     const {
         data: orders = [],
         isPending: isLoading,
@@ -19,7 +19,7 @@ const AllOrders = () => {
             return res.data;
         },
     });
-    
+
     const [page, setPage] = useState(1);
     const limit = 10;
     const totalPages = Math.ceil(orders.length / limit);
@@ -65,7 +65,7 @@ const AllOrders = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
+                <progress className="progress w-56 text-black dark:text-white"></progress>
             </div>
         );
     }

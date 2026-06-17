@@ -20,9 +20,16 @@ const PopularProducts = () => {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
-            </div>
+            <section className="max-w-7xl mx-auto px-6 py-20">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {[...Array(4)].map((_, index) => (
+                        <div
+                            key={index}
+                            className="h-80 bg-gray-200 dark:bg-gray-700 animate-pulse rounded-lg"
+                        ></div>
+                    ))}
+                </div>
+            </section>
         );
     }
 

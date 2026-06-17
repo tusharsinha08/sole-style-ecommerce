@@ -9,16 +9,16 @@ const Users = () => {
     const axiosSecure = useAxiosSecure();
     const [page, setPage] = useState(1);
     const limit = 10;
-    
+
     const { data: users = [], isPending: isLoading } = useQuery({
         queryKey: ['users', page, limit],
         queryFn: async () => {
             const res = await axiosSecure.get('/users')
-            
+
             return res.data
         }
     })
-    
+
     const totalPages = Math.ceil(users.length / limit);
     const paginatedUsers = users.slice(
         (page - 1) * limit,
@@ -53,7 +53,7 @@ const Users = () => {
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
+                <progress className="progress w-56 text-black dark:text-white"></progress>
             </div>
         );
     }
@@ -103,13 +103,13 @@ const Users = () => {
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
                                             <div className="w-8 h-8 rounded-full">
-                                                { user.image ? 
-                                                <img
-                                                    src={user.image }
-                                                    alt={user.name}
-                                                    className="object-cover"
-                                                /> : 
-                                                <FaUser className='border rounded-full text-xl w-full h-full text-gray-500'></FaUser>
+                                                {user.image ?
+                                                    <img
+                                                        src={user.image}
+                                                        alt={user.name}
+                                                        className="object-cover"
+                                                    /> :
+                                                    <FaUser className='border rounded-full text-xl w-full h-full text-gray-500'></FaUser>
 
                                                 }
                                             </div>

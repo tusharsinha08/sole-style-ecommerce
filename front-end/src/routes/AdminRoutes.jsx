@@ -10,7 +10,7 @@ const AdminRoutes = ({ children }) => {
     if (loading || isAdminLoading) {
         return <>
             <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
+                <progress className="progress w-56 text-black dark:text-white"></progress>
             </div>
         </>
     }

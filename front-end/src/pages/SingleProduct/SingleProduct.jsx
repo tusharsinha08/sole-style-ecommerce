@@ -185,7 +185,7 @@ const SingleProduct = () => {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <progress className="progress w-56"></progress>
+                <progress className="progress w-56 text-black dark:text-white"></progress>
             </div>
         );
     }
@@ -648,8 +648,8 @@ const SingleProduct = () => {
                                                         <span
                                                             key={i}
                                                             className={`text-lg ${i < review.rating
-                                                                    ? "text-yellow-400"
-                                                                    : "text-gray-300"
+                                                                ? "text-yellow-400"
+                                                                : "text-gray-300"
                                                                 }`}
                                                         >
                                                             ★

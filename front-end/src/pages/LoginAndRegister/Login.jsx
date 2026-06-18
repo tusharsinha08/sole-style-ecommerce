@@ -16,7 +16,7 @@ const Login = () => {
     const axiosSecure = useAxiosSecure()
     const guestCart = JSON.parse(localStorage.getItem("carts")) || [];
     const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
-
+    const [loginError, setLoginError] = useState("");
 
 
     const {
@@ -29,127 +29,143 @@ const Login = () => {
         const { email, password } = data;
 
         try {
-            await signInUser(email, password)
-                .then(response => {
+            await signInUser(email, password);
 
-                    guestCart.forEach(cart => {
-                        const updatedCartItem = {
-                            ...cart,
-                            email: email
+            // Add guest cart items to database
+            for (const cart of guestCart) {
+                const updatedCartItem = {
+                    ...cart,
+                    email
+                };
+
+                const res = await axiosSecure.post('/carts', updatedCartItem);
+
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: `${cart.name} is added to cart.`,
+                        showConfirmButton: false,
+                        timer: 1000,
+                        customClass: {
+                            popup: 'w-56 p-2 text-sm'
                         }
-                        axiosSecure.post('/carts', updatedCartItem)
-                            .then(res => {
-                                if (res.data.insertedId) {
-                                    Swal.fire({
-                                        toast: true,
-                                        position: "top-end",
-                                        icon: "success",
-                                        title: `${cart.name} is added to cart.`,
-                                        showConfirmButton: false,
-                                        timer: 500,
-                                        customClass: {
-                                            popup: 'w-56 p-2 text-sm'
-                                        }
-                                    });
-                                    refetch()
-                                }
-                            })
-                        });
-                        
-                        navigate(from, { replace: true })
-                    })
-                    
-                    localStorage.removeItem('carts');
-                    reset();
+                    });
                 }
-        catch (error) {
-                console.log(error.message);
             }
-        };
 
-        
-        return (
-            <div className="min-h-screen flex items-center justify-center px-4 pt-10">
-                <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-8 md:p-10">
+            refetch();
+            localStorage.removeItem("carts");
+            reset();
+            navigate(from, { replace: true });
 
-                    {/* Heading */}
-                    <div className="mb-10">
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
-                            Sign In
-                        </h1>
+        } catch (error) {
+            let message = "Login failed. Please try again.";
 
-                        <p className="mt-3 text-gray-500 dark:text-gray-400">
-                            Welcome back! Please login to your account.
-                        </p>
-                    </div>
+            if (error.code === "auth/user-not-found") {
+                message = "No account found with this email.";
+            } else if (
+                error.code === "auth/wrong-password" ||
+                error.code === "auth/invalid-credential"
+            ) {
+                message = "Incorrect email or password.";
+            } else if (error.code === "auth/too-many-requests") {
+                message = "Too many attempts. Please try again later.";
+            }
+            setLoginError(message);
+        }
+    };
 
-                    {/* Form */}
-                    <form
-                        onSubmit={handleSubmit(handleLogin)}
-                        className="space-y-6"
-                    >
 
-                        {/* Email */}
-                        <div>
-                            <label className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">
-                                Email Address
-                            </label>
+    return (
+        <div className="min-h-screen flex items-center justify-center px-4 pt-10">
+            <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-8 md:p-10">
 
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-                                {...register("email", { required: true })}
-                            />
-                        </div>
+                {/* Heading */}
+                <div className="mb-10">
+                    <h1 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white">
+                        Sign In
+                    </h1>
 
-                        {/* Password */}
-                        <div>
-                            <label className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">
-                                Password
-                            </label>
-
-                            <input
-                                type="password"
-                                placeholder="Enter your password"
-                                className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
-                                {...register("password", { required: true })}
-                            />
-                        </div>
-
-                        {/* Forgot */}
-                        <div className="flex justify-end">
-                            <button 
-                                onClick={() => setIsForgotModalOpen(true)}
-                            className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition cursor-pointer"
-                            >
-                                Forgot password?
-                            </button>
-                        </div>
-
-                        {/* Button */}
-                        <button
-                            type="submit"
-                            className="btn w-full border-0 bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 text-lg"
-                        >
-                            Login
-                        </button>
-                    </form>
-                    <p className="mt-6 text-center text-gray-500 dark:text-gray-400">
-                        Don't have an account?{" "}
-                        <Link to={'/register'} className="text-black dark:text-white font-bold hover:underline">
-                            Register
-                        </Link>
+                    <p className="mt-3 text-gray-500 dark:text-gray-400">
+                        Welcome back! Please login to your account.
                     </p>
                 </div>
 
-                <ForgotPasswordModal 
-                    isModalOpen={isForgotModalOpen}
-                    setIsModalOpen={setIsForgotModalOpen}
-                ></ForgotPasswordModal>
+                {/* Form */}
+                <form
+                    onSubmit={handleSubmit(handleLogin)}
+                    className="space-y-6"
+                >
+
+                    {/* Email */}
+                    <div>
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            {...register("email", { required: true })}
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-400">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            className="input w-full mt-2 border border-gray-300 dark:border-gray-700 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            {...register("password", { required: true })}
+                        />
+                    </div>
+
+                    {/* Forgot */}
+                    <div className="flex justify-end">
+                        <button
+                            onClick={() => setIsForgotModalOpen(true)}
+                            className="text-sm text-gray-500 hover:text-black dark:hover:text-white transition cursor-pointer"
+                        >
+                            Forgot password?
+                        </button>
+                    </div>
+
+                    {loginError && (
+                        <p className="text-red-500 text-sm mt-2">
+                            {loginError}
+                        </p>
+                    )}
+
+                    {/* Button */}
+                    <button
+                        type="submit"
+                        className="btn w-full border-0 bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 text-lg"
+                    >
+                        Login
+                    </button>
+                </form>
+                <p className="mt-6 text-center text-gray-500 dark:text-gray-400">
+                    Don't have an account?{" "}
+                    <Link to={'/register'} className="text-black dark:text-white font-bold hover:underline">
+                        Register
+                    </Link>
+                </p>
             </div>
 
-        );
-    };
+            <ForgotPasswordModal
+                isModalOpen={isForgotModalOpen}
+                setIsModalOpen={setIsForgotModalOpen}
+            ></ForgotPasswordModal>
+        </div>
 
-    export default Login;
+    );
+};
+
+export default Login;
